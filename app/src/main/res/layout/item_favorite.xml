@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_2sdp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivGalleryImgItem"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_image_placeholder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivPlayIcon"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:tint="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_play" />
+
+    <TextView
+        android:id="@+id/tvDuration"
+        style="@style/CustomFontMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:background="@drawable/bg_rounded_corner_black_70"
+        android:paddingHorizontal="@dimen/_5sdp"
+        android:paddingVertical="@dimen/_1sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_8ssp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivPlayIcon" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:padding="@dimen/_6sdp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_favourites_white" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIsGIF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:background="@drawable/rounded_background_for_gif"
+        android:paddingHorizontal="@dimen/_6sdp"
+        android:paddingVertical="@dimen/_2sdp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_gif"
+        app:tint="@color/white" />
+</androidx.constraintlayout.widget.ConstraintLayout>

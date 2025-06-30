@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_6sdp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageViewAlbumCover"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_image_placeholder"
+        app:shapeAppearance="@style/RoundedImageStyle" />
+
+    <TextView
+        android:id="@+id/textViewAlbumName"
+        style="@style/CustomFontRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:maxLines="1"
+        android:textColor="?attr/colorTitleText"
+        android:textSize="@dimen/_12sdp"
+        tools:text="Album Name" />
+
+    <TextView
+        android:id="@+id/textViewPhotoCount"
+        style="@style/CustomFontRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:maxLines="1"
+        android:textColor="?attr/colorTextContent"
+        android:textSize="@dimen/_10ssp"
+        tools:text="12 photos" />
+</LinearLayout>

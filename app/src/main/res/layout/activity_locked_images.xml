@@ -1,0 +1,201 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorBgScreen"
+    android:orientation="vertical"
+    tools:context=".activity.LockedImagesActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/llMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/llText"
+                style="@style/CustomFontRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_12sdp"
+                android:gravity="center"
+                android:text="@string/these_photos_and_videos_are_hidden_and_wont_show_as_you_scroll_through_gallery_or_in_other_apps"
+                android:textColor="?attr/colorTextContent"
+                android:textSize="@dimen/_12ssp" />
+
+            <RelativeLayout
+                android:id="@+id/llSelections"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llText"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/CustomFontMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:gravity="start"
+                    android:text="@string/locked_images"
+                    android:textColor="?attr/colorTitleText"
+                    android:textSize="@dimen/_16ssp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivSelectImages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ripple_effect"
+                    android:padding="@dimen/_6sdp"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_select_inactive" />
+            </RelativeLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/llMoveAndDelete"
+                android:layout_below="@id/llSelections"
+                android:layout_centerHorizontal="true"
+                android:indeterminateTint="?attr/colorApp"
+                android:visibility="visible" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewLocked"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/llMoveAndDelete"
+                android:layout_below="@id/llSelections"
+                android:layout_centerHorizontal="true"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:padding="@dimen/_10sdp"
+                android:scrollbars="none" />
+
+            <LinearLayout
+                android:id="@+id/llMoveAndDelete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="?attr/colorToolbarBg"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/llMove"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.496"
+                    android:background="@drawable/ripple_effect"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/ic_move_new" />
+
+                    <TextView
+                        style="@style/CustomFontRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="@string/restore"
+                        android:textColor="?attr/colorTextContent"
+                        android:textSize="@dimen/_10ssp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="@dimen/_14sdp"
+                    android:layout_weight="0.008"
+                    android:background="?attr/colorControlHighlight" />
+
+                <LinearLayout
+                    android:id="@+id/llDelete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.496"
+                    android:background="@drawable/ripple_effect"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/ic_delete_new" />
+
+                    <TextView
+                        style="@style/CustomFontRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="@string/delete"
+                        android:textColor="?attr/colorTitleText"
+                        android:textSize="@dimen/_10ssp" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabLockMedia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/_20sdp"
+                android:tint="@color/white"
+                app:backgroundTint="?attr/colorApp"
+                app:fabSize="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_add_media" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/llLockedPhotoEmpty"
+            layout="@layout/empty_state_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </LinearLayout>
+</RelativeLayout>

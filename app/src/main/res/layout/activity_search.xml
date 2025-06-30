@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorBgScreen"
+    tools:context=".activity.SearchActivity">
+
+    <RelativeLayout
+        android:id="@+id/rlSearchToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="?attr/colorToolbarBg"
+        android:elevation="@dimen/_1sdp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_34sdp"
+            android:background="@drawable/ripple_effect"
+            android:padding="@dimen/_3sdp"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/searchBar"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_22sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/ivBack"
+            android:background="@drawable/bg_rounded_corner_search"
+            android:drawableStart="@drawable/ic_search_edittext"
+            android:drawablePadding="@dimen/_10sdp"
+            android:hint="@string/search_new"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            android:textColor="?attr/colorTitleText"
+            android:textColorHint="?attr/colorEditTextHint"
+            android:textSize="@dimen/_16ssp" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nswSuggestionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rlSearchToolbar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/rlSearchSuggestionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rlSearchToolbar">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvLocation"
+                style="@style/CustomFontMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLines="1"
+                android:text="@string/search_by_location"
+                android:textColor="?attr/colorTitleText"
+                android:textSize="@dimen/_16ssp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerLocations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvLocation"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDocument"
+                style="@style/CustomFontMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recyclerLocations"
+                android:layout_alignParentStart="true"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLines="1"
+                android:text="@string/search_by_document"
+                android:textColor="?attr/colorTitleText"
+                android:textSize="@dimen/_16ssp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerDocuments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvDocument"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+            <include
+                android:id="@+id/noSearchResultFound"
+                layout="@layout/empty_state_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rlImageRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rlSearchToolbar"
+        android:layout_centerHorizontal="true"
+        android:overScrollMode="never"
+        android:padding="@dimen/_10sdp"
+        android:scrollbars="none"
+        android:visibility="gone" />
+</RelativeLayout>

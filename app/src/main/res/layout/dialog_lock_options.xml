@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rounded_corner_dialog"
+    android:elevation="@dimen/_4sdp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvModifyPin"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="@dimen/_14ssp"
+        android:text="@string/modify_pin"
+        android:textColor="?attr/colorTitleText"
+        android:textSize="@dimen/_14ssp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginHorizontal="@dimen/_14ssp"
+        android:background="?attr/colorEditTextHint" />
+
+    <TextView
+        android:id="@+id/tvChangeEmail"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="@dimen/_14ssp"
+        android:text="@string/change_email"
+        android:textColor="?attr/colorTitleText"
+        android:textSize="@dimen/_14ssp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginHorizontal="@dimen/_14ssp"
+        android:background="?attr/colorEditTextHint" />
+
+    <TextView
+        android:id="@+id/tvChangeSecurityQuestion"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="@dimen/_14ssp"
+        android:text="@string/change_security_question"
+        android:textColor="?attr/colorTitleText"
+        android:textSize="@dimen/_14ssp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginHorizontal="@dimen/_14ssp"
+        android:background="?attr/colorEditTextHint" />
+
+    <RelativeLayout
+        android:id="@+id/switchContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/_14ssp"
+        android:paddingVertical="@dimen/_12ssp">
+
+        <TextView
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_toStartOf="@+id/switchFingerprint"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/unlock_with_fingerprint"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_14ssp" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switchFingerprint"
+            style="@style/CustomFontMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            app:thumbIcon="@drawable/switch_custom_thumb"
+            app:thumbIconSize="0dp"
+            app:thumbTint="?attr/colorDialogBg"
+            app:trackDecoration="@null"
+            app:trackTint="@color/switch_selector" />
+    </RelativeLayout>
+</LinearLayout>

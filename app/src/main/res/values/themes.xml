@@ -1,0 +1,308 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.PhotoGallery" parent="Theme.Material3.DayNight.NoActionBar">
+    </style>
+
+    <style name="BottomNavigationViewTextStyle">
+        <item name="android:fontFamily">@font/kumbh_sans_regular</item>
+    </style>
+
+    <style name="CustomFontRegular">
+        <item name="fontFamily">@font/kumbh_sans_regular</item>
+        <item name="android:includeFontPadding">false</item>
+
+    </style>
+
+    <style name="CustomFontMedium">
+        <item name="fontFamily">@font/kumbh_sans_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="CustomFontBold">
+        <item name="fontFamily">@font/kumbh_sans_semi_bold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="RoundedImageStyle" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">@dimen/_12sdp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="CustomFontRegularPopup">
+        <item name="fontFamily">@font/kumbh_sans_medium</item>
+        <item name="android:textColor">?attr/colorTitleText</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="AppTheme.1" parent="Base.Theme.PhotoGallery">
+        <item name="colorBgScreen">@color/color_light_screen_bg</item>
+        <item name="colorTitleText">@color/color_light_title_text</item>
+        <item name="colorTextApp">?attr/colorApp</item>
+        <item name="colorTextContent">@color/color_light_text_70</item>
+        <item name="colorBottomNavBg">@color/color_light_bottom_nav_bg</item>
+        <item name="colorBottomNavUnselected">@color/color_light_bottom_nav_unselected</item>
+        <item name="colorToolbarBg">@color/color_light_toolbar_bg</item>
+        <item name="colorIcon">@color/color_light_icon</item>
+        <item name="colorDialogBg">@color/color_light_dialog_bg</item>
+        <item name="colorBorderBtn">@color/color_light_border_btn</item>
+        <item name="colorRadioUnselected">@color/color_light_black_30</item>
+        <item name="colorSelectedImageBg">@color/theme_color_1_20</item>
+        <item name="colorRoundedImageBg">@color/color_rounded_image_bg_light</item>
+        <item name="colorSliderIcon">@color/color_slider_icon_light</item>
+        <item name="colorEditTextHint">@color/color_hint_light</item>
+        <item name="colorCloseIconInner">@color/color_close_icon_inner_light</item>
+        <item name="colorCloseIconOuter">@color/color_close_icon_outer_light</item>
+        <item name="colorIllustrationIcon5">@color/color_illustration_icon_5_light</item>
+        <item name="colorIllustrationIcon7">@color/color_illustration_icon_7_light</item>
+        <item name="colorPlaceHolder">@color/color_placeholder_light</item>
+        <item name="colorApp">@color/theme_color_1</item>
+        <item name="colorFavoriteSolid">@color/color_favorite_solid_light</item>
+        <item name="colorFavoriteStroke">@color/color_favorite_stroke_light</item>
+        <item name="colorLockSolid">@color/color_lock_solid_light</item>
+        <item name="colorLockStroke">@color/color_lock_stroke_light</item>
+        <item name="colorDuplicateSolid">@color/color_duplicate_solid_light</item>
+        <item name="colorDuplicateStroke">@color/color_duplicate_stroke_light</item>
+        <item name="colorRecycleBeenSolid">@color/color_delete_solid_light</item>
+        <item name="colorRecycleBeenStroke">@color/color_delete_stroke_light</item>
+        <item name="colorStroke">@color/color_stroke_light</item>
+    </style>
+
+    <style name="AppTheme.2" parent="Base.Theme.PhotoGallery">
+        <item name="colorBgScreen">@color/color_light_screen_bg</item>
+        <item name="colorTitleText">@color/color_light_title_text</item>
+        <item name="colorTextApp">?attr/colorApp</item>
+        <item name="colorTextContent">@color/color_light_text_70</item>
+        <item name="colorBottomNavBg">@color/color_light_bottom_nav_bg</item>
+        <item name="colorBottomNavUnselected">@color/color_light_bottom_nav_unselected</item>
+        <item name="colorToolbarBg">@color/color_light_toolbar_bg</item>
+        <item name="colorIcon">@color/color_light_icon</item>
+        <item name="colorDialogBg">@color/color_light_dialog_bg</item>
+        <item name="colorBorderBtn">@color/color_light_border_btn</item>
+        <item name="colorRadioUnselected">@color/color_light_black_30</item>
+        <item name="colorSelectedImageBg">@color/theme_color_2_20</item>
+        <item name="colorRoundedImageBg">@color/color_rounded_image_bg_light</item>
+        <item name="colorSliderIcon">@color/color_slider_icon_light</item>
+        <item name="colorEditTextHint">@color/color_hint_light</item>
+        <item name="colorCloseIconInner">@color/color_close_icon_inner_light</item>
+        <item name="colorCloseIconOuter">@color/color_close_icon_outer_light</item>
+        <item name="colorIllustrationIcon5">@color/color_illustration_icon_5_light</item>
+        <item name="colorIllustrationIcon7">@color/color_illustration_icon_7_light</item>
+        <item name="colorPlaceHolder">@color/color_placeholder_light</item>
+        <item name="colorApp">@color/theme_color_2</item>
+        <item name="colorFavoriteSolid">@color/color_favorite_solid_light</item>
+        <item name="colorFavoriteStroke">@color/color_favorite_stroke_light</item>
+        <item name="colorLockSolid">@color/color_lock_solid_light</item>
+        <item name="colorLockStroke">@color/color_lock_stroke_light</item>
+        <item name="colorDuplicateSolid">@color/color_duplicate_solid_light</item>
+        <item name="colorDuplicateStroke">@color/color_duplicate_stroke_light</item>
+        <item name="colorRecycleBeenSolid">@color/color_delete_solid_light</item>
+        <item name="colorRecycleBeenStroke">@color/color_delete_stroke_light</item>
+        <item name="colorStroke">@color/color_stroke_light</item>
+    </style>
+
+    <style name="AppTheme.3" parent="Base.Theme.PhotoGallery">
+        <item name="colorBgScreen">@color/color_light_screen_bg</item>
+        <item name="colorTitleText">@color/color_light_title_text</item>
+        <item name="colorTextApp">?attr/colorApp</item>
+        <item name="colorTextContent">@color/color_light_text_70</item>
+        <item name="colorBottomNavBg">@color/color_light_bottom_nav_bg</item>
+        <item name="colorBottomNavUnselected">@color/color_light_bottom_nav_unselected</item>
+        <item name="colorToolbarBg">@color/color_light_toolbar_bg</item>
+        <item name="colorIcon">@color/color_light_icon</item>
+        <item name="colorDialogBg">@color/color_light_dialog_bg</item>
+        <item name="colorBorderBtn">@color/color_light_border_btn</item>
+        <item name="colorRadioUnselected">@color/color_light_black_30</item>
+        <item name="colorSelectedImageBg">@color/theme_color_3_20</item>
+        <item name="colorRoundedImageBg">@color/color_rounded_image_bg_light</item>
+        <item name="colorSliderIcon">@color/color_slider_icon_light</item>
+        <item name="colorEditTextHint">@color/color_hint_light</item>
+        <item name="colorCloseIconInner">@color/color_close_icon_inner_light</item>
+        <item name="colorCloseIconOuter">@color/color_close_icon_outer_light</item>
+        <item name="colorIllustrationIcon5">@color/color_illustration_icon_5_light</item>
+        <item name="colorIllustrationIcon7">@color/color_illustration_icon_7_light</item>
+        <item name="colorPlaceHolder">@color/color_placeholder_light</item>
+        <item name="colorApp">@color/theme_color_3</item>
+        <item name="colorFavoriteSolid">@color/color_favorite_solid_light</item>
+        <item name="colorFavoriteStroke">@color/color_favorite_stroke_light</item>
+        <item name="colorLockSolid">@color/color_lock_solid_light</item>
+        <item name="colorLockStroke">@color/color_lock_stroke_light</item>
+        <item name="colorDuplicateSolid">@color/color_duplicate_solid_light</item>
+        <item name="colorDuplicateStroke">@color/color_duplicate_stroke_light</item>
+        <item name="colorRecycleBeenSolid">@color/color_delete_solid_light</item>
+        <item name="colorRecycleBeenStroke">@color/color_delete_stroke_light</item>
+        <item name="colorStroke">@color/color_stroke_light</item>
+    </style>
+
+    <style name="AppTheme.4" parent="Base.Theme.PhotoGallery">
+        <item name="colorBgScreen">@color/color_light_screen_bg</item>
+        <item name="colorTitleText">@color/color_light_title_text</item>
+        <item name="colorTextApp">?attr/colorApp</item>
+        <item name="colorTextContent">@color/color_light_text_70</item>
+        <item name="colorBottomNavBg">@color/color_light_bottom_nav_bg</item>
+        <item name="colorBottomNavUnselected">@color/color_light_bottom_nav_unselected</item>
+        <item name="colorToolbarBg">@color/color_light_toolbar_bg</item>
+        <item name="colorIcon">@color/color_light_icon</item>
+        <item name="colorDialogBg">@color/color_light_dialog_bg</item>
+        <item name="colorBorderBtn">@color/color_light_border_btn</item>
+        <item name="colorRadioUnselected">@color/color_light_black_30</item>
+        <item name="colorSelectedImageBg">@color/theme_color_4_20</item>
+        <item name="colorRoundedImageBg">@color/color_rounded_image_bg_light</item>
+        <item name="colorSliderIcon">@color/color_slider_icon_light</item>
+        <item name="colorEditTextHint">@color/color_hint_light</item>
+        <item name="colorCloseIconInner">@color/color_close_icon_inner_light</item>
+        <item name="colorCloseIconOuter">@color/color_close_icon_outer_light</item>
+        <item name="colorIllustrationIcon5">@color/color_illustration_icon_5_light</item>
+        <item name="colorIllustrationIcon7">@color/color_illustration_icon_7_light</item>
+        <item name="colorPlaceHolder">@color/color_placeholder_light</item>
+        <item name="colorApp">@color/theme_color_4</item>
+        <item name="colorFavoriteSolid">@color/color_favorite_solid_light</item>
+        <item name="colorFavoriteStroke">@color/color_favorite_stroke_light</item>
+        <item name="colorLockSolid">@color/color_lock_solid_light</item>
+        <item name="colorLockStroke">@color/color_lock_stroke_light</item>
+        <item name="colorDuplicateSolid">@color/color_duplicate_solid_light</item>
+        <item name="colorDuplicateStroke">@color/color_duplicate_stroke_light</item>
+        <item name="colorRecycleBeenSolid">@color/color_delete_solid_light</item>
+        <item name="colorRecycleBeenStroke">@color/color_delete_stroke_light</item>
+        <item name="colorStroke">@color/color_stroke_light</item>
+    </style>
+
+    <style name="AppTheme.5" parent="Base.Theme.PhotoGallery">
+        <item name="colorBgScreen">@color/color_light_screen_bg</item>
+        <item name="colorTitleText">@color/color_light_title_text</item>
+        <item name="colorTextApp">?attr/colorApp</item>
+        <item name="colorTextContent">@color/color_light_text_70</item>
+        <item name="colorBottomNavBg">@color/color_light_bottom_nav_bg</item>
+        <item name="colorBottomNavUnselected">@color/color_light_bottom_nav_unselected</item>
+        <item name="colorToolbarBg">@color/color_light_toolbar_bg</item>
+        <item name="colorIcon">@color/color_light_icon</item>
+        <item name="colorDialogBg">@color/color_light_dialog_bg</item>
+        <item name="colorBorderBtn">@color/color_light_border_btn</item>
+        <item name="colorRadioUnselected">@color/color_light_black_30</item>
+        <item name="colorSelectedImageBg">@color/theme_color_5_20</item>
+        <item name="colorRoundedImageBg">@color/color_rounded_image_bg_light</item>
+        <item name="colorSliderIcon">@color/color_slider_icon_light</item>
+        <item name="colorEditTextHint">@color/color_hint_light</item>
+        <item name="colorCloseIconInner">@color/color_close_icon_inner_light</item>
+        <item name="colorCloseIconOuter">@color/color_close_icon_outer_light</item>
+        <item name="colorIllustrationIcon5">@color/color_illustration_icon_5_light</item>
+        <item name="colorIllustrationIcon7">@color/color_illustration_icon_7_light</item>
+        <item name="colorPlaceHolder">@color/color_placeholder_light</item>
+        <item name="colorApp">@color/theme_color_5</item>
+        <item name="colorFavoriteSolid">@color/color_favorite_solid_light</item>
+        <item name="colorFavoriteStroke">@color/color_favorite_stroke_light</item>
+        <item name="colorLockSolid">@color/color_lock_solid_light</item>
+        <item name="colorLockStroke">@color/color_lock_stroke_light</item>
+        <item name="colorDuplicateSolid">@color/color_duplicate_solid_light</item>
+        <item name="colorDuplicateStroke">@color/color_duplicate_stroke_light</item>
+        <item name="colorRecycleBeenSolid">@color/color_delete_solid_light</item>
+        <item name="colorRecycleBeenStroke">@color/color_delete_stroke_light</item>
+        <item name="colorStroke">@color/color_stroke_light</item>
+    </style>
+
+    <style name="AppTheme.6" parent="Base.Theme.PhotoGallery">
+        <item name="colorBgScreen">@color/color_light_screen_bg</item>
+        <item name="colorTitleText">@color/color_light_title_text</item>
+        <item name="colorTextApp">?attr/colorApp</item>
+        <item name="colorTextContent">@color/color_light_text_70</item>
+        <item name="colorBottomNavBg">@color/color_light_bottom_nav_bg</item>
+        <item name="colorBottomNavUnselected">@color/color_light_bottom_nav_unselected</item>
+        <item name="colorToolbarBg">@color/color_light_toolbar_bg</item>
+        <item name="colorIcon">@color/color_light_icon</item>
+        <item name="colorDialogBg">@color/color_light_dialog_bg</item>
+        <item name="colorBorderBtn">@color/color_light_border_btn</item>
+        <item name="colorRadioUnselected">@color/color_light_black_30</item>
+        <item name="colorSelectedImageBg">@color/theme_color_6_20</item>
+        <item name="colorRoundedImageBg">@color/color_rounded_image_bg_light</item>
+        <item name="colorSliderIcon">@color/color_slider_icon_light</item>
+        <item name="colorEditTextHint">@color/color_hint_light</item>
+        <item name="colorCloseIconInner">@color/color_close_icon_inner_light</item>
+        <item name="colorCloseIconOuter">@color/color_close_icon_outer_light</item>
+        <item name="colorIllustrationIcon5">@color/color_illustration_icon_5_light</item>
+        <item name="colorIllustrationIcon7">@color/color_illustration_icon_7_light</item>
+        <item name="colorPlaceHolder">@color/color_placeholder_light</item>
+        <item name="colorApp">@color/theme_color_6</item>
+        <item name="colorFavoriteSolid">@color/color_favorite_solid_light</item>
+        <item name="colorFavoriteStroke">@color/color_favorite_stroke_light</item>
+        <item name="colorLockSolid">@color/color_lock_solid_light</item>
+        <item name="colorLockStroke">@color/color_lock_stroke_light</item>
+        <item name="colorDuplicateSolid">@color/color_duplicate_solid_light</item>
+        <item name="colorDuplicateStroke">@color/color_duplicate_stroke_light</item>
+        <item name="colorRecycleBeenSolid">@color/color_delete_solid_light</item>
+        <item name="colorRecycleBeenStroke">@color/color_delete_stroke_light</item>
+        <item name="colorStroke">@color/color_stroke_light</item>
+    </style>
+
+    <style name="AppTheme.7" parent="Base.Theme.PhotoGallery">
+        <item name="colorBgScreen">@color/color_light_screen_bg</item>
+        <item name="colorTitleText">@color/color_light_title_text</item>
+        <item name="colorTextApp">?attr/colorApp</item>
+        <item name="colorTextContent">@color/color_light_text_70</item>
+        <item name="colorBottomNavBg">@color/color_light_bottom_nav_bg</item>
+        <item name="colorBottomNavUnselected">@color/color_light_bottom_nav_unselected</item>
+        <item name="colorToolbarBg">@color/color_light_toolbar_bg</item>
+        <item name="colorIcon">@color/color_light_icon</item>
+        <item name="colorDialogBg">@color/color_light_dialog_bg</item>
+        <item name="colorBorderBtn">@color/color_light_border_btn</item>
+        <item name="colorRadioUnselected">@color/color_light_black_30</item>
+        <item name="colorSelectedImageBg">@color/theme_color_7_20</item>
+        <item name="colorRoundedImageBg">@color/color_rounded_image_bg_light</item>
+        <item name="colorSliderIcon">@color/color_slider_icon_light</item>
+        <item name="colorEditTextHint">@color/color_hint_light</item>
+        <item name="colorCloseIconInner">@color/color_close_icon_inner_light</item>
+        <item name="colorCloseIconOuter">@color/color_close_icon_outer_light</item>
+        <item name="colorIllustrationIcon5">@color/color_illustration_icon_5_light</item>
+        <item name="colorIllustrationIcon7">@color/color_illustration_icon_7_light</item>
+        <item name="colorPlaceHolder">@color/color_placeholder_light</item>
+        <item name="colorApp">@color/theme_color_7</item>
+        <item name="colorFavoriteSolid">@color/color_favorite_solid_light</item>
+        <item name="colorFavoriteStroke">@color/color_favorite_stroke_light</item>
+        <item name="colorLockSolid">@color/color_lock_solid_light</item>
+        <item name="colorLockStroke">@color/color_lock_stroke_light</item>
+        <item name="colorDuplicateSolid">@color/color_duplicate_solid_light</item>
+        <item name="colorDuplicateStroke">@color/color_duplicate_stroke_light</item>
+        <item name="colorRecycleBeenSolid">@color/color_delete_solid_light</item>
+        <item name="colorRecycleBeenStroke">@color/color_delete_stroke_light</item>
+        <item name="colorStroke">@color/color_stroke_light</item>
+    </style>
+
+    <style name="AppTheme.8" parent="Base.Theme.PhotoGallery">
+        <item name="colorBgScreen">@color/color_light_screen_bg</item>
+        <item name="colorTitleText">@color/color_light_title_text</item>
+        <item name="colorTextApp">?attr/colorApp</item>
+        <item name="colorTextContent">@color/color_light_text_70</item>
+        <item name="colorBottomNavBg">@color/color_light_bottom_nav_bg</item>
+        <item name="colorBottomNavUnselected">@color/color_light_bottom_nav_unselected</item>
+        <item name="colorToolbarBg">@color/color_light_toolbar_bg</item>
+        <item name="colorIcon">@color/color_light_icon</item>
+        <item name="colorDialogBg">@color/color_light_dialog_bg</item>
+        <item name="colorBorderBtn">@color/color_light_border_btn</item>
+        <item name="colorRadioUnselected">@color/color_light_black_30</item>
+        <item name="colorSelectedImageBg">@color/theme_color_8_20</item>
+        <item name="colorRoundedImageBg">@color/color_rounded_image_bg_light</item>
+        <item name="colorSliderIcon">@color/color_slider_icon_light</item>
+        <item name="colorEditTextHint">@color/color_hint_light</item>
+        <item name="colorCloseIconInner">@color/color_close_icon_inner_light</item>
+        <item name="colorCloseIconOuter">@color/color_close_icon_outer_light</item>
+        <item name="colorIllustrationIcon5">@color/color_illustration_icon_5_light</item>
+        <item name="colorIllustrationIcon7">@color/color_illustration_icon_7_light</item>
+        <item name="colorPlaceHolder">@color/color_placeholder_light</item>
+        <item name="colorApp">@color/theme_color_8</item>
+        <item name="colorFavoriteSolid">@color/color_favorite_solid_light</item>
+        <item name="colorFavoriteStroke">@color/color_favorite_stroke_light</item>
+        <item name="colorLockSolid">@color/color_lock_solid_light</item>
+        <item name="colorLockStroke">@color/color_lock_stroke_light</item>
+        <item name="colorDuplicateSolid">@color/color_duplicate_solid_light</item>
+        <item name="colorDuplicateStroke">@color/color_duplicate_stroke_light</item>
+        <item name="colorRecycleBeenSolid">@color/color_delete_solid_light</item>
+        <item name="colorRecycleBeenStroke">@color/color_delete_stroke_light</item>
+        <item name="colorStroke">@color/color_stroke_light</item>
+    </style>
+
+    <style name="AppTheme.VideoPlayerActivity" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowExitAnimation">@null</item>
+        <item name="android:windowEnterAnimation">@null</item>
+    </style>
+</resources>

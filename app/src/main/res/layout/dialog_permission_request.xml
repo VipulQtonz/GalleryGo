@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_14sdp"
+        android:background="@drawable/bg_rounded_corner_dialog">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/CustomFontMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:text="@string/allow_storage_permission"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_16ssp" />
+
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            style="@style/CustomFontRegular"
+            android:gravity="center"
+            android:outlineProvider="none"
+            android:text="@string/permission_required_to_access_all_files"
+            android:textColor="?attr/colorTextContent"
+            android:textSize="@dimen/_14ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvMessage"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:weightSum="2"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:background="@drawable/bg_rounded_corner_border_btn"
+                style="@style/CustomFontRegular"
+                android:gravity="center"
+                android:stateListAnimator="@null"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorTitleText"
+                android:textSize="@dimen/_14ssp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAllow"
+                style="@style/CustomFontMedium"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:stateListAnimator="@null"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_corner_btn"
+                android:outlineProvider="none"
+                android:text="@string/grant_access"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

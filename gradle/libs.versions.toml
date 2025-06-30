@@ -1,0 +1,91 @@
+[versions]
+agp = "8.10.0"
+biometric = "1.1.0"
+exifinterface = "1.4.1"
+gsonVersion = "2.11.0"
+imageLabeling = "17.0.9"
+kotlin = "2.1.10"
+coreKtx = "1.16.0"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+kotlinxCoroutinesAndroid = "1.10.2"
+library = "1.3.0"
+lifecycleLivedata = "2.9.1"
+material = "1.12.0"
+activity = "1.10.1"
+constraintlayout = "2.2.1"
+multidex = "2.0.1"
+photoview = "2.3.0"
+playServicesLocation = "21.3.0"
+playServicesMaps = "19.2.0"
+recyclerviewfastscroller = "1.0.0"
+sdpAndroid = "1.1.1"
+sspAndroid = "1.1.1"
+glide = "4.16.0"
+roomRuntime = "2.6.1"
+balloon = "1.6.8"
+
+nexusStaging = "0.22.0"
+mavenGradlePlugin = "2.0"
+firebaseDatabaseKtx = "21.0.0"
+firebaseBom = "33.15.0"
+review = "2.0.2"
+transition = "1.6.0"
+flexbox = "3.0.0"
+
+[libraries]
+androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "exifinterface" }
+androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata", version.ref = "lifecycleLivedata" }
+androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
+androidx-transition = { module = "androidx.transition:transition", version.ref = "transition" }
+google-gson = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
+image-labeling = { module = "com.google.mlkit:image-labeling", version.ref = "imageLabeling" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+library = { module = "me.zhanghai.android.fastscroll:library", version.ref = "library" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+photoview = { module = "com.github.chrisbanes:PhotoView", version.ref = "photoview" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+recyclerviewfastscroller = { module = "com.quiph.ui:recyclerviewfastscroller", version.ref = "recyclerviewfastscroller" }
+sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
+ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+android-maven-gradle-plugin = { module = "com.github.dcendents:android-maven-gradle-plugin", version.ref = "mavenGradlePlugin" }
+gradle-nexus-staging-plugin = { module = "io.codearte.gradle.nexus:gradle-nexus-staging-plugin", version.ref = "nexusStaging" }
+
+firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-config = { module = "com.google.firebase:firebase-config" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
+
+review = { module = "com.google.android.play:review", version.ref = "review" }
+review-ktx = { module = "com.google.android.play:review-ktx", version.ref = "review" }
+flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexbox" }
+balloon = { module = "com.github.skydoves:balloon", version.ref = "balloon" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version = "4.4.2" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "3.0.4" }
+ksp = { id = "com.google.devtools.ksp", version = "2.0.21-1.0.27" }
+nexus-staging = { id = "io.codearte.nexus-staging", version.ref = "nexusStaging" }
+

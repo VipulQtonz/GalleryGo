@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_10sdp"
+    android:background="@drawable/bg_rounded_corner_dialog"
+    android:paddingBottom="@dimen/_12sdp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivCancel"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:src="@drawable/ic_close" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleExitFromApp"
+        style="@style/CustomFontBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:text="@string/confirm_exit"
+        android:textColor="?attr/colorTitleText"
+        android:textSize="@dimen/_16ssp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDetailExitFromApp"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitleExitFromApp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/are_you_sure_you_want_to_exit_the_app"
+        android:textAlignment="center"
+        android:textColor="?attr/colorTextContent"
+        android:textSize="@dimen/_14ssp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRateUs"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDetailExitFromApp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/_12sdp"
+        android:background="@drawable/bg_rounded_corner_btn"
+        android:paddingHorizontal="@dimen/_50sdp"
+        android:paddingVertical="@dimen/_10sdp"
+        android:stateListAnimator="@null"
+        android:text="@string/continue_"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnExit"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnRateUs"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:background="@drawable/bg_rounded_corner_border_btn"
+        android:outlineProvider="none"
+        android:stateListAnimator="@null"
+        android:text="@string/yes"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorTitleText"
+        android:textSize="@dimen/_14ssp" />
+
+</RelativeLayout>

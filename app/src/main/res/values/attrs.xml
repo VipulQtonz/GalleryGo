@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorBgScreen" format="reference|color" />
+    <attr name="colorTitleText" format="reference|color" />
+    <attr name="colorTextApp" format="reference|color" />
+    <attr name="colorTextContent" format="reference|color" />
+    <attr name="colorBottomNavBg" format="reference|color" />
+    <attr name="colorBottomNavUnselected" format="reference|color" />
+    <attr name="colorToolbarBg" format="reference|color" />
+    <attr name="colorIcon" format="reference|color" />
+    <attr name="colorDialogBg" format="reference|color" />
+    <attr name="colorBorderBtn" format="reference|color" />
+    <attr name="colorRadioUnselected" format="reference|color" />
+    <attr name="colorSelectedImageBg" format="reference|color" />
+    <attr name="colorRoundedImageBg" format="reference|color" />
+    <attr name="colorSliderIcon" format="reference|color" />
+    <attr name="colorEditTextHint" format="reference|color" />
+    <attr name="colorCloseIconInner" format="reference|color" />
+    <attr name="colorCloseIconOuter" format="reference|color" />
+    <attr name="colorIllustrationIcon5" format="reference|color" />
+    <attr name="colorIllustrationIcon7" format="reference|color" />
+    <attr name="colorPlaceHolder" format="reference|color" />
+    <attr name="colorApp" format="reference|color" />
+    <attr name="colorFavoriteSolid" format="reference|color" />
+    <attr name="colorFavoriteStroke" format="reference|color" />
+    <attr name="colorLockSolid" format="reference|color" />
+    <attr name="colorLockStroke" format="reference|color" />
+    <attr name="colorDuplicateSolid" format="reference|color" />
+    <attr name="colorDuplicateStroke" format="reference|color" />
+    <attr name="colorRecycleBeenSolid" format="reference|color" />
+    <attr name="colorRecycleBeenStroke" format="reference|color" />
+    <attr name="colorStroke" format="reference|color" />
+
+    <declare-styleable name="RatingBar">
+        <attr name="filledDrawable" format="integer" />
+        <attr name="emptyDrawable" format="integer" />
+        <attr name="rating" format="float" />
+        <attr name="numStars" format="integer" />
+        <attr name="minAllowedStars" format="integer" />
+        <attr name="starSize" format="dimension" />
+        <attr name="starSpacing" format="dimension" />
+        <attr name="starMargin" format="dimension" />
+        <attr name="isIndicator" format="boolean" />
+        <attr name="stepSize" format="float" />
+        <attr name="selectTheTappedRating" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomTheme">
+        <attr name="buttonColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="CropView">
+        <attr name="crop_aspect_ratio_x" format="float" />
+        <attr name="crop_aspect_ratio_y" format="float" />
+        <attr name="crop_show_oval_crop_frame" format="boolean" />
+        <attr name="crop_circle_dimmed_layer" format="boolean" />
+        <attr name="crop_dimmed_color" format="color" />
+        <attr name="crop_grid_stroke_size" format="dimension" />
+        <attr name="crop_grid_color" format="color" />
+        <attr name="crop_grid_row_count" format="integer" />
+        <attr name="crop_grid_column_count" format="integer" />
+        <attr name="crop_show_grid" format="boolean" />
+        <attr name="crop_frame_stroke_size" format="dimension" />
+        <attr name="crop_frame_color" format="color" />
+        <attr name="crop_show_frame" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="crop_AspectRatioTextView">
+        <attr name="crop_artv_ratio_title" format="string" />
+        <attr name="crop_artv_ratio_x" format="float" />
+        <attr name="crop_artv_ratio_y" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="PhotoEditorView">
+        <attr name="photo_src" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="StoriesProgressView">
+        <attr name="progressCount" format="integer|reference" />
+    </declare-styleable>
+</resources>

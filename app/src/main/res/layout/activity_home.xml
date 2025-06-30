@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorToolbarBg"
+    tools:context=".activity.HomeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/FlBottomView"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorBgScreen"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/flMainToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorToolbarBg"
+            android:elevation="@dimen/_1sdp">
+
+            <RelativeLayout
+                android:id="@+id/rlToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="?attr/colorToolbarBg">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivSettings"
+                    android:layout_width="@dimen/_26sdp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="@drawable/ripple_effect"
+                    android:padding="@dimen/_3sdp"
+                    android:src="@drawable/ic_settings" />
+
+                <LinearLayout
+                    android:id="@+id/llDropDownMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="@dimen/_45sdp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvToolbarTitle"
+                        style="@style/CustomFontBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/photos"
+                        android:textColor="?attr/colorTitleText"
+                        android:textSize="@dimen/_16ssp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivArrow"
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        app:srcCompat="@drawable/ic_down_arrow" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvToolbarNewTitle"
+                    style="@style/CustomFontBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginHorizontal="@dimen/_45sdp"
+                    android:textColor="?attr/colorTitleText"
+                    android:textSize="@dimen/_16ssp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlSelectedItemView"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="?attr/colorToolbarBg"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="@dimen/_26sdp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="@drawable/ripple_effect"
+                    android:padding="@dimen/_3sdp"
+                    android:src="@drawable/ic_back" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSelectedImages"
+                    style="@style/CustomFontBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="?attr/colorTitleText"
+                    android:textSize="@dimen/_16ssp"
+                    tools:text="6 selected" />
+
+            </RelativeLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayoutHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/FlBottomView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorBottomNavBg"
+            android:paddingVertical="@dimen/_5sdp"
+            app:elevation="0dp"
+            app:itemActiveIndicatorStyle="@null"
+            app:itemIconTint="@color/bottom_nav_color"
+            app:itemPaddingBottom="@dimen/_12sdp"
+            app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"
+            app:itemTextAppearanceInactive="@style/BottomNavigationViewTextStyle"
+            app:itemTextColor="@color/bottom_nav_color"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/menu_home_bottom_nav" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rwSelectedPhotosOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorToolbarBg"
+            android:overScrollMode="never"
+            android:paddingVertical="@dimen/_6sdp"
+            android:scrollbars="none"
+            android:visibility="gone" />
+    </FrameLayout>
+</RelativeLayout>

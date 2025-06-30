@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorBgScreen"
+    android:orientation="vertical"
+    tools:context=".activity.RecyclerBinActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/llMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/llText"
+            style="@style/CustomFontRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_12sdp"
+            android:gravity="center"
+            android:text="@string/photos_and_videos_display_the_days_left_until_they_are_permanently_deleted"
+            android:textColor="?attr/colorTextContent"
+            android:textSize="@dimen/_12ssp" />
+
+        <RelativeLayout
+            android:id="@+id/llSelections"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/llText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/CustomFontMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:gravity="start"
+                android:text="@string/recycle_bin"
+                android:textColor="?attr/colorTitleText"
+                android:textSize="@dimen/_16ssp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSelectImages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ripple_effect"
+                android:padding="@dimen/_6sdp"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_select_inactive" />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/llRestoreAndDelete"
+            android:layout_below="@id/llSelections"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:padding="@dimen/_10sdp"
+            android:scrollbars="none" />
+
+        <LinearLayout
+            android:id="@+id/llRestoreAndDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="?attr/colorToolbarBg"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/llRestore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.496"
+                android:background="@drawable/ripple_effect"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_restore" />
+
+                <TextView
+                    style="@style/CustomFontRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/restore"
+                    android:textColor="?attr/colorTextContent"
+                    android:textSize="@dimen/_10ssp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="@dimen/_14sdp"
+                android:layout_weight="0.008"
+                android:background="?attr/colorControlHighlight" />
+
+            <LinearLayout
+                android:id="@+id/llDelete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.496"
+                android:background="@drawable/ripple_effect"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_delete_new" />
+
+                <TextView
+                    style="@style/CustomFontRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="@string/permanently_delete"
+                    android:textColor="?attr/colorTitleText"
+                    android:textSize="@dimen/_10ssp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/llRecyclerBinEmpty"
+        layout="@layout/empty_state_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+</LinearLayout>

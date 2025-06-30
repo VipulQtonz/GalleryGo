@@ -1,0 +1,87 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlCrop"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_dark_screen_bg"
+    tools:context=".activity.CropActivity">
+
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/color_dark_toolbar_bg">
+
+        <RelativeLayout
+            android:id="@+id/rlToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_15sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBack"
+                android:layout_width="@dimen/_26sdp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@drawable/ripple_effect"
+                android:padding="@dimen/_3sdp"
+                android:src="@drawable/ic_back_n" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvToolbarTitle"
+                style="@style/CustomFontMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginHorizontal="@dimen/_60sdp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:text="@string/crop_image"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16ssp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSave"
+                style="@style/CustomFontMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/bg_rounded_corner_btn"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_20sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"
+                android:visibility="visible" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/flCropFrame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/flControlsWrapper"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/color_dark_screen_bg">
+
+        <com.photogallery.crop.view.CropView
+            android:id="@+id/crop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:background="@color/color_dark_screen_bg" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/flControlsWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_dark_screen_bg"
+        android:visibility="gone" />
+</RelativeLayout>

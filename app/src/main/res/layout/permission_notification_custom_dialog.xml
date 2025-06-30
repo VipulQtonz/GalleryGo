@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rounded_corner_dialog">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/_4sdp"
+            android:background="@drawable/ripple_effect"
+            android:src="@drawable/ic_close" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitleDeleteFile"
+            style="@style/CustomFontBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="@string/text_enable_notification_access"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_16ssp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDetailDelete"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitleDeleteFile"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="@string/text_this_app_requires_notification_permissions_to_function_correctly_please_grant_the_permission_in_the_app_settings"
+            android:textAlignment="center"
+            android:textColor="?attr/colorTextContent"
+            android:textSize="@dimen/_14ssp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAllow"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvDetailDelete"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/_12sdp"
+            android:background="@drawable/bg_rounded_corner_btn"
+            android:paddingHorizontal="@dimen/_50sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            android:stateListAnimator="@null"
+            android:text="@string/allow"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/tvDeny"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnAllow"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:background="@drawable/bg_rounded_corner_border_btn"
+            android:outlineProvider="none"
+            android:stateListAnimator="@null"
+            android:text="@string/no_thanks"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_14ssp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

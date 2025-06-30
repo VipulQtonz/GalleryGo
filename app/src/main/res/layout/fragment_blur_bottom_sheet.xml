@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_10sdp"
+    android:background="@color/color_dark_toolbar_bg">
+
+    <include
+        android:id="@+id/toolbarBlur"
+        layout="@layout/cancel_tool_done_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <SeekBar
+        android:id="@+id/sbBlue"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_28sdp"
+        android:layout_below="@id/toolbarBlur"
+        android:layout_centerHorizontal="true"
+        android:max="100"
+        android:min="0"
+        android:paddingVertical="14dp"
+        android:progress="20"
+        android:progressDrawable="@drawable/custom_seekbar"
+        android:thumb="@drawable/ic_custom_thumb" />
+
+</RelativeLayout>

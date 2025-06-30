@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_corner_dialog">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/create_new_album"
+            android:textAlignment="center"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_16ssp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtCreateNewAlbum"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@drawable/bg_rounded_corner_border"
+            android:hint="@string/enter_album_name"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingVertical="@dimen/_14sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_40sdp"
+            android:textColor="?attr/colorTitleText"
+            android:textColorHint="?attr/colorEditTextHint"
+            android:textSize="@dimen/_16ssp" />
+
+        <ImageView
+            android:id="@+id/ivClear"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_alignTop="@+id/edtCreateNewAlbum"
+            android:layout_alignEnd="@+id/edtCreateNewAlbum"
+            android:layout_alignBottom="@+id/edtCreateNewAlbum"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:padding="@dimen/_4sdp"
+            android:src="@drawable/ic_cross"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edtCreateNewAlbum"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCancel"
+                style="@style/CustomFontMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_1sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_rounded_corner_border_btn"
+                android:outlineProvider="none"
+                android:stateListAnimator="@null"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorTitleText"
+                android:textSize="@dimen/_14ssp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCreateNewAlbum"
+                style="@style/CustomFontMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_rounded_corner_btn"
+                android:outlineProvider="none"
+                android:stateListAnimator="@null"
+                android:text="@string/create"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,104 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorBgScreen"
+    tools:context=".activity.LocationPhotoViewerActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorBgScreen"
+        android:orientation="vertical"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
+        <ImageView
+            android:id="@+id/drag_handle"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_4sdp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:src="@drawable/ic_drag" />
+
+        <TextView
+            android:id="@+id/tv_bottom_sheet_title"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:gravity="center"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="50 photos"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_16ssp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/colorEditTextHint" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_bottom_sheet_images"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:padding="@dimen/_10sdp"
+            android:scrollbars="none" />
+
+        <include
+            android:id="@+id/ll_empty_bottom_sheet"
+            layout="@layout/empty_state_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/_80sdp"
+        android:layout_marginEnd="@dimen/_12sdp">
+
+        <ImageView
+            android:layout_width="@dimen/_44sdp"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/rounded_bg_for_map" />
+
+        <ImageView
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_map_types" />
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

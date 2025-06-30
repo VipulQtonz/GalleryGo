@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_dark_screen_bg"
+    android:orientation="vertical">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpMoments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rlDetails"
+        android:layout_below="@id/storiesProgressView"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_10sdp" />
+
+    <com.photogallery.utils.StoriesProgressView
+        android:id="@+id/storiesProgressView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/_10sdp" />
+
+    <FrameLayout
+        android:id="@+id/flCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/vpMoments"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="top|start"
+        android:layout_margin="@dimen/_10sdp">
+
+        <ImageView
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/bg_round_play_pause" />
+
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_gravity="center"
+            android:padding="@dimen/_4sdp"
+            android:src="@drawable/ic_cross" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/flSoundOnOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/vpMoments"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_10sdp">
+
+        <ImageView
+            android:layout_width="@dimen/_44sdp"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/bg_round_play_pause" />
+
+        <ImageView
+            android:id="@+id/btnSoundOnOff"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_sound_on" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/rlDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/tvEventName"
+            style="@style/CustomFontBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_6sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+</RelativeLayout>

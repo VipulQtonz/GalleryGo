@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_10sdp"
+    android:background="?attr/colorDialogBg"
+    android:elevation="@dimen/_1sdp"
+    android:paddingBottom="@dimen/_12sdp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/_10sdp"
+        android:src="@drawable/ic_close" />
+
+    <TextView
+        android:id="@+id/tvTitleFileInfo"
+        style="@style/CustomFontBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:text="@string/details"
+        android:textColor="?attr/colorTitleText"
+        android:textSize="@dimen/_16ssp" />
+
+    <TextView
+        android:id="@+id/tvImageFileNameText"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitleFileInfo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/name"
+        android:textColor="?attr/colorEditTextHint"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:id="@+id/tvImageFileName"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvImageFileNameText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:textColor="?attr/colorTextContent"
+        android:textSize="@dimen/_12ssp" />
+
+    <View
+        android:id="@+id/viewOne"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/tvImageFileName"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="?attr/colorStroke" />
+
+    <TextView
+        android:id="@+id/tvImageFileTimeText"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewOne"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/time"
+        android:textColor="?attr/colorEditTextHint"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:id="@+id/tvImageFileTime"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvImageFileTimeText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:textColor="?attr/colorTextContent"
+        android:textSize="@dimen/_12ssp" />
+
+
+    <View
+        android:id="@+id/viewTwo"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/tvImageFileTime"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="?attr/colorStroke" />
+
+    <TextView
+        android:id="@+id/tvImageFileDimensionsText"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewTwo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/dimensions"
+        android:textColor="?attr/colorEditTextHint"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:id="@+id/tvImageFileDimensions"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvImageFileDimensionsText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:textColor="?attr/colorTextContent"
+        android:textSize="@dimen/_12ssp" />
+
+    <View
+        android:id="@+id/viewThree"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/tvImageFileDimensions"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="?attr/colorStroke" />
+
+
+    <TextView
+        android:id="@+id/tvImageFileSizeText"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewThree"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/size"
+        android:textColor="?attr/colorEditTextHint"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:id="@+id/tvImageFileSize"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvImageFileSizeText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:textColor="?attr/colorTextContent"
+        android:textSize="@dimen/_12ssp" />
+
+    <View
+        android:id="@+id/viewFour"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/tvImageFileSize"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="?attr/colorStroke" />
+
+    <TextView
+        android:id="@+id/tvImagePathText"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewFour"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/path"
+        android:textColor="?attr/colorEditTextHint"
+        android:textSize="@dimen/_10ssp" />
+
+    <TextView
+        android:id="@+id/tvImagePath"
+        style="@style/CustomFontMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvImagePathText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:textColor="?attr/colorTextContent"
+        android:textSize="@dimen/_12ssp" />
+
+</RelativeLayout>

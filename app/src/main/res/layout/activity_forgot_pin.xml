@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorBgScreen"
+    android:orientation="vertical"
+    tools:context=".activity.ForgotPinActivity">
+
+    <include
+        android:id="@+id/toolbarForgotPin"
+        layout="@layout/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarForgotPin"
+        android:orientation="vertical"
+        android:padding="@dimen/_12sdp">
+
+        <TextView
+            android:id="@+id/tvQuestion0"
+            style="@style/CustomFontRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12ssp"
+            android:text="@string/enter_recovery_email"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_12sdp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etRecoveryEmail"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@drawable/bg_rounded_corner_border_new"
+            android:hint="@string/enter_recovery_email_dot"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_14sdp"
+            android:textColor="?attr/colorTitleText"
+            android:textColorHint="?attr/colorTextContent"
+            android:textSize="@dimen/_16ssp" />
+
+        <TextView
+            android:id="@+id/tvQuestion1"
+            style="@style/CustomFontRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12ssp"
+            android:text="@string/what_s_your_favourite_color"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_12sdp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etAnswer1"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@drawable/bg_rounded_corner_border_new"
+            android:hint="@string/answer"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_14sdp"
+            android:textColor="?attr/colorTitleText"
+            android:textColorHint="?attr/colorTextContent"
+            android:textSize="@dimen/_16ssp" />
+
+        <TextView
+            android:id="@+id/tvQuestion2"
+            style="@style/CustomFontRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12ssp"
+            android:text="@string/what_s_your_pet_s_name"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_12sdp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etAnswer2"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@drawable/bg_rounded_corner_border_new"
+            android:hint="@string/answer"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_14sdp"
+            android:textColor="?attr/colorTitleText"
+            android:textColorHint="?attr/colorTextContent"
+            android:textSize="@dimen/_16ssp" />
+
+        <TextView
+            android:id="@+id/tvQuestion3"
+            style="@style/CustomFontRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12ssp"
+            android:text="@string/what_s_your_lucky_number"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_12sdp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etAnswer3"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@drawable/bg_rounded_corner_border_new"
+            android:hint="@string/answer"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_14sdp"
+            android:textColor="?attr/colorTitleText"
+            android:textColorHint="?attr/colorTextContent"
+            android:textSize="@dimen/_16ssp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnVerify"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@drawable/bg_rounded_corner_btn"
+            android:paddingHorizontal="@dimen/_50sdp"
+            android:stateListAnimator="@null"
+            android:text="@string/verify"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnResetPin"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@drawable/bg_rounded_corner_btn"
+            android:paddingHorizontal="@dimen/_50sdp"
+            android:stateListAnimator="@null"
+            android:text="@string/reset_pin"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:visibility="gone" />
+    </LinearLayout>
+</RelativeLayout>

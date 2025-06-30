@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="color_black_60">#99000000</color>
+    <color name="color_black_70">#B3000000</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="color_shape_bg">#393939</color>
+
+    <!--    light theme colors -->
+    <color name="color_light_screen_bg">#F9F9F9</color>
+    <color name="color_light_title_text">#242424</color>
+    <color name="color_light_text_70">#B3242424</color>
+    <color name="color_light_bottom_nav_bg">#FFFFFF</color>
+    <color name="color_light_bottom_nav_unselected">#99242424</color>
+    <color name="color_light_toolbar_bg">#FFFFFF</color>
+    <color name="color_light_icon">#242424</color>
+    <color name="color_light_dialog_bg">#FFFFFF</color>
+    <color name="color_light_border_btn">#33242424</color>
+    <color name="color_light_black_30">#4D242424</color>
+    <color name="color_rounded_image_bg_light">#e5e5e5</color>
+    <color name="color_slider_icon_light">#777777</color>
+    <color name="color_hint_light">#a7a7a7</color>
+    <color name="color_close_icon_outer_light">#bebebe</color>
+    <color name="color_close_icon_inner_light">#666666</color>
+    <color name="color_illustration_icon_5_light">#d3d3d3</color>
+    <color name="color_illustration_icon_7_light">#e7e7e7</color>
+    <color name="color_placeholder_light">#ffffff</color>
+    <color name="color_stroke_light">#e0e0e0</color>
+
+    <!--    dark theme colors -->
+    <color name="color_dark_screen_bg">#161616</color>
+    <color name="color_dark_title_text">#FFFFFF</color>
+    <color name="color_dark_text_60">#B3FFFFFF</color>
+    <color name="color_dark_text_70">#B3FFFFFF</color>
+    <color name="color_dark_text_80">#CCFFFFFF</color>
+    <color name="color_dark_bottom_nav_bg">#282828</color>
+    <color name="color_dark_bottom_nav_unselected">#80FFFFFF</color>
+    <color name="color_dark_toolbar_bg">#282828</color>
+    <color name="color_dark_icon">#FFFFFF</color>
+    <color name="color_dark_dialog_bg">#282828</color>
+    <color name="color_dark_border_btn">#33FFFFFF</color>
+    <color name="color_dark_black_30">#4DFFFFFF</color>
+    <color name="color_rounded_image_bg_dark">#2d2d2d</color>
+    <color name="color_slider_icon_dark">#808080</color>
+    <color name="color_hint_dark">#737373</color>
+    <color name="color_close_icon_outer_dark">#686868</color>
+    <color name="color_illustration_icon_5_dark">#787878</color>
+    <color name="color_illustration_icon_7_dark">#5f5f5f</color>
+    <color name="color_placeholder_dark">#282828</color>
+    <color name="color_stroke_dark">#464646</color>
+
+    <color name="color_icon_bg">#2d2d2d</color>
+
+    <color name="blue_color_picker">#0066FF</color>
+    <color name="brown_color_picker">#AF593E</color>
+    <color name="green_color_picker">#01A368</color>
+    <color name="orange_color_picker">#FF861F</color>
+    <color name="red_color_picker">#ED0A3F</color>
+    <color name="red_orange_color_picker">#FF3F34</color>
+    <color name="sky_blue_color_picker">#76D7EA</color>
+    <color name="violet_color_picker">#8359A3</color>
+    <color name="yellow_color_picker">#FBE870</color>
+    <color name="yellow_green_color_picker">#C5E17A</color>
+    <color name="tool_bg">#151414</color>
+
+    <color name="theme_color_1">#ff6562</color>
+    <color name="theme_color_2">#527de7</color>
+    <color name="theme_color_3">#ffa300</color>
+    <color name="theme_color_4">#00d9d8</color>
+    <color name="theme_color_5">#9b64ff</color>
+    <color name="theme_color_6">#ff692f</color>
+    <color name="theme_color_7">#ff3a69</color>
+    <color name="theme_color_8">#00a8ff</color>
+
+    <color name="theme_color_1_20">#33FF6562</color>
+    <color name="theme_color_2_20">#33527de7</color>
+    <color name="theme_color_3_20">#33ffa300</color>
+    <color name="theme_color_4_20">#3300d9d8</color>
+    <color name="theme_color_5_20">#339b64ff</color>
+    <color name="theme_color_6_20">#33ff692f</color>
+    <color name="theme_color_7_20">#33ff3a69</color>
+    <color name="theme_color_8_20">#3300a8ff</color>
+
+    <color name="color_delete_solid_dark">#2d2713</color>
+    <color name="color_delete_stroke_dark">#604d0d</color>
+    <color name="color_duplicate_solid_dark">#231b2d</color>
+    <color name="color_duplicate_stroke_dark">#402661</color>
+    <color name="color_favorite_solid_dark">#2d1b1e</color>
+    <color name="color_favorite_stroke_dark">#622731</color>
+    <color name="color_lock_solid_dark">#192226</color>
+    <color name="color_lock_stroke_dark">#203e4a</color>
+
+    <color name="color_delete_solid_light">#f5efdb</color>
+    <color name="color_delete_stroke_light">#ecda9a </color>
+    <color name="color_duplicate_solid_light">#ebe3f5</color>
+    <color name="color_duplicate_stroke_light">#ccb2ed</color>
+    <color name="color_favorite_solid_light">#f5e3e6</color>
+    <color name="color_favorite_stroke_light">#eeb3bd</color>
+    <color name="color_lock_solid_light">#e1eaee</color>
+    <color name="color_lock_stroke_light">#accad6</color>
+
+    <color name="crop_color_default_crop_grid">#80ffffff</color>
+    <color name="crop_color_default_crop_frame">#ffffff</color>
+    <color name="crop_color_default_dimmed">#8c000000</color>
+    <color name="crop_color_default_logo">#4f212121</color>
+
+    <color name="progress_primary">@color/white</color>
+    <color name="progress_secondary">@color/gray_scale</color>
+    <color name="progress_max_active">@color/white</color>
+    <color name="gray_scale">#8affffff</color>
+</resources>

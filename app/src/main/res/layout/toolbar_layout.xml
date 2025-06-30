@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorToolbarBg"
+    android:elevation="@dimen/_1sdp">
+
+    <RelativeLayout
+        android:id="@+id/rlToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/_15sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:background="@drawable/ripple_effect"
+            android:padding="@dimen/_3sdp"
+            android:src="@drawable/ic_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvToolbarTitle"
+            style="@style/CustomFontBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginHorizontal="@dimen/_45sdp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/photos"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_16ssp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivMore"
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/ripple_effect"
+            android:padding="@dimen/_3sdp"
+            android:src="@drawable/ic_more"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>

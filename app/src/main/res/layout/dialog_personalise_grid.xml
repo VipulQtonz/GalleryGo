@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_corner_dialog">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivClose"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:srcCompat="@drawable/ic_close" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_toStartOf="@id/ivClose"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/personalise_your_grid"
+            android:textAlignment="center"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_16ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitle"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rlComfort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/_15sdp"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivComfort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_comfortable_layout" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvComfortable"
+                    style="@style/CustomFontRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_toStartOf="@id/rbComfort"
+                    android:layout_toEndOf="@id/ivComfort"
+                    android:text="@string/comfortable"
+                    android:textColor="?attr/colorTitleText"
+                    android:textSize="@dimen/_16ssp" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rbComfort"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="@android:color/transparent"
+                    android:button="@null"
+                    android:drawableEnd="@drawable/ic_radio_button_selector" />
+            </RelativeLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="@dimen/_10ssp"
+                android:visibility="gone"
+                app:dividerColor="?attr/colorEditTextHint"
+                app:dividerThickness="1dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/_15sdp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_month_layout" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDay"
+                    style="@style/CustomFontRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_toStartOf="@id/rbDay"
+                    android:layout_toEndOf="@id/ivDay"
+                    android:text="@string/day"
+                    android:textColor="?attr/colorTitleText"
+                    android:textSize="@dimen/_16ssp" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rbDay"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="@android:color/transparent"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableEnd="@drawable/ic_radio_button_selector" />
+            </RelativeLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="@dimen/_10ssp"
+                app:dividerColor="?attr/colorEditTextHint"
+                app:dividerThickness="1dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/_15sdp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_day_layout" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvMonth"
+                    style="@style/CustomFontRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_toStartOf="@id/rbMonth"
+                    android:layout_toEndOf="@id/ivMonth"
+                    android:text="@string/month"
+                    android:textColor="?attr/colorTitleText"
+                    android:textSize="@dimen/_16ssp" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rbMonth"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="@android:color/transparent"
+                    android:button="@null"
+                    android:drawableEnd="@drawable/ic_radio_button_selector" />
+            </RelativeLayout>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnApply"
+                style="@style/CustomFontMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/bg_rounded_corner_btn"
+                android:outlineProvider="none"
+                android:stateListAnimator="@null"
+                android:text="@string/apply_changes"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/llApplyAndCancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:weightSum="2">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnCancel"
+                    style="@style/CustomFontRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_rounded_corner_border_btn"
+                    android:gravity="center"
+                    android:stateListAnimator="@null"
+                    android:text="@string/cancel"
+                    android:textAllCaps="false"
+                    android:textColor="?attr/colorTitleText"
+                    android:textSize="@dimen/_14ssp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnApplyNew"
+                    style="@style/CustomFontMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_rounded_corner_btn"
+                    android:outlineProvider="none"
+                    android:stateListAnimator="@null"
+                    android:text="@string/apply"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14ssp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_corner_dialog">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/delete_all_photos"
+            android:textAlignment="center"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_16ssp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCreateNewAlbum"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:gravity="center"
+            android:text="@string/are_you_sure_you_want_to_permanently_delete_all_photos_from_this_device"
+            android:textColor="?attr/colorTextContent"
+            android:textSize="@dimen/_14ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCreateNewAlbum"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCancel"
+                style="@style/CustomFontMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_1sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_rounded_corner_border_btn"
+                android:outlineProvider="none"
+                android:stateListAnimator="@null"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorTitleText"
+                android:textSize="@dimen/_14ssp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnYesDelete"
+                style="@style/CustomFontMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_rounded_corner_btn"
+                android:outlineProvider="none"
+                android:stateListAnimator="@null"
+                android:text="@string/yes_delete"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

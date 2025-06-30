@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <CheckedTextView
+        android:id="@android:id/text1"
+        style="@style/CustomFontRegular"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:paddingStart="@dimen/_10ssp"
+        android:paddingEnd="@dimen/_10ssp"
+        android:textColor="?attr/colorTitleText"
+        android:textSize="@dimen/_14ssp" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:background="?attr/colorEditTextHint" />
+</LinearLayout>

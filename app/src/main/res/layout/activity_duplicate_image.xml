@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorBgScreen">
+
+    <include
+        android:id="@+id/toolbarDuplicate"
+        layout="@layout/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <RelativeLayout
+        android:id="@+id/rlPhotoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbarDuplicate"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/CustomFontMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_12sdp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/duplicate_images"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_16ssp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDuplicateImages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnRemoveAllDuplicates"
+            android:layout_below="@id/tvTitle"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="@dimen/_4sdp"
+            android:clipToPadding="false" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRemoveAllDuplicates"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@drawable/bg_rounded_corner_btn"
+            android:outlineProvider="none"
+            android:stateListAnimator="@null"
+            android:text="@string/clear_all_duplicates"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/noDuplicateImageLayout"
+        layout="@layout/empty_state_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbarDuplicate"
+        android:visibility="visible" />
+</RelativeLayout>

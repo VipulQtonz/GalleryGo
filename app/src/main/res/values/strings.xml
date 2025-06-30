@@ -1,0 +1,763 @@
+<resources>
+    <string name="app_name">PhotoGallery</string>
+    <string name="app_name_splash">Photo Gallery</string>
+    <string name="welcome_to">Welcome to</string>
+    <string name="get_started">Get Started</string>
+    <string name="photo_gallery">Photo Gallery</string>
+    <string name="get_started_content">By tapping on the “Get Started” Button\nyou agree with our Privacy Policy</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="photos">Photos</string>
+    <string name="videos">Videos</string>
+    <string name="gifs">GIFs</string>
+    <string name="search">Search</string>
+    <string name="explore">Explore</string>
+    <string name="label_today">Today</string>
+    <string name="allow_storage_permission">Allow Storage Permission</string>
+    <string name="permission_required_to_access_all_files">Permission required to access all files</string>
+    <string name="cancel">Cancel</string>
+    <string name="grant_access">Allow</string>
+    <string name="permission_not_granted">Permission not granted</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="revisit_the_moment">Revisit the\nmoment</string>
+    <string name="details">Details</string>
+    <string name="name">Name :</string>
+    <string name="time">Time :</string>
+    <string name="dimensions">Dimensions :</string>
+    <string name="size">Size :</string>
+    <string name="path">Path :</string>
+    <string name="file_not_found">File not found</string>
+    <string name="personalise_your_grid">Personalise Your Grid</string>
+    <string name="apply_changes">Apply Changes</string>
+    <string name="comfortable">Comfortable</string>
+    <string name="day">Day</string>
+    <string name="month">Month</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="lock">Lock</string>
+    <string name="add_to_album">Add To Album</string>
+    <string name="move_to_album">Move to Album</string>
+    <string name="slideshow">Slideshow</string>
+    <string name="edit">Edit</string>
+    <string name="no_items_selected">No items selected</string>
+    <string name="share_via">Share via</string>
+    <string name="error_sharing_items">Error sharing items: %1$s</string>
+    <string name="delete_photo">Delete Photo?</string>
+    <string name="move_to_bin">Move to Bin</string>
+    <string name="are_you_sure_you_want_to_delete_photo">Are you sure you want to delete photo?</string>
+    <string name="create">Create</string>
+    <string name="create_new_album">Create New Album</string>
+    <string name="enter_album_name">Enter Album Name...</string>
+    <string name="recycle_bin">Recycle Bin</string>
+    <string name="error_deleting_media">Error deleting media</string>
+    <string name="restore">Restore</string>
+    <string name="photos_and_videos_display_the_days_left_until_they_are_permanently_deleted">Photos and videos display the days left until they are permanently deleted.</string>
+    <string name="files_deleted_within_30_days_can_be_restored_from_the_recycle_bin">Files deleted within 30 days can be restored from the recycle bin</string>
+    <string name="permanently_delete">Permanently Delete</string>
+    <string name="delete_all_photos">Delete All Photos?</string>
+    <string name="are_you_sure_you_want_to_permanently_delete_all_photos_from_this_device">Are you sure you want to permanently delete all photos from this device?</string>
+    <string name="yes_delete">Yes, Delete</string>
+    <string name="file_not_found_in_recycle_bin">File not found in recycle bin</string>
+    <string name="_30_days">30 Days</string>
+    <string name="_15_days">15 Days</string>
+    <string name="_7_days">7 Days</string>
+    <string name="save">Save</string>
+    <string name="days">%1$s Days</string>
+    <string name="please_select_image">Please select Image</string>
+    <string name="delete_from_bin_options">Delete from Bin Options</string>
+    <string name="new_album">New Album</string>
+    <string name="please_enter_album_name">Please enter album name</string>
+    <string name="failed_to_create_album">Failed to create album</string>
+    <string name="album_already_exists">Album already exists</string>
+    <string name="error_creating_album">Error creating album: %1$s</string>
+
+    <string name="moved_to_album">Moved to %1$s</string>
+    <string name="error_processing_media">Error processing media: %1$s</string>
+    <string name="restore_or_delete">Restore or Delete</string>
+    <string name="please_select_any_one_operation_n_restore_or_delete">Please select any one operation\n restore or delete?</string>
+    <string name="no_photos_yet">No Photos Yet!</string>
+    <string name="no_photos_available_capture_and_share_your_moments">No photos available. Capture and share your moments!</string>
+    <string name="open_camera">Open Camera</string>
+    <string name="no_videos_yet">No Videos Yet!</string>
+    <string name="no_videos_available_capture_and_share_your_moments">No videos available. Capture and share your moments!</string>
+    <string name="no_gifs_yet">No GIFs Yet!</string>
+    <string name="no_gifs_here_add_some_fun_by_downloading_your_favourite_gifs">No GIFs here! Add some fun by downloading your favourite GIFs</string>
+    <string name="favorite">Favorite</string>
+    <string name="no_favourites_yet">No Favourites Yet!</string>
+    <string name="your_favourites_list_is_empty_start_saving_content_to_fill_this_space">Your favourites list is empty. Start saving content to fill this space!</string>
+
+    <string name="favorites">Favorites</string>
+    <string name="error_removing_favorite">Error removing favorite</string>
+    <string name="add_to_favourites">Add to Favourites</string>
+    <string name="remove_from_favorite">Remove From Favorite</string>
+    <string name="are_you_sure_you_want_to_remove_photo_from_favorite">Are you sure you want to remove photo from favorite?</string>
+    <string name="no_image_selected">No image selected</string>
+    <string name="remove">Remove</string>
+    <string name="error_updating_favorite">Error updating favorite</string>
+    <string name="error_checking_favorite_status">Error checking favorite status</string>
+    <string name="rename">Rename</string>
+    <string name="error_deleting_photo">Error deleting photo</string>
+    <string name="error_moving_to_recycle_bin">Error moving to recycle bin</string>
+    <string name="lock_photo">Lock Photo</string>
+    <string name="are_you_sure_want_to_lock_this_photo">Are you sure want to lock this photo?</string>
+    <string name="are_you_sure_want_to_lock_this_video">Are you sure want to lock this video?</string>
+    <string name="please_enter_name">Please enter a name</string>
+    <string name="error_renaming_file">Error renaming file</string>
+    <string name="invalid_image_path">Invalid image path</string>
+
+    <string name="toast_cannot_retrieve_selected_image">Cannot retrieve selected image</string>
+    <string name="toast_cannot_retrieve_cropped_image">Cannot retrieve cropped image</string>
+    <string name="toast_unexpected_error">Unexpected error</string>
+    <string name="original">Original</string>
+    <string name="edit_photo">Edit Photo</string>
+    <string name="crop_error_input_data_is_absent">Both input and output Uri must be specified</string>
+    <string name="crop_mutate_exception_hint">Therefore, override color resource in your app to make it work on pre-L devices</string>
+    <string name="scale">Scale</string>
+    <string name="no_image_uri_received">No image URI received</string>
+
+    <string name="oval">Oval</string>
+    <string name="rectangle">Rectangle</string>
+    <string name="line">Line</string>
+    <string name="arrow">Arrow</string>
+    <string name="emoji">Emoji</string>
+    <string name="sticker">Sticker</string>
+    <string name="eraser">Eraser</string>
+    <string name="text">Text</string>
+    <string name="filter">Filter</string>
+    <string name="brush">Brush</string>
+    <string name="shape">Shape</string>
+    <string name="opacity">Opacity</string>
+    <string name="done">Done</string>
+    <string name="no_keep">No, Keep</string>
+    <string name="yes_discard">Yes, Discard</string>
+    <string name="discard_changes">Discard Changes?</string>
+    <string name="are_you_sure_you_want_to_discard_the_changes">Are you sure you want to discard the changes?</string>
+    <string name="rotate">Rotate</string>
+    <string name="blur">Blur</string>
+    <string name="crop">Crop</string>
+    <string name="flip_horizontal">Flip Horizontal</string>
+    <string name="flip_vertical">Flip Vertical</string>
+    <string name="no_media_selected">No Media Selected</string>
+    <string name="invalid_video_uri">Invalid video URI</string>
+    <string name="share_video_via">Share video via</string>
+    <string name="lock_video">Lock Video!</string>
+    <string name="next">Next</string>
+    <string name="set_pin">Set PIN</string>
+    <string name="confirm_pin">Confirm PIN</string>
+    <string name="enter_recovery_email">Enter recovery email</string>
+    <string name="enter_recovery_email_dot">Enter recovery email...</string>
+    <string name="set_security_question">Set Security Question</string>
+    <string name="enter_pin">Enter Pin</string>
+    <string name="forgot_pin"><u>Forgot Pin?</u></string>
+    <string name="set_email">Set Email</string>
+    <string name="confirm_email">Confirm Email</string>
+    <string name="confirm_recovery_email">Confirm Recovery Email</string>
+    <string name="re_enter_recovery_email">Re-enter recovery email...</string>
+    <string name="help_you_to_set_password_when_you_forget_it">Help you to set password when you forget it</string>
+    <string name="re_write_your_email_to_confirm_it">Re-write your email to confirm it</string>
+    <string name="enter_the_answer">Enter the answer</string>
+    <string name="reset_pin">Reset PIN</string>
+    <string name="verify">Verify</string>
+    <string name="answer">Answer</string>
+    <string name="what_s_your_favourite_color">What’s your favourite color?</string>
+    <string name="what_s_your_pet_s_name">What’s your pet’s name?</string>
+    <string name="what_s_your_lucky_number">What’s your lucky number?</string>
+    <string name="no_locked_item_yet">No Locked Item Yet!</string>
+    <string name="no_items_into_locked_folder_yet_lock_your_private_moment">No items into locked folder yet! Lock your private moment!</string>
+    <string name="add">Add</string>
+    <string name="locked">Locked</string>
+    <string name="use_finger_print">Use Finger Print</string>
+    <string name="modify_pin">Modify PIN</string>
+    <string name="change_email">Change Email</string>
+    <string name="change_security_question">Change Security Question</string>
+    <string name="unlock_with_fingerprint">Unlock with Fingerprint</string>
+    <string name="locked_images">Locked Images</string>
+    <string name="these_photos_and_videos_are_hidden_and_wont_show_as_you_scroll_through_gallery_or_in_other_apps">These photos and videos are hidden and wont show as you scroll through gallery or in other apps</string>
+    <string name="move">Move</string>
+    <string name="move_or_delete">Move or Delete</string>
+    <string name="please_select_any_one_operation_n_move_or_delete">Please select any one operation\n Move or delete?</string>
+    <string name="notifications">Notifications</string>
+    <string name="app_theme_color"><![CDATA[App theme & color]]></string>
+    <string name="rate_us">Rate us</string>
+    <string name="feedback">Feedback</string>
+    <string name="sort">Sort</string>
+    <string name="share_app">Share app</string>
+    <string name="terms_of_service">Terms of service</string>
+
+    <string-array name="photo_editor_emoji">
+        <item>u+1f604</item>
+        <item>u+1f603</item>
+        <item>u+1f600</item>
+        <item>u+1f60a</item>
+        <item>u+263a</item>
+        <item>u+1f609</item>
+        <item>u+1f60d</item>
+        <item>u+1f618</item>
+        <item>u+1f61a</item>
+        <item>u+1f617</item>
+        <item>u+1f619</item>
+        <item>u+1f61c</item>
+        <item>u+1f61d</item>
+        <item>u+1f61b</item>
+        <item>u+1f633</item>
+        <item>u+1f601</item>
+        <item>u+1f614</item>
+        <item>u+1f60c</item>
+        <item>u+1f612</item>
+        <item>u+1f61e</item>
+        <item>u+1f623</item>
+        <item>u+1f622</item>
+        <item>u+1f602</item>
+        <item>u+1f62d</item>
+        <item>u+1f62a</item>
+        <item>u+1f625</item>
+        <item>u+1f630</item>
+        <item>u+1f605</item>
+        <item>u+1f613</item>
+        <item>u+1f629</item>
+        <item>u+1f62b</item>
+        <item>u+1f628</item>
+        <item>u+1f631</item>
+        <item>u+1f620</item>
+        <item>u+1f621</item>
+        <item>u+1f624</item>
+
+        <!--People -->
+        <item>u+1f616</item>
+        <item>u+1f606</item>
+        <item>u+1f60b</item>
+        <item>u+1f637</item>
+        <item>u+1f60e</item>
+        <item>u+1f634</item>
+        <item>u+1f635</item>
+        <item>u+1f632</item>
+        <item>u+1f61f</item>
+        <item>u+1f626</item>
+        <item>u+1f627</item>
+        <item>u+1f608</item>
+        <item>u+1f47f</item>
+        <item>u+1f62e</item>
+        <item>u+1f62c</item>
+        <item>u+1f610</item>
+        <item>u+1f615</item>
+        <item>u+1f62f</item>
+        <item>u+1f636</item>
+        <item>u+1f607</item>
+        <item>u+1f60f</item>
+        <item>u+1f611</item>
+        <item>u+1f472</item>
+        <item>u+1f473</item>
+        <item>u+1f46e</item>
+        <item>u+1f477</item>
+        <item>u+1f482</item>
+        <item>u+1f476</item>
+        <item>u+1f466</item>
+        <item>u+1f467</item>
+        <item>u+1f468</item>
+        <item>u+1f469</item>
+        <item>u+1f474</item>
+        <item>u+1f475</item>
+        <item>u+1f471</item>
+        <item>u+1f47c</item>
+        <item>u+1f478</item>
+        <item>u+1f63a</item>
+        <item>u+1f638</item>
+        <item>u+1f63b</item>
+        <item>u+1f63d</item>
+        <item>u+1f63c</item>
+        <item>u+1f640</item>
+        <item>u+1f63f</item>
+        <item>u+1f639</item>
+        <item>u+1f63e</item>
+        <item>u+1f479</item>
+        <item>u+1f47a</item>
+        <item>u+1f648</item>
+        <item>u+1f649</item>
+        <item>u+1f64a</item>
+        <item>u+1f480</item>
+        <item>u+1f47d</item>
+        <item>u+1f4a9</item>
+        <item>u+1f525</item>
+        <item>u+2728</item>
+        <item>u+1f31f</item>
+        <item>u+1f4ab</item>
+        <item>u+1f4a5</item>
+        <item>u+1f4a2</item>
+        <item>u+1f4a6</item>
+        <item>u+1f4a7</item>
+        <item>u+1f4a4</item>
+        <item>u+1f4a8</item>
+        <item>u+1f442</item>
+        <item>u+1f440</item>
+        <item>u+1f443</item>
+        <item>u+1f445</item>
+        <item>u+1f444</item>
+        <item>u+1f44d</item>
+        <item>u+1f44e</item>
+        <item>u+1f44c</item>
+        <item>u+1f44a</item>
+        <item>u+270a</item>
+        <item>u+270c</item>
+        <item>u+1f44b</item>
+        <item>u+270b</item>
+        <item>u+1f450</item>
+        <item>u+1f446</item>
+        <item>u+1f447</item>
+        <item>u+1f449</item>
+        <item>u+1f448</item>
+        <item>u+1f64c</item>
+        <item>u+1f64f</item>
+        <item>u+261d</item>
+        <item>u+1f44f</item>
+        <item>u+1f4aa</item>
+        <item>u+1f6b6</item>
+        <item>u+1f3c3</item>
+        <item>u+1f483</item>
+        <item>u+1f46b</item>
+        <item>u+1f46a</item>
+        <item>u+1f46c</item>
+        <item>u+1f46d</item>
+        <item>u+1f48f</item>
+        <item>u+1f491</item>
+        <item>u+1f46f</item>
+        <item>u+1f646</item>
+        <item>u+1f645</item>
+        <item>u+1f481</item>
+        <item>u+1f64b</item>
+        <item>u+1f486</item>
+        <item>u+1f487</item>
+        <item>u+1f485</item>
+        <item>u+1f470</item>
+        <item>u+1f64e</item>
+        <item>u+1f64d</item>
+        <item>u+1f647</item>
+        <item>u+1f3a9</item>
+        <item>u+1f451</item>
+        <item>u+1f452</item>
+        <item>u+1f45f</item>
+        <item>u+1f45e</item>
+        <item>u+1f461</item>
+        <item>u+1f460</item>
+        <item>u+1f462</item>
+        <item>u+1f455</item>
+        <item>u+1f454</item>
+        <item>u+1f45a</item>
+        <item>u+1f457</item>
+        <item>u+1f3bd</item>
+        <item>u+1f456</item>
+        <item>u+1f458</item>
+        <item>u+1f459</item>
+        <item>u+1f4bc</item>
+        <item>u+1f45c</item>
+        <item>u+1f45d</item>
+        <item>u+1f45b</item>
+        <item>u+1f453</item>
+        <item>u+1f380</item>
+        <item>u+1f302</item>
+        <item>u+1f484</item>
+        <item>u+1f49b</item>
+        <item>u+1f499</item>
+        <item>u+1f49c</item>
+        <item>u+1f49a</item>
+        <item>u+2764</item>
+        <item>u+1f494</item>
+        <item>u+1f497</item>
+        <item>u+1f493</item>
+        <item>u+1f495</item>
+        <item>u+1f496</item>
+        <item>u+1f49e</item>
+        <item>u+1f498</item>
+        <item>u+1f48c</item>
+        <item>u+1f48b</item>
+        <item>u+1f48d</item>
+        <item>u+1f48e</item>
+        <item>u+1f464</item>
+        <item>u+1f465</item>
+        <item>u+1f4ac</item>
+        <item>u+1f463</item>
+        <item>u+1f4ad</item>
+
+        <!--  Nature-->
+        <item>u+1f436</item>
+        <item>u+1f43a</item>
+        <item>u+1f431</item>
+        <item>u+1f42d</item>
+        <item>u+1f439</item>
+        <item>u+1f430</item>
+        <item>u+1f438</item>
+        <item>u+1f42f</item>
+        <item>u+1f428</item>
+        <item>u+1f43b</item>
+        <item>u+1f437</item>
+        <item>u+1f43d</item>
+        <item>u+1f42e</item>
+        <item>u+1f417</item>
+        <item>u+1f435</item>
+        <item>u+1f412</item>
+        <item>u+1f434</item>
+        <item>u+1f411</item>
+        <item>u+1f418</item>
+        <item>u+1f43c</item>
+        <item>u+1f427</item>
+        <item>u+1f426</item>
+        <item>u+1f424</item>
+        <item>u+1f425</item>
+        <item>u+1f423</item>
+        <item>u+1f414</item>
+        <item>u+1f40d</item>
+        <item>u+1f422</item>
+        <item>u+1f41b</item>
+        <item>u+1f41d</item>
+        <item>u+1f41c</item>
+        <item>u+1f41e</item>
+        <item>u+1f40c</item>
+        <item>u+1f419</item>
+        <item>u+1f41a</item>
+        <item>u+1f420</item>
+        <item>u+1f41f</item>
+        <item>u+1f42c</item>
+        <item>u+1f433</item>
+        <item>u+1f40b</item>
+        <item>u+1f404</item>
+        <item>u+1f40f</item>
+        <item>u+1f400</item>
+        <item>u+1f403</item>
+        <item>u+1f405</item>
+        <item>u+1f407</item>
+        <item>u+1f409</item>
+        <item>u+1f40e</item>
+        <item>u+1f410</item>
+        <item>u+1f413</item>
+        <item>u+1f415</item>
+        <item>u+1f416</item>
+        <item>u+1f401</item>
+        <item>u+1f402</item>
+        <item>u+1f432</item>
+        <item>u+1f421</item>
+        <item>u+1f40a</item>
+        <item>u+1f42b</item>
+        <item>u+1f42a</item>
+        <item>u+1f406</item>
+        <item>u+1f408</item>
+        <item>u+1f429</item>
+        <item>u+1f43e</item>
+        <item>u+1f490</item>
+        <item>u+1f338</item>
+        <item>u+1f337</item>
+        <item>u+1f340</item>
+        <item>u+1f339</item>
+        <item>u+1f33b</item>
+        <item>u+1f33a</item>
+        <item>u+1f341</item>
+        <item>u+1f343</item>
+        <item>u+1f342</item>
+        <item>u+1f33f</item>
+        <item>u+1f33e</item>
+        <item>u+1f344</item>
+        <item>u+1f335</item>
+        <item>u+1f334</item>
+        <item>u+1f332</item>
+        <item>u+1f333</item>
+        <item>u+1f330</item>
+        <item>u+1f331</item>
+        <item>u+1f33c</item>
+        <item>u+1f310</item>
+        <item>u+1f31e</item>
+        <item>u+1f31d</item>
+        <item>u+1f31a</item>
+        <item>u+1f311</item>
+        <item>u+1f312</item>
+        <item>u+1f313</item>
+        <item>u+1f314</item>
+        <item>u+1f315</item>
+        <item>u+1f316</item>
+        <item>u+1f317</item>
+        <item>u+1f318</item>
+        <item>u+1f31c</item>
+        <item>u+1f31b</item>
+        <item>u+1f319</item>
+        <item>u+1f30d</item>
+        <item>u+1f30e</item>
+        <item>u+1f30f</item>
+        <item>u+1f30b</item>
+        <item>u+1f30c</item>
+        <item>u+1f320</item>
+        <item>u+2b50</item>
+        <item>u+2600</item>
+        <item>u+26c5</item>
+        <item>u+2601</item>
+        <item>u+26a1</item>
+        <item>u+2614</item>
+        <item>u+2744</item>
+        <item>u+26c4</item>
+        <item>u+1f300</item>
+        <item>u+1f301</item>
+        <item>u+1f308</item>
+        <item>u+1f30a</item>
+
+        <!--Places-->
+        <item>u+1f3e0</item>
+        <item>u+1f3e1</item>
+        <item>u+1f3eb</item>
+        <item>u+1f3e2</item>
+        <item>u+1f3e3</item>
+        <item>u+1f3e5</item>
+        <item>u+1f3e6</item>
+        <item>u+1f3ea</item>
+        <item>u+1f3e9</item>
+        <item>u+1f3e8</item>
+        <item>u+1f492</item>
+        <item>u+26ea</item>
+        <item>u+1f3ec</item>
+        <item>u+1f3e4</item>
+        <item>u+1f307</item>
+        <item>u+1f306</item>
+        <item>u+1f3ef</item>
+        <item>u+1f3f0</item>
+        <item>u+26fa</item>
+        <item>u+1f3ed</item>
+        <item>u+1f5fc</item>
+        <item>u+1f5fe</item>
+        <item>u+1f5fb</item>
+        <item>u+1f304</item>
+        <item>u+1f305</item>
+        <item>u+1f303</item>
+        <item>u+1f5fd</item>
+        <item>u+1f309</item>
+        <item>u+1f3a0</item>
+        <item>u+1f3a1</item>
+        <item>u+26f2</item>
+        <item>u+1f3a2</item>
+        <item>u+1f6a2</item>
+        <item>u+26f5</item>
+        <item>u+1f6a4</item>
+        <item>u+1f6a3</item>
+        <item>u+2693</item>
+        <item>u+1f680</item>
+        <item>u+2708</item>
+        <item>u+1f4ba</item>
+        <item>u+1f681</item>
+        <item>u+1f682</item>
+        <item>u+1f68a</item>
+        <item>u+1f689</item>
+        <item>u+1f69e</item>
+        <item>u+1f686</item>
+        <item>u+1f684</item>
+        <item>u+1f685</item>
+        <item>u+1f688</item>
+        <item>u+1f687</item>
+        <item>u+1f69d</item>
+        <item>u+1f68b</item>
+        <item>u+1f683</item>
+        <item>u+1f68e</item>
+        <item>u+1f68c</item>
+        <item>u+1f68d</item>
+        <item>u+1f699</item>
+        <item>u+1f698</item>
+        <item>u+1f697</item>
+        <item>u+1f695</item>
+        <item>u+1f696</item>
+        <item>u+1f69b</item>
+        <item>u+1f69a</item>
+        <item>u+1f6a8</item>
+        <item>u+1f693</item>
+        <item>u+1f694</item>
+        <item>u+1f692</item>
+        <item>u+1f691</item>
+        <item>u+1f690</item>
+        <item>u+1f6b2</item>
+        <item>u+1f6a1</item>
+        <item>u+1f69f</item>
+        <item>u+1f6a0</item>
+        <item>u+1f69c</item>
+        <item>u+1f488</item>
+        <item>u+1f68f</item>
+        <item>u+1f3ab</item>
+        <item>u+1f6a6</item>
+        <item>u+1f6a5</item>
+        <item>u+26a0</item>
+        <item>u+1f6a7</item>
+        <item>u+1f530</item>
+        <item>u+26fd</item>
+        <item>u+1f3ee</item>
+        <item>u+1f3b0</item>
+        <item>u+2668</item>
+        <item>u+1f5ff</item>
+        <item>u+1f3aa</item>
+        <item>u+1f3ad</item>
+        <item>u+1f4cd</item>
+        <item>u+1f6a9</item>
+    </string-array>
+
+    <string-array name="security_questions">
+        <item>What\'s your favorite color?</item>
+        <item>What\'s your pet\'s name?</item>
+        <item>What\'s your lucky number?</item>
+    </string-array>
+
+    <string name="thanks_for_rating">Thanks for rating</string>
+    <string name="google_play_not_installed">You don\'t have Google Play installed</string>
+    <string name="try_it_now">" Try it NOW! "</string>
+    <string name="text_enable_notification_access">Enable Notification Access</string>
+    <string name="text_this_app_requires_notification_permissions_to_function_correctly_please_grant_the_permission_in_the_app_settings">This app requires notification permissions to function correctly. Please grant the permission in the app settings.</string>
+    <string name="allow">Allow</string>
+    <string name="no_thanks">No Thanks</string>
+    <string name="confirm_exit">Confirm Exit?</string>
+    <string name="are_you_sure_you_want_to_exit_the_app">Are you sure you want to exit the app?</string>
+    <string name="yes">Yes</string>
+    <string name="continue_">Continue</string>
+    <string name="settings">Settings</string>
+    <string name="submit_feedback">Submit Feedback</string>
+    <string name="newest_at_top">Newest at top</string>
+    <string name="newest_at_bottom">Newest at bottom</string>
+    <string name="apply">Apply</string>
+    <string name="no">No</string>
+    <string name="please_enter_your_requirements">please enter your requirements</string>
+    <string name="feedback_submit_successfully">Feedback Submit successfully</string>
+    <string name="feedback_submit_error">Feedback Submit Error</string>
+    <string name="no_internet_connection">No Internet Connection!</string>
+    <string name="choose_the_theme">Choose the Theme</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="system_default">System Default</string>
+    <string name="choose_color">Choose Color</string>
+    <string name="invalid_image_uri">Invalid image URI</string>
+    <string name="ai_photo_gallery">AI Photo Gallery</string>
+    <string name="duplicates">Duplicates</string>
+    <string name="favourites">Favourites</string>
+    <string name="albums">Albums</string>
+    <string name="set_as_wallpaper">Set as Wallpaper</string>
+    <string name="home_screen">Home Screen</string>
+    <string name="lock_screen">Lock Screen</string>
+    <string name="carousel_wallpaper">Carousel Wallpaper</string>
+    <string name="home_amp_lock_screens"><![CDATA[Home & Lock Screens]]></string>
+
+    <string name="wallpaper_set_successfully">Wallpaper set successfully</string>
+    <string name="error_setting_wallpaper">Error setting wallpaper</string>
+    <string name="carousel_wallpaper_not_supported">Carousel wallpaper is not supported</string>
+    <string name="album_created">Album Created</string>
+    <string name="search_new">Search...</string>
+    <string name="see_all">See all</string>
+    <string name="places">Places</string>
+    <string name="select_map_type">Select Map Type</string>
+    <string name="default_">Default</string>
+    <string name="satellite">Satellite</string>
+    <string name="terrain">Terrain</string>
+    <string name="my_location">My Location</string>
+    <string name="documents">Documents</string>
+    <string name="search_by_location">Search By Location</string>
+    <string name="search_by_document">Search By Document</string>
+    <string name="duplicate_images">Duplicate Images</string>
+    <string name="clear_all_duplicates">Clear All Duplicates</string>
+    <string name="deleted_successfully">Deleted successfully</string>
+    <string name="are_you_sure_you_want_to_clear_all_duplicates_from_this_device">Are you sure you want to clear all duplicates from this device?</string>
+    <string name="yes_clear">Yes, Clear</string>
+    <string name="unlock_failed">Unlock failed</string>
+    <string name="no_images_selected">No images selected</string>
+    <string name="failed_to_lock">Failed to lock %1$s</string>
+    <string name="items_locked">%1$s items locked</string>
+    <string name="crop_image">Crop Image</string>
+    <string name="no_camera_app_found">No camera app found</string>
+    <string name="pinch_to_zoom">Pinch to Zoom</string>
+    <string name="zoom_in_and_out_easily_by_pinching_the_screen">Zoom in and out easily by pinching the screen</string>
+    <string name="got_it">Got It!</string>
+    <string name="double_tap_to_zoom">Double Tap to Zoom</string>
+    <string name="quickly_zoom_in_with_a_double_tap_on_the_screen">Quickly zoom in with a double tap on the screen</string>
+    <string name="tap_to_undo">Tap to Undo</string>
+    <string name="tap_to_redo">Tap to Redo</string>
+    <string name="failed_to_apply_transformation">Failed to apply transformation</string>
+    <string name="failed_to_save_blur">Failed to save blur</string>
+    <string name="failed_to_revert_blur">Failed to revert blur</string>
+    <string name="failed_to_apply_blur">Failed to apply blur</string>
+    <string name="failed_to_prepare_image_for_cropping">Failed to prepare image for cropping</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="please_enter_a_valid_email">Please enter a valid email</string>
+    <string name="no_security_question_found">No security question found</string>
+    <string name="email_not_found">Email not found</string>
+    <string name="please_provide_an_answer">Please provide an answer</string>
+    <string name="verification_successful">Verification successful</string>
+    <string name="incorrect_answer">Incorrect answer</string>
+    <string name="no_security_question_loaded">No security question loaded</string>
+    <string name="submit_answer">Submit Answer</string>
+    <string name="please_enter_a_4_digit_pin">Please enter a 4-digit PIN</string>
+    <string name="no_recovery_email_set">No recovery email set</string>
+    <string name="fingerprint_authentication_is_disabled">Fingerprint authentication is disabled</string>
+    <string name="no_pin_set_please_set_a_pin_first">No PIN set, please set a PIN first</string>
+    <string name="incorrect_pin">Incorrect PIN</string>
+    <string name="too_many_failed_attempts_please_use_pin">Too many failed attempts. Please use PIN.</string>
+    <string name="authentication_failed_try_again">Authentication failed, try again</string>
+    <string name="touch_the_fingerprint_sensor">Touch the fingerprint sensor</string>
+    <string name="use_pin">Use PIN</string>
+    <string name="failed_to_move_file_to">Failed to move file to %1$s</string>
+    <string name="unknown">Unknown</string>
+    <string name="add_album">Add Album</string>
+    <string name="pin_must_be_4_digits">PIN must be 4 digits</string>
+    <string name="pin_does_not_match">PIN does not match</string>
+    <string name="emails_do_not_match">Emails do not match</string>
+    <string name="security_setup_completed">Security setup completed</string>
+    <string name="pin_updated_successfully">PIN updated successfully</string>
+    <string name="recovery_email_updated">Recovery email updated</string>
+    <string name="security_question_updated">Security question updated</string>
+    <string name="selected">%1$s selected</string>
+    <string name="items_locked_">%1$s items locked</string>
+    <string name="photos_">%1$s Photos</string>
+    <string name="failed_to_lock_media">Failed to lock media: %1$s</string>
+    <string name="failed_to_open_image_stream">Failed to open image stream</string>
+    <string name="face_group">Face Group %1$s</string>
+    <string name="unknown_location">Unknown Location</string>
+    <string name="try_again">Try Again\n</string>
+    <string name="please_make_sure_you_have_a_stable_internet_connection">Please make sure you have a stable internet connection</string>
+    <string name="loop_video_on">Loop Video on</string>
+    <string name="loop_video_off">Loop Video Off</string>
+    <string name="duration">Duration</string>
+    <string name="select_media_type">Select Media Type</string>
+    <string name="select_grid_type">Select Grid Type</string>
+    <string name="select_all_photos">Select all photos</string>
+    <string name="long_press_to_select">Long Press To Select</string>
+    <string name="scroll_horizontal_for_available_options">Scroll Horizontal for available options</string>
+    <string name="rotate_image">Rotate Image</string>
+    <string name="click_to_add_to_favorites">Click to add to favorites</string>
+    <string name="click_to_view_image_information">Click to view image information</string>
+    <string name="click_to_undo">Click to Undo</string>
+    <string name="click_to_redo">Click to Redo</string>
+    <string name="scroll_horizontal_for_more_tools">Scroll Horizontal for more tools</string>
+    <string name="click_to_play_pause">Click To Play/Pause</string>
+    <string name="total_video_duration">Total Video Duration</string>
+    <string name="current_time">Current Time</string>
+    <string name="mute_and_unmute_video_sound">Mute and Unmute Video Sound</string>
+    <string name="click_to_exit_moment_view">Click to Exit Moment View</string>
+    <string name="click_to_turn_on_off_sound">Click to turn on/off sound</string>
+    <string name="click_to_open_available_set_as_options">Click to Open Available Set as Options</string>
+    <string name="click_to_open_search_screen">Click to open Search Screen</string>
+    <string name="click_to_see_all_locations">Click to see all locations</string>
+    <string name="click_to_see_all_documents">Click to see all documents</string>
+    <string name="click_to_choose_map_type">Click to Choose Map Type</string>
+    <string name="organize_view_edit_and_share_your_photos_videos_all_in_one_place"><![CDATA[Organize, view, edit, and share your photos & videos — all in one place.]]></string>
+    <string name="app_permissions_needed">App Permissions Needed</string>
+    <string name="to_provide_the_best_experience_photo_gallery_needs_access_to">To provide the best experience, Photo\n Gallery needs access to:</string>
+    <string name="drag_handle_to_move">Drag handle to move</string>
+    <string name="tap_to_remove_from_favorites">Tap to remove from favorites</string>
+    <string name="tap_to_view_delete_options">Tap to view Delete Options</string>
+    <string name="tap_to_delete_permanently_this_action_cannot_be_undone">Tap to delete permanently, this action cannot be undone</string>
+    <string name="tap_to_restore_the_selected_media">Tap to restore the selected media</string>
+    <string name="choose_your_favorite_theme">Choose your favorite theme</string>
+    <string name="select_your_favorite_theme_color">Select your favorite Theme color</string>
+    <string name="click_to_apply_changes">Click to Apply Changes</string>
+    <string name="tap_to_view_more_options">Tap to view more options</string>
+    <string name="click_to_reset_your_pin">Click to reset your pin</string>
+    <string name="click_to_lock_more_media">Click to lock more media</string>
+    <string name="click_to_move_selected_media_from_lock">Click to move selected media from lock</string>
+    <string name="click_to_delete_all_duplicates_it_keep_1_from_each_duplicate">Click to Delete All Duplicates, it keep 1 from each duplicate</string>
+    <string name="view_organize_and_edit_your_images_stored_on_your_device">View, organize, and edit your images stored on your device.</string>
+    <string name="manage_and_preview_your_video_files_in_the_gallery">Manage and preview your video files in the gallery.</string>
+    <string name="video_access">Video Access</string>
+    <string name="photo_access">Photo Access</string>
+    <string name="your_photos_and_videos_stay_private_and_are_only_stored_on_your_device">Your photos and videos stay private and are only stored on your device.</string>
+    <string name="enjoying_photo_gallery">Enjoying Photo Gallery?</string>
+    <string name="if_you_love_using_our_app_please_take_a_moment_to_rate_us_your_support_means_a_lot">If you love using our app, please take a moment to Rate Us. Your support means a lot!</string>
+    <string name="rate_now">Rate Now</string>
+    <string name="maybe_later">Maybe Later</string>
+    <string name="help_us_improve_share_your_thoughts_suggestions_or_issues">Help us improve! Share your thoughts, suggestions, or issues.</string>
+    <string name="type_your_feedback_here">Type your feedback here...</string>
+    <string name="we_value_your_feedback">We Value Your Feedback.</string>
+
+</resources>

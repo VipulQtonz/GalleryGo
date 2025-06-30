@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.carousel.MaskableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/carousel_item_container"
+    android:layout_width="@dimen/_120sdp"
+    android:layout_height="@dimen/_140sdp"
+    android:layout_marginHorizontal="@dimen/_6sdp"
+    android:foreground="?attr/selectableItemBackground"
+    app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivMomentsCarousel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_black_gradient" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        style="@style/CustomFontBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginHorizontal="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="@string/revisit_the_moment"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp" />
+</com.google.android.material.carousel.MaskableFrameLayout>

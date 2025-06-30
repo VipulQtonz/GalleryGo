@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_dark_toolbar_bg"
+    android:visibility="gone"
+    tools:showIn="@layout/crop_controls"
+    tools:visibility="visible">
+
+    <TextView
+        android:id="@+id/tvRotateText"
+        style="@style/CustomFontMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="@dimen/_6sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12ssp"
+        tools:text="100°" />
+
+    <com.photogallery.crop.view.widget.HorizontalProgressWheelView
+        android:id="@+id/rotateScrollWheel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tvRotateText"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_toStartOf="@+id/flWrapperRotateByAngle"
+        android:layout_toEndOf="@+id/flWrapperResetRotate" />
+
+    <FrameLayout
+        android:id="@+id/flWrapperResetRotate"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="@dimen/_48sdp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:background="?attr/selectableItemBackgroundBorderless">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ripple_effect"
+            android:padding="@dimen/_6sdp"
+            app:srcCompat="@drawable/ic_reset" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/flWrapperRotateByAngle"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="@dimen/_48sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="?attr/selectableItemBackgroundBorderless">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ripple_effect"
+            android:padding="@dimen/_12sdp"
+            android:src="@drawable/ic_rotate"
+            app:tint="@color/white" />
+    </FrameLayout>
+</RelativeLayout>

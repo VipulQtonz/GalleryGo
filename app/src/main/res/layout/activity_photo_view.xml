@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_dark_screen_bg"
+    tools:context=".activity.PhotoViewActivity">
+
+    <RelativeLayout
+        android:id="@+id/rlToolbarMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_dark_toolbar_bg">
+
+        <RelativeLayout
+            android:id="@+id/rlToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="@dimen/_15sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSettings"
+                android:layout_width="@dimen/_26sdp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@drawable/ripple_effect"
+                android:padding="@dimen/_3sdp"
+                android:src="@drawable/ic_back_n" />
+
+            <LinearLayout
+                android:id="@+id/llDropDownMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivRotate"
+                    android:layout_width="@dimen/_26sdp"
+                    android:layout_height="match_parent"
+                    android:background="?android:selectableItemBackgroundBorderless"
+                    android:padding="@dimen/_3sdp"
+                    android:src="@drawable/ic_rotate" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivFavorite"
+                    android:layout_width="@dimen/_26sdp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="?android:selectableItemBackgroundBorderless"
+                    android:padding="@dimen/_3sdp"
+                    android:src="@drawable/ic_favourites_inactive" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivInfo"
+                    android:layout_width="@dimen/_26sdp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="?android:selectableItemBackgroundBorderless"
+                    android:padding="@dimen/_3sdp"
+                    android:src="@drawable/ic_info" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rwEditOptions"
+        android:layout_below="@id/rlToolbarMain" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rwEditOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/color_dark_screen_bg"
+        android:overScrollMode="never"
+        android:paddingVertical="@dimen/_12sdp"
+        android:scrollbars="none" />
+
+    <LinearLayout
+        android:id="@+id/llSuggestionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@color/color_black_60"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivIllustrator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_6sdp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_pinch_to_zoom" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/CustomFontMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:gravity="start"
+            android:text="@string/pinch_to_zoom"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16ssp" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            style="@style/CustomFontRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:gravity="center"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:text="@string/zoom_in_and_out_easily_by_pinching_the_screen"
+            android:textColor="@color/color_dark_text_70"
+            android:textSize="@dimen/_12ssp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGotIt"
+            style="@style/CustomFontMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_corner_btn"
+            android:outlineProvider="none"
+            android:paddingHorizontal="@dimen/_30sdp"
+            android:stateListAnimator="@null"
+            android:text="@string/got_it"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
+    </LinearLayout>
+</RelativeLayout>

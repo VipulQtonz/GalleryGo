@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_corner_dialog">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/CustomFontMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/delete_from_bin_options"
+            android:textAlignment="center"
+            android:textColor="?attr/colorTitleText"
+            android:textSize="@dimen/_16ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTitle"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/_15sdp"
+                android:visibility="visible">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv30Days"
+                    style="@style/CustomFontRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_toStartOf="@id/rb30Days"
+                    android:text="@string/_30_days"
+                    android:textColor="?attr/colorTitleText"
+                    android:textSize="@dimen/_16ssp" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb30Days"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="@android:color/transparent"
+                    android:button="@null"
+                    android:drawableEnd="@drawable/ic_radio_button_selector" />
+            </RelativeLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:background="?attr/colorBorderBtn"
+                android:layout_height="@dimen/_1sdp"
+                app:dividerColor="?attr/colorEditTextHint"
+                app:dividerThickness="1dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/_15sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv15Days"
+                    style="@style/CustomFontRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_toStartOf="@id/rb15Days"
+                    android:text="@string/_15_days"
+                    android:textColor="?attr/colorTitleText"
+                    android:textSize="@dimen/_16ssp" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb15Days"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="@android:color/transparent"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableEnd="@drawable/ic_radio_button_selector" />
+            </RelativeLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                app:dividerColor="?attr/colorEditTextHint"
+                app:dividerThickness="1dp"
+                android:layout_height="@dimen/_1sdp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/_15sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv7Days"
+                    style="@style/CustomFontRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_toStartOf="@id/rb7Days"
+                    android:text="@string/_7_days"
+                    android:textColor="?attr/colorTitleText"
+                    android:textSize="@dimen/_16ssp" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/rb7Days"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="@android:color/transparent"
+                    android:button="@null"
+                    android:drawableEnd="@drawable/ic_radio_button_selector" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnCancel"
+                    style="@style/CustomFontMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_1sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_rounded_corner_border_btn"
+                    android:outlineProvider="none"
+                    android:stateListAnimator="@null"
+                    android:text="@string/cancel"
+                    android:textAllCaps="false"
+                    android:textColor="?attr/colorTitleText"
+                    android:textSize="@dimen/_14ssp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSave"
+                    style="@style/CustomFontMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_rounded_corner_btn"
+                    android:outlineProvider="none"
+                    android:stateListAnimator="@null"
+                    android:text="@string/save"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14ssp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

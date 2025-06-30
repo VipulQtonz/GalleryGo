@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llEmptyLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="visible">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIllustrator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_6sdp"
+        android:visibility="visible"
+        app:srcCompat="@drawable/ic_photos_empty" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/CustomFontMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_12sdp"
+        android:gravity="start"
+        android:text="@string/no_photos_yet"
+        android:textColor="?attr/colorTitleText"
+        android:textSize="@dimen/_16ssp" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        style="@style/CustomFontRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:gravity="center"
+        android:text="@string/no_photos_available_capture_and_share_your_moments"
+        android:textColor="?attr/colorTextContent"
+        android:textSize="@dimen/_12ssp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnOpen"
+        style="@style/CustomFontMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:background="@drawable/bg_rounded_corner_btn"
+        android:outlineProvider="none"
+        android:paddingHorizontal="@dimen/_30sdp"
+        android:stateListAnimator="@null"
+        android:text="@string/open_camera"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp" />
+</LinearLayout>

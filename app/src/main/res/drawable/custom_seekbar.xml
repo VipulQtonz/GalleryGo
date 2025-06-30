@@ -1,0 +1,21 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background Line -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/_10sdp" />
+            <size android:height="@dimen/_10sdp" /> <!-- Adjust track thickness -->
+            <solid android:color="#E7DFFB" /> <!-- Inactive track color -->
+        </shape>
+    </item>
+
+    <!-- Progress Line -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <corners android:radius="@dimen/_10sdp" />
+                <size android:height="@dimen/_10sdp" /> <!-- Match track thickness -->
+                <solid android:color="?attr/colorApp" /> <!-- Progress bar color -->
+            </shape>
+        </clip>
+    </item>
+</layer-list>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_dark_screen_bg"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/color_dark_bottom_nav_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/rlToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_15sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBack"
+                android:layout_width="@dimen/_26sdp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@drawable/ripple_effect"
+                android:padding="@dimen/_3sdp"
+                android:src="@drawable/ic_back_n" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgUndo"
+                    android:layout_width="@dimen/top_tool_icon_width"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple_effect"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/ic_undo"
+                    app:layout_constraintEnd_toStartOf="@+id/imgRedo" />
+
+                <ImageView
+                    android:id="@+id/imgRedo"
+                    android:layout_width="@dimen/top_tool_icon_width"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple_effect"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/ic_redo"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </LinearLayout>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSave"
+                style="@style/CustomFontRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/bg_rounded_corner_btn"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_20sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:src="@drawable/ic_back_n"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"
+                android:visibility="visible" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <com.photogallery.photoEditor.photoEditorHelper.PhotoEditorView
+        android:id="@+id/photoEditorView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_dark_screen_bg"
+        app:layout_constraintBottom_toTopOf="@+id/rvConstraintTools"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvConstraintTools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_dark_screen_bg"
+        android:orientation="horizontal"
+        android:padding="@dimen/_6sdp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/rlConstraintTools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/color_dark_screen_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        tools:listitem="@layout/row_filter_view">
+
+        <include
+            android:id="@+id/layoutControlOptions"
+            layout="@layout/cancel_tool_done_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_12sdp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFilterView"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_94sdp"
+            android:layout_below="@id/layoutControlOptions"
+            android:background="@color/tool_bg"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:paddingHorizontal="@dimen/_6sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            tools:listitem="@layout/row_filter_view" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
