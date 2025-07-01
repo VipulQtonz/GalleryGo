@@ -22,6 +22,7 @@ import com.photogallery.MyApplication
 import com.photogallery.R
 import com.photogallery.adapter.ImageAdapter
 import com.photogallery.adapter.SearchSuggestionAdapter
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivitySearchBinding
 import com.photogallery.model.DocumentGroup
 import com.photogallery.model.GroupedLocationPhoto
@@ -113,6 +114,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
 
         locationAdapter = SearchSuggestionAdapter(emptyList()) { locationName ->
             binding.searchBar.setText(locationName)
+            binding.searchBar.setSelection(locationName.length)
             selectedGroup.value = locationName
             currentLocationLiveData?.removeObserver(locationGroupObserver)
             currentLocationLiveData =
@@ -122,6 +124,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
 
         documentAdapter = SearchSuggestionAdapter(emptyList()) { documentName ->
             binding.searchBar.setText(documentName)
+            binding.searchBar.setSelection(documentName.length)
             selectedGroup.value = documentName
             currentDocumentLiveData?.removeObserver(documentGroupObserver)
             currentDocumentLiveData =

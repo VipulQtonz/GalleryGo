@@ -9,6 +9,7 @@ import com.photogallery.MyApplication.Companion.processDuplicates
 import com.photogallery.MyApplication.Companion.processLocationPhotos
 import com.photogallery.MyApplication.Companion.processMoments
 import com.photogallery.MyApplication.Companion.processPhotoClassification
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivitySplashBinding
 import com.photogallery.utils.isInternet
 

@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.photogallery.MyApplication
 import com.photogallery.R
 import com.photogallery.adapter.AlbumAdapter
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityAddToAlbumBinding
 import com.photogallery.model.Album
 import com.photogallery.model.MediaData

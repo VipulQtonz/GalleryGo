@@ -24,6 +24,7 @@ import com.photogallery.MyApplication
 import com.photogallery.MyApplication.Companion.setupTooltip
 import com.photogallery.R
 import com.photogallery.adapter.RecyclerBinAdapter
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityRecyclerBinBinding
 import com.photogallery.databinding.DialogDeleteOptionsBinding
 import com.photogallery.db.PhotoGalleryDatabase

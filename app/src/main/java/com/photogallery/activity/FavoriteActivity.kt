@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.photogallery.MyApplication
 import com.photogallery.R
 import com.photogallery.adapter.FavoritesAdapter
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityFavoriteBinding
 import com.photogallery.db.PhotoGalleryDatabase
 import com.photogallery.db.model.MediaFavoriteData

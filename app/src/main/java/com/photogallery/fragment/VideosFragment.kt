@@ -24,6 +24,7 @@ import com.photogallery.R
 import com.photogallery.activity.HomeActivity
 import com.photogallery.activity.VideoPlayerActivity
 import com.photogallery.adapter.GalleryVideoAdapter
+import com.photogallery.base.BaseFragment
 import com.photogallery.databinding.DialogPersonaliseGridBinding
 import com.photogallery.databinding.FragmentPhotosBinding
 import com.photogallery.model.GalleryListItem

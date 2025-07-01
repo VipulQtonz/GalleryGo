@@ -31,6 +31,7 @@ import androidx.transition.AutoTransition
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
 import com.photogallery.R
+import com.photogallery.base.BaseActivity
 import com.photogallery.crop.Crop
 import com.photogallery.crop.callback.BitmapCropCallback
 import com.photogallery.crop.model.AspectRatio

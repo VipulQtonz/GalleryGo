@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import com.photogallery.R
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityCropImageBinding
 import com.photogallery.crop.Crop
 import com.photogallery.crop.CropFragment

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.photogallery.MyApplication
@@ -22,7 +23,9 @@ import com.photogallery.activity.SearchActivity
 import com.photogallery.activity.SeeAllActivity
 import com.photogallery.adapter.DocumentAdapter
 import com.photogallery.adapter.LocationPhotosAdapter
+import com.photogallery.base.BaseFragment
 import com.photogallery.databinding.FragmentSearchBinding
+import com.photogallery.utils.ConnectivityObserver
 import com.photogallery.utils.isInternet
 import com.skydoves.balloon.ArrowOrientation
 import kotlinx.coroutines.Job
@@ -30,6 +33,7 @@ import kotlinx.coroutines.Job
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private lateinit var locationPhotosAdapter: LocationPhotosAdapter
     private lateinit var documentAdapter: DocumentAdapter
+    private lateinit var connectivityObserver: ConnectivityObserver
     private val allowedDocumentCategories = listOf(
         "Documents",
         "Screenshot",
@@ -83,6 +87,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     override fun init() {
+        binding.noInternetLayout.tvTitle.text = getString(R.string.no_internet_connection)
+        binding.noInternetLayout.tvDescription.text =
+            getString(R.string.please_make_sure_you_have_a_stable_internet_connection)
+        binding.noInternetLayout.ivIllustrator.setImageResource(R.drawable.ic_no_internet)
+        binding.noInternetLayout.btnOpen.text = getString(R.string.try_again)
+
+        connectivityObserver = ConnectivityObserver(requireContext())
         setupAdapters()
         setupRecyclerViews()
         setupObservers()
@@ -94,7 +105,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 processMoments(requireContext())
                 processDuplicates(requireContext())
             }
-            if (ePreferences!!.getBoolean("isFirstTimeSearchFragmentSearch", true)) {
+            if (ePreferences!!.getBoolean(
+                    "isFirstTimeSearchFragmentSearch",
+                    true
+                ) && binding.searchBar.isVisible
+            ) {
                 setupTooltip(
                     requireContext(),
                     binding.searchBar,
@@ -150,12 +165,34 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun setupObservers() {
+        // Observe network status
+        connectivityObserver.observe(viewLifecycleOwner, Observer { isConnected ->
+            if (isConnected) {
+                binding.noInternetLayout.llEmptyLayout.visibility = View.GONE
+                binding.rlSearchLayout.visibility = View.VISIBLE
+                // Process data when internet is available
+                if (hasStoragePermission()) {
+                    processPhotoClassification(requireContext())
+                    processMoments(requireContext())
+                    processDuplicates(requireContext())
+                }
+            } else {
+                binding.noInternetLayout.llEmptyLayout.visibility = View.VISIBLE
+                binding.rlSearchLayout.visibility = View.GONE
+            }
+        })
+
         MyApplication.groupedLocationPhotosLiveData.observe(viewLifecycleOwner, Observer { photos ->
             binding.rlLocation.visibility = if (photos.isNotEmpty()) View.VISIBLE else View.GONE
+            binding.progressBar.visibility = if (photos.isNotEmpty()) View.GONE else View.VISIBLE
             locationPhotosAdapter.updateData(photos)
             locationPhotosAdapter.notifyDataSetChanged()
 
-            if (ePreferences!!.getBoolean("isFirstTimeSearchFragmnetLocation", true)) {
+            if (ePreferences!!.getBoolean(
+                    "isFirstTimeSearchFragmnetLocation",
+                    true
+                ) && binding.tvSeeAllLocation.isVisible
+            ) {
                 setupTooltip(
                     requireContext(),
                     binding.tvSeeAllLocation,
@@ -174,10 +211,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
             binding.rlDocuments.visibility =
                 if (filteredDocs.isNotEmpty()) View.VISIBLE else View.GONE
+            binding.progressBar.visibility =
+                if (filteredDocs.isNotEmpty()) View.GONE else View.VISIBLE
             documentAdapter.updateData(filteredDocs)
             documentAdapter.notifyDataSetChanged()
 
-            if (ePreferences!!.getBoolean("isFirstTimeSearchFragmnetDocument", true)) {
+            if (ePreferences!!.getBoolean(
+                    "isFirstTimeSearchFragmnetDocument",
+                    true
+                ) && binding.tvSeeAllDocuments.isVisible
+            ) {
                 setupTooltip(
                     requireContext(),
                     binding.tvSeeAllDocuments,
@@ -225,6 +268,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
     }
 
+//    override fun onResume() {
+//        super.onResume()
+//        if (hasStoragePermission()) {
+//            locationPhotosAdapter.notifyDataSetChanged()
+//            documentAdapter.notifyDataSetChanged()
+//        } else {
+//            showPermissionDialog()
+//        }
+//        if (requireContext().isInternet()) {
+//            binding.noInternetLayout.llEmptyLayout.visibility = View.GONE
+//        } else {
+//            binding.noInternetLayout.llEmptyLayout.visibility = View.GONE
+//            binding.rlSearchLayout.visibility = View.GONE
+//        }
+//    }
+
     override fun onResume() {
         super.onResume()
         if (hasStoragePermission()) {
@@ -232,12 +291,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             documentAdapter.notifyDataSetChanged()
         } else {
             showPermissionDialog()
-        }
-        if (requireContext().isInternet()) {
-            binding.noInternetLayout.llEmptyLayout.visibility = View.GONE
-        } else {
-            binding.noInternetLayout.llEmptyLayout.visibility = View.GONE
-            binding.rlSearchLayout.visibility = View.GONE
         }
     }
 

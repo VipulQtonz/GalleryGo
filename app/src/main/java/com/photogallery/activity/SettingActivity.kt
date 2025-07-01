@@ -17,6 +17,7 @@ import com.photogallery.MyApplication
 import com.photogallery.MyApplication.Companion.PRIVACY_POLICY_LINK
 import com.photogallery.MyApplication.Companion.TERMS_OF_SERVICES_LINK
 import com.photogallery.R
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivitySettingBinding
 import com.photogallery.databinding.DialogPersonaliseGridBinding
 import com.photogallery.databinding.PermissionNotificationCustomDialogBinding

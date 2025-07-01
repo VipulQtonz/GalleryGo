@@ -41,6 +41,7 @@ import com.photogallery.MyApplication.Companion.setupTooltip
 import com.photogallery.R
 import com.photogallery.adapter.CustomPopupMenuAdapter
 import com.photogallery.adapter.SelectedOptionsAdapter
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityHomeBinding
 import com.photogallery.db.PhotoGalleryDatabase
 import com.photogallery.db.model.MediaDataEntity
@@ -107,7 +108,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         recyclerView.adapter = adapter
 
         if (MyApplication.instance.hasStoragePermission()) {
-            if (ePreferences.getBoolean("isFirstTimeViewHome", true)) {
+            if (ePreferences.getBoolean(
+                    "isFirstTimeViewHome", true
+                ) && (currentFragment is PhotosFragment || currentFragment is VideosFragment)
+            ) {
                 Handler(Looper.getMainLooper()).postDelayed({
                     setupTooltip(
                         this,
@@ -203,16 +207,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
             val menuItems = listOf(
                 PopupMenuItem(
-                    R.drawable.ic_photos_selector,
-                    resources.getString(R.string.photos),
-                    1
-                ),
-                PopupMenuItem(
-                    R.drawable.ic_videos_selector,
-                    resources.getString(R.string.videos),
-                    2
-                ),
-                PopupMenuItem(R.drawable.ic_gifs_selector, resources.getString(R.string.gifs), 3)
+                    R.drawable.ic_photos_selector, resources.getString(R.string.photos), 1
+                ), PopupMenuItem(
+                    R.drawable.ic_videos_selector, resources.getString(R.string.videos), 2
+                ), PopupMenuItem(R.drawable.ic_gifs_selector, resources.getString(R.string.gifs), 3)
             )
 
             val adapter = CustomPopupMenuAdapter(this, popupMenuItemSelectedId, menuItems)
@@ -251,8 +249,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             popupWindow.height = LinearLayout.LayoutParams.WRAP_CONTENT
             popupWindow.setBackgroundDrawable(
                 ContextCompat.getDrawable(
-                    this,
-                    R.drawable.bg_custom_pop_up
+                    this, R.drawable.bg_custom_pop_up
                 )
             )
             popupWindow.elevation = 20f
@@ -264,10 +261,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         MyApplication.isPhotoFetchReload = true
         MyApplication.isVideoFetchReload = true
         currentFragment = fragment
-        supportFragmentManager.beginTransaction()
-            .replace(binding.frameLayoutHome.id, fragment)
-            .addToBackStack(null)
-            .commit()
+        supportFragmentManager.beginTransaction().replace(binding.frameLayoutHome.id, fragment)
+            .addToBackStack(null).commit()
     }
 
     private fun handleInsets() {
@@ -369,9 +364,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         }
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_move_to_recyclebin, null)
-        val dialog = AlertDialog.Builder(this)
-            .setView(dialogView)
-            .create()
+        val dialog = AlertDialog.Builder(this).setView(dialogView).create()
         dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
 
         val tvTitle = dialogView.findViewById<TextView>(R.id.tvTitle)
@@ -596,9 +589,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
                 if (count > 0) {
                     Toast.makeText(
                         this@HomeActivity,
-                        getString(R.string.items_locked_, count), Toast.LENGTH_SHORT
-                    )
-                        .show()
+                        getString(R.string.items_locked_, count),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -663,19 +656,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     private fun dialogExitFromApp() {
         if (!ePreferences.getBoolean(SharedPreferenceHelper.RATE_US, false)) {
             ExitAppCustomDialog(
-                isFromRateUse = true,
-                context = this,
-                onYesClick = {
+                isFromRateUse = true, context = this, onYesClick = {
                     RateUsAppCustomDialog(this as Activity, true).show()
-                }
-            ).show()
+                }).show()
         } else {
             ExitAppCustomDialog(
-                isFromRateUse = false,
-                context = this,
-                onYesClick = {
-                }
-            ).show()
+                isFromRateUse = false, context = this, onYesClick = {}).show()
         }
     }
 }

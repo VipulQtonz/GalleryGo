@@ -17,6 +17,7 @@ import android.widget.ImageView
 import androidx.core.net.toUri
 import com.photogallery.MyApplication
 import com.photogallery.R
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityStartBinding
 import kotlin.random.Random
 

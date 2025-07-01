@@ -1,7 +1,7 @@
-package com.photogallery.activity
+package com.photogallery.base
 
-import android.R
 import android.app.Activity
+import android.app.Dialog
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
@@ -14,57 +14,55 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.photogallery.MyApplication
+import com.photogallery.R
 import com.photogallery.utils.SharedPreferenceHelper
-import com.photogallery.utils.SharedPreferenceHelper.Companion.PREF_APP_COLOR
-import com.photogallery.utils.SharedPreferenceHelper.Companion.PREF_THEME
-import com.photogallery.utils.SharedPreferenceHelper.Companion.THEME_SYSTEM_DEFAULT
 import java.io.File
 
 abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
-    private var customLoadingDialog: android.app.Dialog? = null
+    private var customLoadingDialog: Dialog? = null
     internal lateinit var ePreferences: SharedPreferenceHelper
     lateinit var binding: T
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ePreferences = MyApplication.instance.pref
-        val theme = ePreferences.getInt(PREF_APP_COLOR, 0)
+        ePreferences = MyApplication.Companion.instance.pref
+        val theme = ePreferences.getInt(SharedPreferenceHelper.Companion.PREF_APP_COLOR, 0)
 
         when (theme) {
             0 -> {
-                setTheme(com.photogallery.R.style.AppTheme_1)
+                setTheme(R.style.AppTheme_1)
             }
 
             1 -> {
-                setTheme(com.photogallery.R.style.AppTheme_2)
+                setTheme(R.style.AppTheme_2)
             }
 
             2 -> {
-                setTheme(com.photogallery.R.style.AppTheme_3)
+                setTheme(R.style.AppTheme_3)
             }
 
             3 -> {
-                setTheme(com.photogallery.R.style.AppTheme_4)
+                setTheme(R.style.AppTheme_4)
             }
 
             4 -> {
-                setTheme(com.photogallery.R.style.AppTheme_5)
+                setTheme(R.style.AppTheme_5)
             }
 
             5 -> {
-                setTheme(com.photogallery.R.style.AppTheme_6)
+                setTheme(R.style.AppTheme_6)
             }
 
             6 -> {
-                setTheme(com.photogallery.R.style.AppTheme_7)
+                setTheme(R.style.AppTheme_7)
             }
 
             7 -> {
-                setTheme(com.photogallery.R.style.AppTheme_8)
+                setTheme(R.style.AppTheme_8)
             }
 
             else -> {
-                setTheme(com.photogallery.R.style.AppTheme_1)
+                setTheme(R.style.AppTheme_1)
             }
         }
 
@@ -130,11 +128,11 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
     protected fun showLoading() {
         if (customLoadingDialog?.isShowing == true) return
-        val dialogView = layoutInflater.inflate(com.photogallery.R.layout.dialog_loading, null)
-        customLoadingDialog = android.app.Dialog(this).apply {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_loading, null)
+        customLoadingDialog = Dialog(this).apply {
             setContentView(dialogView)
             setCancelable(false)
-            window?.setBackgroundDrawableResource(R.color.transparent)
+            window?.setBackgroundDrawableResource(android.R.color.transparent)
             show()
         }
     }
@@ -147,8 +145,11 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
 
-        val currentTheme = ePreferences.getInt(PREF_THEME, THEME_SYSTEM_DEFAULT)
-        if (currentTheme == THEME_SYSTEM_DEFAULT) {
+        val currentTheme = ePreferences.getInt(
+            SharedPreferenceHelper.Companion.PREF_THEME,
+            SharedPreferenceHelper.Companion.THEME_SYSTEM_DEFAULT
+        )
+        if (currentTheme == SharedPreferenceHelper.Companion.THEME_SYSTEM_DEFAULT) {
             recreate()
         }
     }
@@ -162,15 +163,15 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
     fun Activity.nextScreenAnimation() {
         overridePendingTransition(
-            com.photogallery.R.anim.in_right,
-            com.photogallery.R.anim.out_left
+            R.anim.in_right,
+            R.anim.out_left
         )
     }
 
     fun Activity.backScreenAnimation() {
         overridePendingTransition(
-            com.photogallery.R.anim.in_left,
-            com.photogallery.R.anim.out_right
+            R.anim.in_left,
+            R.anim.out_right
         )
     }
 }

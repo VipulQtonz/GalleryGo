@@ -2,6 +2,7 @@ package com.photogallery.activity
 
 import android.content.Intent
 import android.os.Bundle
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityPermissionBinding
 
 class PermissionActivity : BaseActivity<ActivityPermissionBinding>() {

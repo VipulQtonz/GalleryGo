@@ -37,6 +37,7 @@ import com.photogallery.MyApplication
 import com.photogallery.R
 import com.photogallery.adapter.EditOptionsAdapter
 import com.photogallery.adapter.ImagePagerAdapter
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityVideoPlayerBinding
 import com.photogallery.db.PhotoGalleryDatabase
 import com.photogallery.db.model.MediaDataEntity

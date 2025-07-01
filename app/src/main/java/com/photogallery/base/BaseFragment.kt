@@ -1,4 +1,4 @@
-package com.photogallery.fragment
+package com.photogallery.base
 
 import android.Manifest
 import android.app.Activity
@@ -78,7 +78,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         fragmentContext = context
-        ePreferences = MyApplication.instance.pref
+        ePreferences = MyApplication.Companion.instance.pref
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.photogallery.MyApplication.Companion.setupTooltip
 import com.photogallery.R
 import com.photogallery.adapter.LockedMediaAdapter
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityLockedImagesBinding
 import com.photogallery.databinding.DialogLockOptionsBinding
 import com.skydoves.balloon.ArrowOrientation

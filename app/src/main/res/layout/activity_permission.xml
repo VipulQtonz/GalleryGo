@@ -65,10 +65,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_1sdp"
                 android:layout_marginTop="@dimen/_14sdp"
                 android:background="@drawable/bg_rounded_corner_dialog"
+                android:elevation="@dimen/_1sdp"
                 android:orientation="vertical"
-                android:padding="@dimen/_14sdp">
+                android:padding="@dimen/_12sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -76,15 +78,16 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_gallery" />
+                        android:src="@drawable/ic_gallery_permission" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/CustomFontBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:gravity="start"
                         android:text="@string/photo_access"
@@ -97,7 +100,7 @@
                     style="@style/CustomFontRegular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
                     android:gravity="start"
                     android:text="@string/view_organize_and_edit_your_images_stored_on_your_device"
                     android:textColor="?attr/colorTextContent"
@@ -107,10 +110,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_1sdp"
                 android:layout_marginTop="@dimen/_12sdp"
                 android:background="@drawable/bg_rounded_corner_dialog"
+                android:elevation="@dimen/_1sdp"
                 android:orientation="vertical"
-                android:padding="@dimen/_14sdp">
+                android:padding="@dimen/_12sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -118,15 +123,16 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_videos" />
+                        android:src="@drawable/ic_videos_permission" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/CustomFontBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:gravity="start"
                         android:text="@string/video_access"
@@ -139,7 +145,7 @@
                     style="@style/CustomFontRegular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
                     android:gravity="start"
                     android:text="@string/manage_and_preview_your_video_files_in_the_gallery"
                     android:textColor="?attr/colorTextContent"

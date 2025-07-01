@@ -40,6 +40,7 @@ import com.photogallery.MyApplication.Companion.setupTooltip
 import com.photogallery.R
 import com.photogallery.adapter.EditOptionsAdapter
 import com.photogallery.adapter.ImagePagerAdapter
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityPhotoViewBinding
 import com.photogallery.db.PhotoGalleryDatabase
 import com.photogallery.db.model.MediaDataEntity

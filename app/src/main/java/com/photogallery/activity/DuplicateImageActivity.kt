@@ -16,6 +16,7 @@ import com.photogallery.MyApplication
 import com.photogallery.MyApplication.Companion.setupTooltip
 import com.photogallery.R
 import com.photogallery.adapter.DuplicateGroupImageAdapter
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityDuplicateImageBinding
 import com.photogallery.db.PhotoGalleryDatabase
 import com.photogallery.db.model.MediaDataEntity

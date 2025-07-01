@@ -1,6 +1,7 @@
 package com.photogallery
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -299,6 +300,9 @@ class MyApplication : MultiDexApplication() {
             prefKey: String,
             onDismissCallback: (() -> Unit)? = null
         ) {
+            val activity = context as? Activity
+            if (activity == null || activity.isFinishing || activity.isDestroyed) return
+
             val typedValue = TypedValue()
             context.theme.resolveAttribute(R.attr.colorApp, typedValue, true)
             val colorPrimary = typedValue.data
@@ -316,7 +320,7 @@ class MyApplication : MultiDexApplication() {
                 .setCornerRadius(8f)
                 .setArrowOrientation(orientation)
                 .setBackgroundColor(colorPrimary)
-                .setLifecycleOwner(context as LifecycleOwner?)
+                .setLifecycleOwner(activity as LifecycleOwner?)
                 .setDismissWhenLifecycleOnPause(true)
                 .setOnBalloonDismissListener {
                     ePreferences.putBoolean(prefKey, false)
@@ -325,8 +329,21 @@ class MyApplication : MultiDexApplication() {
                 .build()
 
             view.post {
-                if (view.windowToken != null) {
-                    balloon.showAlignBottom(view)
+                if (
+                    view.isAttachedToWindow &&
+                    view.windowToken != null &&
+                    activity.window?.decorView?.windowToken != null
+                ) {
+                    try {
+                        balloon.showAlignBottom(view)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                } else {
+                    Log.w(
+                        "Tooltip",
+                        "Skipping balloon show: view is not attached or activity is finishing"
+                    )
                 }
             }
         }

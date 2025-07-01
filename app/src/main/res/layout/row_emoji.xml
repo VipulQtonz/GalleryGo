@@ -9,9 +9,9 @@
         style="@style/CustomFontMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:padding="2dp"
+        android:layout_margin="@dimen/_2sdp"
+        android:padding="@dimen/_2sdp"
         android:textColor="#FFFFFF"
-        android:textSize="35sp"
+        android:textSize="@dimen/_10sdp"
         tools:android="Burhanuddin" />
 </LinearLayout>

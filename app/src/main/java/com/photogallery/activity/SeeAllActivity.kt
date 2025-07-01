@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.photogallery.MyApplication
 import com.photogallery.adapter.GenericGroupAdapter
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivitySeeAllBinding
 import com.photogallery.model.DocumentGroup
 import com.photogallery.model.GroupedLocationPhoto

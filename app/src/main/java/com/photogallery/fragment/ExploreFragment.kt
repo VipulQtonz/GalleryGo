@@ -36,6 +36,7 @@ import com.photogallery.activity.RecyclerBinActivity
 
 import com.photogallery.activity.SetPinActivity
 import com.photogallery.adapter.AlbumAdapter
+import com.photogallery.base.BaseFragment
 import com.photogallery.databinding.FragmentExploreBinding
 import com.photogallery.model.Album
 import com.photogallery.model.MediaData

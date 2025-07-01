@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.photogallery.MyApplication
 import com.photogallery.R
 import com.photogallery.adapter.ImageAdapter
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityAlbumViewerBinding
 import com.photogallery.model.MediaData
 import kotlinx.coroutines.CoroutineScope

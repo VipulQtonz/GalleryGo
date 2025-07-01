@@ -704,7 +704,7 @@
     <string name="failed_to_open_image_stream">Failed to open image stream</string>
     <string name="face_group">Face Group %1$s</string>
     <string name="unknown_location">Unknown Location</string>
-    <string name="try_again">Try Again\n</string>
+    <string name="try_again">Try Again</string>
     <string name="please_make_sure_you_have_a_stable_internet_connection">Please make sure you have a stable internet connection</string>
     <string name="loop_video_on">Loop Video on</string>
     <string name="loop_video_off">Loop Video Off</string>

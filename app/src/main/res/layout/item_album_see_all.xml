@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/textViewAlbumName"
-        style="@style/CustomFontRegular"
+        style="@style/CustomFontMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -37,6 +37,7 @@
         android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:gravity="start"
+        style="@style/CustomFontRegular"
         android:maxLines="1"
         android:textColor="?attr/colorTextContent"
         android:textSize="@dimen/_10ssp"

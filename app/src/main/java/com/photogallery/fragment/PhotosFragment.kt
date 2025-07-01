@@ -31,6 +31,7 @@ import com.photogallery.activity.MomentDetailsActivity
 import com.photogallery.activity.PhotoViewActivity
 import com.photogallery.adapter.GalleryPhotosAdapter
 import com.photogallery.adapter.MomentsImgAdapter
+import com.photogallery.base.BaseFragment
 import com.photogallery.databinding.DialogPersonaliseGridBinding
 import com.photogallery.databinding.FragmentPhotosBinding
 import com.photogallery.model.GalleryListItem

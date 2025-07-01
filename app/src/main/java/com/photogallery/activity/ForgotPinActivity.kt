@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.photogallery.R
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityForgotPinBinding
 import org.json.JSONObject
 

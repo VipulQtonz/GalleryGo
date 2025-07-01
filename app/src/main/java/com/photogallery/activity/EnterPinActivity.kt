@@ -15,6 +15,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import com.photogallery.MyApplication.Companion.setupTooltip
 import com.photogallery.R
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityEnterPinBinding
 import com.skydoves.balloon.ArrowOrientation
 import java.security.MessageDigest

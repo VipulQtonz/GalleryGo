@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.photogallery.MyApplication
 import com.photogallery.adapter.MomentGroupAdapter
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityMomentDetailsBinding
 import com.photogallery.model.Moment
 import kotlin.math.abs

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import com.photogallery.R
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityFeedbackBinding
 import com.photogallery.utils.DeviceUtility
 import com.photogallery.utils.DeviceUtility.checkNetworkConnectivity
