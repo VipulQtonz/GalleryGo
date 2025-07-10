@@ -23,6 +23,7 @@ import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.graphics.scale
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -53,6 +54,7 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
     private var googleMap: GoogleMap? = null
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
+    private var currentMarker: com.google.android.gms.maps.model.Marker? = null
     var personaliseLayoutDialog: AlertDialog? = null
     var googleMapType = GoogleMap.MAP_TYPE_NORMAL
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -105,8 +107,7 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
                 ArrowOrientation.BOTTOM,
                 ePreferences,
                 "null"
-            )
-            {
+            ) {
                 setupTooltip(
                     this,
                     binding.dragHandle,
@@ -121,20 +122,7 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
-        val location = LatLng(latitude, longitude)
-
-        val markerOptions = MarkerOptions()
-            .position(location)
-            .title(albumName)
-            .anchor(0.5f, 1.0f)
-        if (MyApplication.selectedAlbumImages.isNotEmpty()) {
-            val bitmap = createCircularBitmapFromUri(MyApplication.selectedAlbumImages[0])
-            if (bitmap != null) {
-                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bitmap))
-            }
-        }
-        googleMap?.addMarker(markerOptions)
-        googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+        updateMarkerAndCamera(0) // Initialize with the first image
 
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -215,6 +203,18 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
         binding.flMap.setOnClickListener {
             showPersonaliseLayoutDialog()
         }
+
+        // Add scroll listener to RecyclerView
+        binding.rvBottomSheetImages.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as GridLayoutManager
+                val firstVisiblePosition = layoutManager.findFirstCompletelyVisibleItemPosition()
+                if (firstVisiblePosition != -1) {
+                    updateMarkerAndCamera(firstVisiblePosition)
+                }
+            }
+        })
     }
 
     override fun onBackPressedDispatcher() {
@@ -231,7 +231,9 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
                         MediaStore.Images.Media._ID,
                         MediaStore.Images.Media.DISPLAY_NAME,
                         MediaStore.Images.Media.DATA,
-                        MediaStore.Images.Media.DATE_TAKEN
+                        MediaStore.Images.Media.DATE_TAKEN,
+                        MediaStore.Images.Media.LATITUDE,
+                        MediaStore.Images.Media.LONGITUDE
                     ), null, null, null
                 )?.use { cursor ->
                     if (cursor.moveToFirst()) {
@@ -243,6 +245,10 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
                             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
                         val dateTaken =
                             cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN))
+                        val latitude =
+                            cursor.getDouble(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.LATITUDE))
+                        val longitude =
+                            cursor.getDouble(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.LONGITUDE))
 
                         newMediaList.add(
                             MediaData(
@@ -254,7 +260,9 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
                                 isVideo = false,
                                 duration = 0L,
                                 daysRemaining = 0,
-                                isFavorite = false
+                                isFavorite = false,
+                                latitude = latitude,
+                                longitude = longitude
                             )
                         )
                     }
@@ -276,21 +284,53 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
             binding.llEmptyBottomSheet.llEmptyLayout.visibility = View.GONE
             binding.rvBottomSheetImages.visibility = View.VISIBLE
             binding.rvBottomSheetImages.layoutManager = GridLayoutManager(this, 3)
-            val adapter = ImageAdapter(imageUris) { uri ->
-                val position = imageUris.indexOf(uri)
-                if (position != -1) {
-                    val intent = Intent(this, PhotoViewActivity::class.java).apply {
-                        putExtra("selected_position", position)
-                        putExtra("fromAlbum", true)
-                        putExtra("FromSearch", true)
-                        putExtra("isWhat", isWhat)
+            val adapter = ImageAdapter(
+                imageUris,
+                onItemClick = { uri ->
+                    val position = imageUris.indexOf(uri)
+                    if (position != -1) {
+                        updateMarkerAndCamera(position)
+                        val intent = Intent(this, PhotoViewActivity::class.java).apply {
+                            putExtra("selected_position", position)
+                            putExtra("fromAlbum", true)
+                            putExtra("FromSearch", true)
+                            putExtra("isWhat", isWhat)
+                        }
+                        startActivity(intent)
+                        nextScreenAnimation()
                     }
-                    startActivity(intent)
-                    nextScreenAnimation()
+                },
+                onItemLongClick = { uri ->
+                    val position = imageUris.indexOf(uri)
+                    if (position != -1) {
+                        updateMarkerAndCamera(position)
+                    }
                 }
-            }
+            )
             binding.rvBottomSheetImages.adapter = adapter
         }
+    }
+
+    fun updateMarkerAndCamera(position: Int) {
+        if (position < 0 || position >= MyApplication.mediaList.size) return
+
+        val mediaData = MyApplication.mediaList[position]
+        val location = LatLng(mediaData.latitude, mediaData.longitude)
+
+        // Remove the previous marker
+        currentMarker?.remove()
+
+        // Create new marker
+        val markerOptions = MarkerOptions()
+            .position(location)
+            .title(albumName)
+            .anchor(0.5f, 1.0f)
+        val bitmap = createCircularBitmapFromUri(mediaData.uri)
+        if (bitmap != null) {
+            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+        }
+        currentMarker = googleMap?.addMarker(markerOptions)
+        googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
     }
 
     private fun showPersonaliseLayoutDialog() {
@@ -412,7 +452,9 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
             canvas.drawCircle(dotCenterX, dotCenterY, dotRadius, paint)
 
             // Draw the pointer tip (triangle) below the dot
-            val path = Path()
+            val
+
+                    path = Path()
             path.moveTo(dotCenterX, markerSize.toFloat()) // Top of the triangle (at the dot)
             path.lineTo(dotCenterX - dotRadius * 2, markerSize + pointerHeight) // Bottom left
             path.lineTo(dotCenterX + dotRadius * 2, markerSize + pointerHeight) // Bottom right

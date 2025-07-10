@@ -3,6 +3,7 @@ agp = "8.11.0"
 biometric = "1.1.0"
 exifinterface = "1.4.1"
 faceDetection = "16.1.7"
+gradleDownloadTask = "5.6.0"
 gsonVersion = "2.13.1"
 imageLabeling = "17.0.9"
 kotlin = "2.2.0"
@@ -46,6 +47,7 @@ androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "mult
 androidx-transition = { module = "androidx.transition:transition", version.ref = "transition" }
 face-detection = { module = "com.google.mlkit:face-detection", version.ref = "faceDetection" }
 google-gson = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
+gradle-download-task = { module = "de.undercouch:gradle-download-task", version.ref = "gradleDownloadTask" }
 image-labeling = { module = "com.google.mlkit:image-labeling", version.ref = "imageLabeling" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

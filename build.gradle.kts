@@ -12,6 +12,6 @@ buildscript {
         classpath(libs.kotlin.gradle.plugin)
         classpath(libs.android.maven.gradle.plugin)
         classpath(libs.gradle.nexus.staging.plugin)
-        classpath("de.undercouch:gradle-download-task:5.6.0")
+        classpath(libs.gradle.download.task)
     }
 }

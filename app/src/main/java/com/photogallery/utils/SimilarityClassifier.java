@@ -24,7 +24,7 @@ public interface SimilarityClassifier {
 
     void setUseNNAPI(boolean isChecked);
 
-    public class Recognition {
+    class Recognition {
         private final String id;
         private final String title;
         private final Float distance;

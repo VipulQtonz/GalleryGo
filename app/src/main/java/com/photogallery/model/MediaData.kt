@@ -11,5 +11,7 @@ data class MediaData(
     val isVideo: Boolean = false,
     val duration: Long = 0L,
     var daysRemaining: Int = 0,
-    var isFavorite: Boolean = false
+    var isFavorite: Boolean = false,
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0
 )

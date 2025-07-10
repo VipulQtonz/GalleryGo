@@ -12,7 +12,8 @@ import android.content.res.Resources
 
 class ImageAdapter(
     private var imageUris: List<Uri>,
-    private val onItemClick: (Uri) -> Unit = {}
+    private val onItemClick: (Uri) -> Unit = {},
+    private val onItemLongClick: (Uri) -> Unit = {}
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -36,6 +37,10 @@ class ImageAdapter(
             .diskCacheStrategy(com.bumptech.glide.load.engine.DiskCacheStrategy.ALL)
             .into(holder.imageView)
         holder.imageView.setOnClickListener { onItemClick(uri) }
+        holder.imageView.setOnLongClickListener {
+            onItemLongClick(uri)
+            true // Consume the long click event
+        }
     }
 
     override fun getItemCount(): Int = imageUris.size

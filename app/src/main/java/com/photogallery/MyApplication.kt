@@ -233,7 +233,6 @@ class MyApplication : MultiDexApplication() {
                             }.awaitAll()
                         }
                     }
-                    // Compute duplicate groups after all hashes are calculated
                     ClassificationUtils.updateDuplicateGroupsLiveData()
                 } catch (e: Exception) {
                     Log.e("MyApplication", "Duplicate processing failed", e)

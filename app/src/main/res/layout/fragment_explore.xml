@@ -176,7 +176,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:indeterminateTint="?attr/colorTitleText"
+            android:indeterminateTint="?attr/colorApp"
             android:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -188,8 +188,7 @@
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:padding="@dimen/_6sdp"
-            android:scrollbars="none"
-            tools:listitem="@layout/item_album" />
+            android:scrollbars="none" />
     </RelativeLayout>
 
 </androidx.core.widget.NestedScrollView>

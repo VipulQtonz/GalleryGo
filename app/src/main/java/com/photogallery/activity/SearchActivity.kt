@@ -96,9 +96,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        imageAdapter = ImageAdapter(emptyList()) { uri ->
+        imageAdapter = ImageAdapter(emptyList(), onItemClick = {
             synchronized(uriList) {
-                val position = uriList.indexOf(uri)
+                val position = uriList.indexOf(it)
                 if (position != -1) {
                     val intent = Intent(this, PhotoViewActivity::class.java).apply {
                         putExtra("selected_position", position)
@@ -110,7 +110,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
                     nextScreenAnimation()
                 }
             }
-        }
+        }, onItemLongClick = {})
+
 
         locationAdapter = SearchSuggestionAdapter(emptyList()) { locationName ->
             binding.searchBar.setText(locationName)

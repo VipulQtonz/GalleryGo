@@ -135,8 +135,8 @@ class AlbumViewerActivity : BaseActivity<ActivityAlbumViewerBinding>() {
             binding.emptyAlbum.llEmptyLayout.visibility = View.GONE
             binding.recyclerViewAlbum.visibility = View.VISIBLE
             binding.recyclerViewAlbum.layoutManager = GridLayoutManager(this, 3)
-            val adapter = ImageAdapter(imageUris) { uri ->
-                val position = imageUris.indexOf(uri)
+            val adapter = ImageAdapter(imageUris, onItemClick = {
+                val position = imageUris.indexOf(it)
                 if (position != -1) {
                     val intent = Intent(this, PhotoViewActivity::class.java).apply {
                         putExtra("selected_position", position)
@@ -147,7 +147,7 @@ class AlbumViewerActivity : BaseActivity<ActivityAlbumViewerBinding>() {
                     startActivity(intent)
                     nextScreenAnimation()
                 }
-            }
+            }, onItemLongClick = {})
             binding.recyclerViewAlbum.adapter = adapter
         }
     }

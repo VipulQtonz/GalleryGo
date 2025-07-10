@@ -87,7 +87,6 @@
 
 # Firebase Messaging
 -keep class com.google.firebase.messaging.FirebaseMessagingService { *; }
--keep class com.google.firebase.iid.FirebaseInstanceIdService { *; }
 
 # Remote Config
 -keep class com.google.firebase.remoteconfig.** { *; }
@@ -102,7 +101,6 @@
 -keep class com.google.firebase.analytics.** { *; }
 
 -keep class com.google.gson.** { *; }
--keep class sun.misc.Unsafe { *; }  # Optional but can help in some environments
 -keepattributes Signature
 -keepattributes *Annotation*
 
