@@ -13,8 +13,6 @@ internal class PhotoEditorImageViewListener(
 
     override fun onSingleTapUp(e: MotionEvent): Boolean {
         onSingleTapUpCallback.onSingleTapUp()
-        // Returning false when there is no in focus view will pass the
-        // touch event to the zoom layout logic.
         return viewState.currentSelectedView != null
     }
 

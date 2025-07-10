@@ -44,7 +44,6 @@ internal class ScaleGestureDetector(private val mListener: OnScaleGestureListene
     private var mTimeDelta: Long = 0
     private var mInvalidGesture = false
 
-    // Pointer IDs currently responsible for the two fingers controlling the gesture
     private var mActiveId0 = 0
     private var mActiveId1 = 0
     private var mActive0MostRecent = false
@@ -62,10 +61,10 @@ internal class ScaleGestureDetector(private val mListener: OnScaleGestureListene
                     mActiveId0 = event.getPointerId(0)
                     mActive0MostRecent = true
                 }
+
                 MotionEvent.ACTION_UP -> reset()
                 MotionEvent.ACTION_POINTER_DOWN -> {
 
-                    // We have a new multi-finger gesture
                     mPrevEvent?.recycle()
                     mPrevEvent = MotionEvent.obtain(event)
                     mTimeDelta = 0
@@ -73,7 +72,6 @@ internal class ScaleGestureDetector(private val mListener: OnScaleGestureListene
                     var index0 = event.findPointerIndex(mActiveId0)
                     mActiveId1 = event.getPointerId(index1)
                     if (index0 < 0 || index0 == index1) {
-                        // Probably someone sending us a broken event stream.
                         index0 = findNewActiveIndex(event, mActiveId1, -1)
                         mActiveId0 = event.getPointerId(index0)
                     }
@@ -83,11 +81,9 @@ internal class ScaleGestureDetector(private val mListener: OnScaleGestureListene
                 }
             }
         } else {
-            // Transform gesture in progress - attempt to handle it
             when (action) {
                 MotionEvent.ACTION_POINTER_DOWN -> {
 
-                    // End the old gesture and begin a new one with the most recent two fingers.
                     mListener.onScaleEnd(view, this)
                     val oldActive0 = mActiveId0
                     val oldActive1 = mActiveId1
@@ -98,13 +94,13 @@ internal class ScaleGestureDetector(private val mListener: OnScaleGestureListene
                     mActive0MostRecent = false
                     var index0 = event.findPointerIndex(mActiveId0)
                     if (index0 < 0 || mActiveId0 == mActiveId1) {
-                        // Probably someone sending us a broken event stream.
                         index0 = findNewActiveIndex(event, mActiveId1, -1)
                         mActiveId0 = event.getPointerId(index0)
                     }
                     setContext(view, event)
                     isInProgress = mListener.onScaleBegin(view, this)
                 }
+
                 MotionEvent.ACTION_POINTER_UP -> {
                     val pointerCount = event.pointerCount
                     val actionIndex = event.actionIndex
@@ -143,10 +139,7 @@ internal class ScaleGestureDetector(private val mListener: OnScaleGestureListene
                         gestureEnded = true
                     }
                     if (gestureEnded) {
-                        // Gesture ended
                         setContext(view, event)
-
-                        // Set focus point to the remaining finger
                         val activeId = if (actionId == mActiveId0) mActiveId1 else mActiveId0
                         val index = event.findPointerIndex(activeId)
                         mFocusX = event.getX(index)
@@ -157,17 +150,15 @@ internal class ScaleGestureDetector(private val mListener: OnScaleGestureListene
                         mActive0MostRecent = true
                     }
                 }
+
                 MotionEvent.ACTION_CANCEL -> {
                     mListener.onScaleEnd(view, this)
                     reset()
                 }
+
                 MotionEvent.ACTION_UP -> reset()
                 MotionEvent.ACTION_MOVE -> {
                     setContext(view, event)
-
-                    // Only accept the event if our relative pressure is within
-                    // a certain limit - this can help filter shaky data as a
-                    // finger is lifted.
                     if (mCurrPressure / mPrevPressure > PRESSURE_THRESHOLD) {
                         val updatePrevious = mListener.onScale(view, this)
                         if (updatePrevious) {
@@ -188,10 +179,8 @@ internal class ScaleGestureDetector(private val mListener: OnScaleGestureListene
     ): Int {
         val pointerCount = ev.pointerCount
 
-        // It's ok if this isn't found and returns -1, it simply won't match.
         val otherActiveIndex = ev.findPointerIndex(otherActiveId)
 
-        // Pick a new id and update tracking state.
         for (i in 0 until pointerCount) {
             if (i != removedPointerIndex && i != otherActiveIndex) {
                 return i

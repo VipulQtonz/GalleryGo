@@ -29,6 +29,7 @@ import com.photogallery.adapter.LockedMediaAdapter
 import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityLockedImagesBinding
 import com.photogallery.databinding.DialogLockOptionsBinding
+import com.photogallery.utils.MediaDataSerializer
 import com.skydoves.balloon.ArrowOrientation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,20 +41,15 @@ class LockedImagesActivity : BaseActivity<ActivityLockedImagesBinding>() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: LockedMediaAdapter
     private val lockedMedia = mutableListOf<File>() // Changed to List<File>
-    private val pickImagesLauncher =
+    private val selectImageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-                val data = result.data
-                if (data != null) {
-                    val selectedUris = mutableListOf<Uri>()
-                    if (data.clipData != null) {
-                        for (i in 0 until data.clipData!!.itemCount) {
-                            selectedUris.add(data.clipData!!.getItemAt(i).uri)
-                        }
-                    } else if (data.data != null) {
-                        selectedUris.add(data.data!!)
+                result.data?.let { data ->
+                    val selectedMediaJson = data.getStringExtra("selected_media_json")
+                    if (!selectedMediaJson.isNullOrEmpty()) {
+                        val selectedMedia = MediaDataSerializer.deserialize(selectedMediaJson)
+                        lockSelectedMedia(selectedMedia.map { it.uri })
                     }
-                    lockSelectedMedia(selectedUris)
                 }
             }
         }
@@ -137,21 +133,19 @@ class LockedImagesActivity : BaseActivity<ActivityLockedImagesBinding>() {
         }
 
         binding.fabLockMedia.setOnClickListener {
-            openGalleryForImageSelection()
+            openSelectImageActivity()
         }
 
         binding.llLockedPhotoEmpty.btnOpen.setOnClickListener {
-            openGalleryForImageSelection()
+            openSelectImageActivity()
         }
     }
 
-    private fun openGalleryForImageSelection() {
-        val intent =
-            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-                type = "image/*"
-                putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            }
-        pickImagesLauncher.launch(intent)
+    private fun openSelectImageActivity() {
+        val intent = Intent(this, SelectImageActivity::class.java).apply {
+            putExtra("isSelectionMode", true)
+        }
+        selectImageLauncher.launch(intent)
     }
 
     private fun showOptionsDialog() {

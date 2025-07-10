@@ -24,18 +24,22 @@ open class TextStyleBuilder {
                     val size = value as Float
                     applyTextSize(textView, size)
                 }
+
                 TextStyle.COLOR -> {
                     val color = value as Int
                     applyTextColor(textView, color)
                 }
+
                 TextStyle.FONT_FAMILY -> {
                     val typeface = value as Typeface
                     applyFontFamily(textView, typeface)
                 }
+
                 TextStyle.GRAVITY -> {
                     val gravity = value as Int
                     applyGravity(textView, gravity)
                 }
+
                 TextStyle.BACKGROUND -> {
                     if (value is Drawable) {
                         applyBackgroundDrawable(textView, value)
@@ -43,19 +47,23 @@ open class TextStyleBuilder {
                         applyBackgroundColor(textView, value)
                     }
                 }
+
                 TextStyle.TEXT_APPEARANCE -> {
                     if (value is Int) {
                         applyTextAppearance(textView, value)
                     }
                 }
+
                 TextStyle.TEXT_STYLE -> {
                     val typeface = value as Int
                     applyTextStyle(textView, typeface)
                 }
+
                 TextStyle.TEXT_FLAG -> {
                     val flag = value as Int
                     applyTextFlag(textView, flag)
                 }
+
                 TextStyle.SHADOW -> {
                     run {
                         if (value is TextShadow) {
@@ -68,6 +76,7 @@ open class TextStyleBuilder {
                         }
                     }
                 }
+
                 TextStyle.BORDER -> {
                     if (value is TextBorder) {
                         applyTextBorder(textView, value)
@@ -115,7 +124,6 @@ open class TextStyleBuilder {
         }
     }
 
-    // border
     protected open fun applyTextBorder(textView: TextView, textBorder: TextBorder) {
         val gd = GradientDrawable()
         gd.cornerRadius = textBorder.corner
@@ -126,19 +134,15 @@ open class TextStyleBuilder {
         }
     }
 
-    // shadow
     protected open fun applyTextShadow(textView: TextView, textShadow: TextShadow) {
         textView.setShadowLayer(textShadow.radius, textShadow.dx, textShadow.dy, textShadow.color)
     }
 
-    // bold or italic
     protected open fun applyTextStyle(textView: TextView, typeface: Int) {
         textView.setTypeface(textView.typeface, typeface)
     }
 
-    // underline or strike
     protected open fun applyTextFlag(textView: TextView, flag: Int) {
-//        textView.setPaintFlags(textView.getPaintFlags()|flag);
         textView.paint.flags = flag
     }
 

@@ -47,9 +47,6 @@ internal class ImageFilterView @JvmOverloads constructor(
     }
 
     internal fun setSourceBitmap(sourceBitmap: Bitmap?) {
-        /* if (mSourceBitmap != null && mSourceBitmap.sameAs(sourceBitmap)) {
-            //mCurrentEffect = NONE;
-        }*/
         mSourceBitmap = sourceBitmap
         mInitialized = false
     }
@@ -62,14 +59,12 @@ internal class ImageFilterView @JvmOverloads constructor(
     override fun onDrawFrame(gl: GL10) {
         try {
             if (!mInitialized) {
-                //Only need to do this once
                 mEffectContext = EffectContext.createWithCurrentGlContext()
                 mTexRenderer.init()
                 loadTextures()
                 mInitialized = true
             }
             if (mCurrentEffect != PhotoFilter.NONE || mCustomEffect != null) {
-                //if an effect is chosen initialize it and apply it to the texture
                 initEffect()
                 applyEffect()
             }
@@ -118,20 +113,16 @@ internal class ImageFilterView @JvmOverloads constructor(
     }
 
     private fun loadTextures() {
-        // Generate textures
         GLES20.glGenTextures(2, mTextures, 0)
 
-        // Load input bitmap
         mSourceBitmap?.let {
             mImageWidth = it.width
             mImageHeight = it.height
             mTexRenderer.updateTextureSize(mImageWidth, mImageHeight)
 
-            // Upload to texture
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[0])
             GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, it, 0)
 
-            // Set texture parameters
             initTexParams()
         }
     }
@@ -147,7 +138,6 @@ internal class ImageFilterView @JvmOverloads constructor(
                     mEffect?.setParameter(key, value)
                 }
             } else {
-                // Initialize the correct effect based on the selected menu/action item
                 when (mCurrentEffect) {
                     PhotoFilter.AUTO_FIX -> {
                         mEffect = createEffect(EffectFactory.EFFECT_AUTOFIX)
@@ -239,10 +229,8 @@ internal class ImageFilterView @JvmOverloads constructor(
 
     private fun renderResult() {
         if (mCurrentEffect != PhotoFilter.NONE || mCustomEffect != null) {
-            // if no effect is chosen, just render the original bitmap
             mTexRenderer.renderTexture(mTextures[1])
         } else {
-            // render the result of applyEffect()
             mTexRenderer.renderTexture(mTextures[0])
         }
     }

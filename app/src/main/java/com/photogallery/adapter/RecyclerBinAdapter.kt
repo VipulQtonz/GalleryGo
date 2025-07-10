@@ -96,7 +96,6 @@ class RecyclerBinAdapter(
                     .build()
             }
 
-
             ivSelect.visibility = if (isSelectionMode) View.VISIBLE else View.GONE
             ivRemainDays.visibility = View.VISIBLE
             ivSelect.setImageResource(

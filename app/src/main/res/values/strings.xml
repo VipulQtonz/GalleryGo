@@ -702,7 +702,6 @@
     <string name="photos_">%1$s Photos</string>
     <string name="failed_to_lock_media">Failed to lock media: %1$s</string>
     <string name="failed_to_open_image_stream">Failed to open image stream</string>
-    <string name="face_group">Face Group %1$s</string>
     <string name="unknown_location">Unknown Location</string>
     <string name="try_again">Try Again</string>
     <string name="please_make_sure_you_have_a_stable_internet_connection">Please make sure you have a stable internet connection</string>
@@ -760,4 +759,9 @@
     <string name="type_your_feedback_here">Type your feedback here...</string>
     <string name="we_value_your_feedback">We Value Your Feedback.</string>
 
+    <string name="people">People</string>
+    <string name="add_name">Add Name</string>
+    <string name="click_to_see_all_people">Click to see all people</string>
+    <string name="find_them_quickly_by_name_with_search">Find them quickly by name with Search</string>
+    <string name="select_image">Select Image</string>
 </resources>

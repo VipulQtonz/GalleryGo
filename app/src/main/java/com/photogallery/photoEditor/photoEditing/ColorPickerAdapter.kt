@@ -27,7 +27,6 @@ class ColorPickerAdapter internal constructor(
     init {
         inflater = LayoutInflater.from(context)
         this.colorPickerColors = colorPickerColors
-        // Removed premature listener call
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder0825 {
@@ -55,7 +54,6 @@ class ColorPickerAdapter internal constructor(
 
     fun setOnColorPickerClickListener(listener: OnColorPickerClickListener) {
         this.onColorPickerClickListener = listener
-        // Notify listener of default selection when listener is set
         if (colorPickerColors.isNotEmpty() && selectedPosition == 0) {
             listener.onColorPickerClickListener(colorPickerColors[0])
         }

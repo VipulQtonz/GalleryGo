@@ -55,7 +55,6 @@ internal class PhotoSaverTask(
         }
 
         if (result is SaveFileResult.Success) {
-            // Clear all views if it's enabled in save settings
             if (saveSettings.isClearViewsEnabled) {
                 boxHelper.clearAllViews(drawingView)
             }

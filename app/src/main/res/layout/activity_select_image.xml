@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorBgScreen"
+    tools:context=".activity.HomeActivity">
+
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="?attr/colorToolbarBg"
+        android:elevation="@dimen/_1sdp">
+
+        <RelativeLayout
+            android:id="@+id/rlToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="@dimen/_15sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBack"
+                android:layout_width="@dimen/_26sdp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:background="@drawable/ripple_effect"
+                android:padding="@dimen/_3sdp"
+                android:src="@drawable/ic_back" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvToolbarTitle"
+                style="@style/CustomFontBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginHorizontal="@dimen/_45sdp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@string/photos"
+                android:textColor="?attr/colorTitleText"
+                android:textSize="@dimen/_16ssp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivMore"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/ripple_effect"
+                android:src="@drawable/ic_done"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rlMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="?attr/colorBgScreen"
+        tools:context=".activity.SelectImageActivity">
+
+        <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
+            android:id="@+id/fastScroller"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:fastScrollDirection="vertical"
+            app:fastScrollEnabled="true"
+            app:handleDrawable="@drawable/ic_slider"
+            app:handleHeight="@dimen/_30sdp"
+            app:handleWidth="@dimen/_30sdp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:popupDrawable="@drawable/bg_rounded_corner"
+            app:popupTextStyle="@style/CustomFontRegularPopup"
+            app:trackDrawable="@null"
+            app:trackMarginEnd="@dimen/_2sdp"
+            app:trackMarginStart="@dimen/_2sdp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPhotos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:scrollbars="none"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+        </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivStickyMenuOption"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/bg_round"
+            android:padding="@dimen/_6sdp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_more" />
+
+        <include
+            android:id="@+id/emptyViewLayout"
+            layout="@layout/empty_state_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </RelativeLayout>
+</RelativeLayout>

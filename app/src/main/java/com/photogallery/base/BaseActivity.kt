@@ -1,17 +1,30 @@
 package com.photogallery.base
 
+import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.Settings
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import android.widget.Button
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.net.toUri
 import androidx.viewbinding.ViewBinding
 import com.photogallery.MyApplication
 import com.photogallery.R
@@ -21,6 +34,9 @@ import java.io.File
 abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
     private var customLoadingDialog: Dialog? = null
     internal lateinit var ePreferences: SharedPreferenceHelper
+    private lateinit var manageStorageLauncher: ActivityResultLauncher<Intent>
+    private lateinit var readStoragePermissionLauncher: ActivityResultLauncher<Array<String>>
+    var permissionDialog: AlertDialog? = null
     lateinit var binding: T
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,6 +89,31 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
         init(savedInstanceState)
         addListener()
         setupBackButtonCallback()
+
+        readStoragePermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+                val isGranted = permissions.entries.all { it.value }
+                if (isGranted) {
+                    onStoragePermissionGranted()
+                } else {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.permission_denied), Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+        manageStorageLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager()) {
+                    onStoragePermissionGranted()
+                } else {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.permission_not_granted), Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
     }
 
     abstract fun getViewBinding(): T
@@ -87,7 +128,6 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
             }
         }
         onBackPressedDispatcher.addCallback(this, callback)
-
     }
 
     private fun makeStatusBarTransparentAndHide() {
@@ -101,14 +141,8 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
                     WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             }
         } else {
-            window.decorView.systemUiVisibility = (
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            or View.SYSTEM_UI_FLAG_FULLSCREEN
-                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    )
+            window.decorView.systemUiVisibility =
+                (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
         }
     }
 
@@ -163,15 +197,81 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
     fun Activity.nextScreenAnimation() {
         overridePendingTransition(
-            R.anim.in_right,
-            R.anim.out_left
+            R.anim.in_right, R.anim.out_left
         )
     }
 
     fun Activity.backScreenAnimation() {
         overridePendingTransition(
-            R.anim.in_left,
-            R.anim.out_right
+            R.anim.in_left, R.anim.out_right
         )
+    }
+
+    protected fun showPermissionDialog(context: Context) {
+        val builder = AlertDialog.Builder(context)
+        builder.setCancelable(false)
+
+        val view = View.inflate(context, R.layout.dialog_permission_request, null)
+        val btnGrantAccess: Button = view.findViewById(R.id.btnAllow)
+        val btnCancel: Button = view.findViewById(R.id.btnCancel)
+        btnGrantAccess.setOnClickListener {
+            requestStoragePermission()
+            permissionDialog?.dismiss()
+        }
+        btnCancel.setOnClickListener {
+            permissionDialog?.dismiss()
+        }
+
+        builder.setView(view)
+        permissionDialog = builder.create()
+        permissionDialog?.setCanceledOnTouchOutside(false)
+        permissionDialog?.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+        permissionDialog?.show()
+    }
+
+    protected open fun onStoragePermissionGranted() {
+    }
+
+    private fun requestStoragePermission() {
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
+                try {
+                    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                    intent.data = ("package:" + this.packageName).toUri()
+                    manageStorageLauncher.launch(intent)
+                } catch (e: Exception) {
+                    val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                    manageStorageLauncher.launch(intent)
+                }
+            }
+
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
+                readStoragePermissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.READ_MEDIA_IMAGES,
+                        Manifest.permission.READ_MEDIA_VIDEO
+                    )
+                )
+            }
+
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
+                // Request both read and write for Android 10
+                readStoragePermissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                )
+            }
+
+            else -> {
+                readStoragePermissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                )
+            }
+        }
     }
 }

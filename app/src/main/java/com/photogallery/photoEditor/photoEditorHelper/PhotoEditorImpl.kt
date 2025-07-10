@@ -118,16 +118,9 @@ internal class PhotoEditorImpl @SuppressLint("ClickableViewAccessibility") const
     private fun addToEditor(graphic: Graphic) {
         clearHelperBox()
         mGraphicManager.addView(graphic)
-        // Change the in-focus view
         viewState.currentSelectedView = graphic.rootView
     }
 
-    /**
-     * Create a new instance and scalable touchview
-     *
-     * @param isPinchScalable true if make pinch-scalable, false otherwise.
-     * @return scalable multitouch listener
-     */
     private fun getMultiTouchListener(isPinchScalable: Boolean): MultiTouchListener {
         return MultiTouchListener(
             deleteView,
@@ -259,7 +252,6 @@ internal class PhotoEditorImpl @SuppressLint("ClickableViewAccessibility") const
     override val isCacheEmpty: Boolean
         get() = !isUndoAvailable && !isRedoAvailable
 
-    // region Shape
     override fun setShape(shapeBuilder: ShapeBuilder) {
         drawingView.currentShapeBuilder = shapeBuilder
     } // endregion

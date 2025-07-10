@@ -8,7 +8,6 @@ import android.net.NetworkRequest
 import androidx.lifecycle.LiveData
 
 class ConnectivityObserver(context: Context) : LiveData<Boolean>() {
-
     private val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
@@ -28,9 +27,7 @@ class ConnectivityObserver(context: Context) : LiveData<Boolean>() {
     }
 
     init {
-        // Post initial network status
         postValue(context.isInternet())
-        // Register network callback
         val networkRequest = NetworkRequest.Builder()
             .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
             .build()
@@ -39,7 +36,6 @@ class ConnectivityObserver(context: Context) : LiveData<Boolean>() {
 
     override fun onInactive() {
         super.onInactive()
-        // Unregister callback when LiveData is inactive
         connectivityManager.unregisterNetworkCallback(networkCallback)
     }
 }

@@ -19,10 +19,8 @@ internal class TextureRenderer {
     private var mTexWidth = 0
     private var mTexHeight = 0
     fun init() {
-        // Create program
         mProgram = createProgram(VERTEX_SHADER, FRAGMENT_SHADER)
 
-        // Bind attributes and uniforms
         mTexSamplerHandle = GLES20.glGetUniformLocation(
             mProgram,
             "tex_sampler"
@@ -30,7 +28,6 @@ internal class TextureRenderer {
         mTexCoordHandle = GLES20.glGetAttribLocation(mProgram, "a_texcoord")
         mPosCoordHandle = GLES20.glGetAttribLocation(mProgram, "a_position")
 
-        // Setup coordinate buffers
         mTexVertices = ByteBuffer.allocateDirect(
             TEX_VERTICES.size * FLOAT_SIZE_BYTES
         )
@@ -60,21 +57,12 @@ internal class TextureRenderer {
     }
 
     fun renderTexture(texId: Int) {
-        // Bind default FBO
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0)
-
-        // Use our shader program
         GLES20.glUseProgram(mProgram)
         checkGlError("glUseProgram")
-
-        // Set viewport
         GLES20.glViewport(0, 0, mViewWidth, mViewHeight)
         checkGlError("glViewport")
-
-        // Disable blending
         GLES20.glDisable(GLES20.GL_BLEND)
-
-        // Set the vertex attributes
         GLES20.glVertexAttribPointer(
             mTexCoordHandle, 2, GLES20.GL_FLOAT, false,
             0, mTexVertices
@@ -86,15 +74,11 @@ internal class TextureRenderer {
         )
         GLES20.glEnableVertexAttribArray(mPosCoordHandle)
         checkGlError("vertex attribute setup")
-
-        // Set the input texture
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
         checkGlError("glActiveTexture")
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texId)
         checkGlError("glBindTexture")
         GLES20.glUniform1i(mTexSamplerHandle, 0)
-
-        // Draw
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)

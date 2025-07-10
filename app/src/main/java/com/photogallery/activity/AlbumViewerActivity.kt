@@ -6,6 +6,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.photogallery.MyApplication
 import com.photogallery.R
 import com.photogallery.adapter.ImageAdapter
@@ -19,6 +20,7 @@ import kotlinx.coroutines.withContext
 
 class AlbumViewerActivity : BaseActivity<ActivityAlbumViewerBinding>() {
     private var isWhat: String = ""
+    private var albumName: String = ""
     override fun getViewBinding(): ActivityAlbumViewerBinding {
         return ActivityAlbumViewerBinding.inflate(layoutInflater)
     }
@@ -26,13 +28,24 @@ class AlbumViewerActivity : BaseActivity<ActivityAlbumViewerBinding>() {
     override fun onResume() {
         super.onResume()
         isWhat = intent.getStringExtra("isWhat") ?: ""
+        albumName = intent.getStringExtra("albumName") ?: "Album"
+        binding.toolbar.tvToolbarTitle.text = albumName
         showLoadingDialog()
         populateMediaList()
+
+        if (isWhat == "FaceGroup") {
+            binding.rlFaceGroupData.visibility = View.VISIBLE
+            binding.tvPeopleName.text = albumName
+            val representativeUri = intent.getStringExtra("representativeImage")
+            Glide.with(this).load(representativeUri).error(R.drawable.ic_image_placeholder)
+                .placeholder(R.drawable.ic_image_placeholder).into(binding.ivRepresentativeImage)
+        } else {
+            binding.rlFaceGroupData.visibility = View.GONE
+        }
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        val albumName = intent.getStringExtra("albumName") ?: "Album"
-        binding.toolbar.tvToolbarTitle.text = albumName
+
     }
 
     override fun addListener() {

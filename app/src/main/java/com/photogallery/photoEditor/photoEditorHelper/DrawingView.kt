@@ -32,11 +32,9 @@ class DrawingView @JvmOverloads constructor(
     private var viewChangeListener: BrushViewChangeListener? = null
     var currentShapeBuilder: ShapeBuilder
 
-    // eraser parameters
     private var isErasing = false
     var eraserSize = DEFAULT_ERASER_SIZE
 
-    // endregion
     private fun createPaint(): Paint {
         val paint = Paint()
         paint.isAntiAlias = true
@@ -46,15 +44,11 @@ class DrawingView @JvmOverloads constructor(
         paint.strokeCap = Paint.Cap.ROUND
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
 
-        // apply shape builder parameters
         currentShapeBuilder.apply {
             paint.strokeWidth = this.shapeSize
-            // 'paint.color' must be called before 'paint.alpha',
-            // otherwise 'paint.alpha' value will be overwritten.
             paint.color = this.shapeColor
             shapeOpacity?.also { paint.alpha = it }
         }
-
         return paint
     }
 
@@ -147,9 +141,7 @@ class DrawingView @JvmOverloads constructor(
 
     private fun endShape() {
         if (currentShape?.shape?.hasBeenTapped() == true) {
-            // just a tap, this is not a shape, so remove it
             drawShapes.remove(currentShape)
-            //handleTap(touchX, touchY);
         }
         viewChangeListener?.apply {
             onStopDrawing()
@@ -178,14 +170,10 @@ class DrawingView @JvmOverloads constructor(
         return !redoShapes.empty()
     }
 
-    // region eraser
     fun brushEraser() {
         isDrawingEnabled = true
         isErasing = true
     }
-
-    // endregion
-    // region Setters/Getters
 
     fun enableDrawing(brushDrawMode: Boolean) {
         isDrawingEnabled = brushDrawMode
@@ -199,7 +187,6 @@ class DrawingView @JvmOverloads constructor(
         const val DEFAULT_ERASER_SIZE = 50.0f
     }
 
-    // region constructors
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
         visibility = GONE

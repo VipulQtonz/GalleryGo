@@ -6,18 +6,15 @@ import android.graphics.Matrix
 object RotateHelper {
     fun applyTransformations(
         inputBitmap: Bitmap,
-        rotationCount: Int, // Number of 90-degree rotations
+        rotationCount: Int,
         flipHorizontal: Boolean,
         flipVertical: Boolean
     ): Bitmap {
         val matrix = Matrix()
-        // Apply rotation (90 degrees per count)
         matrix.postRotate(rotationCount * 90f)
-        // Apply flip horizontal
         if (flipHorizontal) {
             matrix.postScale(-1f, 1f, inputBitmap.width / 2f, inputBitmap.height / 2f)
         }
-        // Apply flip vertical
         if (flipVertical) {
             matrix.postScale(1f, -1f, inputBitmap.width / 2f, inputBitmap.height / 2f)
         }

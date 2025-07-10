@@ -1,7 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.PhotoGallery" parent="Theme.Material3.DayNight.NoActionBar">
-    </style>
+    <style name="Base.Theme.PhotoGallery" parent="Theme.Material3.DayNight.NoActionBar"/>
 
     <style name="BottomNavigationViewTextStyle">
         <item name="android:fontFamily">@font/kumbh_sans_regular</item>
@@ -26,6 +25,11 @@
     <style name="RoundedImageStyle" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerSize">@dimen/_12sdp</item>
         <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="RoundedImage" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 
     <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner">

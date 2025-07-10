@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.photogallery.MyApplication
 import com.photogallery.MyApplication.Companion.processDuplicates
+import com.photogallery.MyApplication.Companion.processFaceEmbeddings
 import com.photogallery.MyApplication.Companion.processLocationPhotos
 import com.photogallery.MyApplication.Companion.processMoments
 import com.photogallery.MyApplication.Companion.processPhotoClassification
@@ -202,6 +203,7 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
                     processPhotoClassification(requireContext())
                     processMoments(requireContext())
                     processDuplicates(requireContext())
+                    processFaceEmbeddings(requireContext())
                 }
             } else {
                 showPermissionDialog()

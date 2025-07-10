@@ -14,7 +14,6 @@ object BlurHelper {
         val input = Allocation.createFromBitmap(renderScript, inputBitmap)
         val output = Allocation.createFromBitmap(renderScript, outputBitmap)
         val script = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript))
-        // Ensure radius is greater than 0; map 0 to a small positive value
         val safeRadius = if (blurRadius == 0) 0.1f else blurRadius.toFloat().coerceIn(0.1f, 25f)
         try {
             script.setRadius(safeRadius)

@@ -11,57 +11,100 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.photogallery.R
 import com.photogallery.databinding.ItemAlbumSeeAllBinding
+import com.photogallery.databinding.ItemFaceGroupBinding
 import com.photogallery.model.DocumentGroup
 import com.photogallery.model.GroupedLocationPhoto
 import com.photogallery.model.PeopleGroup
+import com.photogallery.process.FaceGroupingUtils
 
 class GenericGroupAdapter(
     private val context: Context,
     private val onItemClick: (Any) -> Unit
-) : ListAdapter<Any, GenericGroupAdapter.GroupViewHolder>(GroupDiffCallback()) {
+) : ListAdapter<Any, RecyclerView.ViewHolder>(GroupDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
-        val binding = ItemAlbumSeeAllBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        val imageView = binding.imageViewAlbumCover
-        imageView.post {
-            val width = imageView.width
-            if (width > 0) {
-                imageView.layoutParams = imageView.layoutParams.apply {
-                    height = width
+    companion object {
+        private const val TYPE_FACE_GROUP = 0
+        private const val TYPE_OTHER_GROUP = 1
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)) {
+            is FaceGroupingUtils.FaceGroup -> TYPE_FACE_GROUP
+            else -> TYPE_OTHER_GROUP
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            TYPE_FACE_GROUP -> {
+                val binding = ItemFaceGroupBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                FaceGroupViewHolder(binding)
+            }
+
+            else -> {
+                val binding = ItemAlbumSeeAllBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                binding.imageViewAlbumCover.post {
+                    val width = binding.imageViewAlbumCover.width
+                    if (width > 0) {
+                        binding.imageViewAlbumCover.layoutParams.height = width
+                    }
                 }
+                OtherGroupViewHolder(binding)
             }
         }
-        return GroupViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val group = getItem(position)
-        holder.bind(group)
+        when (holder) {
+            is FaceGroupViewHolder -> holder.bind(group as FaceGroupingUtils.FaceGroup)
+            is OtherGroupViewHolder -> holder.bind(group)
+        }
     }
 
-    inner class GroupViewHolder(private val binding: ItemAlbumSeeAllBinding) :
+    inner class FaceGroupViewHolder(private val binding: ItemFaceGroupBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(group: FaceGroupingUtils.FaceGroup) {
+            val uri = group.uris.firstOrNull()
+            binding.tvGroupName.text = context.getString(R.string.add_name)
+            Glide.with(context)
+                .load(group.representativeUri)
+                .circleCrop()
+                .placeholder(R.drawable.ic_image_placeholder)
+                .error(R.drawable.ic_image_placeholder)
+                .into(binding.imageView)
+
+            binding.root.setOnClickListener { onItemClick(group) }
+        }
+    }
+
+    inner class OtherGroupViewHolder(private val binding: ItemAlbumSeeAllBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(group: Any) {
             val name = when (group) {
                 is GroupedLocationPhoto -> group.locationName ?: "Unknown Location"
-                is PeopleGroup -> context.getString(R.string.face_group, group.groupId)
                 is DocumentGroup -> group.name
                 else -> ""
             }
+
             val uri = when (group) {
                 is GroupedLocationPhoto -> group.representativeUri
-                is PeopleGroup -> group.allUris.firstOrNull()
                 is DocumentGroup -> group.allUris.firstOrNull()
                 else -> null
             }
+
             val count = when (group) {
                 is GroupedLocationPhoto -> group.allUris.size
-                is PeopleGroup -> group.allUris.size
                 is DocumentGroup -> group.allUris.size
                 else -> 0
             }
@@ -69,18 +112,14 @@ class GenericGroupAdapter(
             binding.textViewAlbumName.text = name
             binding.textViewPhotoCount.text = context.getString(R.string.photos_, count)
 
-            uri?.let {
-                Glide.with(context)
-                    .load(it)
-                    .error(R.drawable.ic_image_placeholder)
-                    .placeholder(R.drawable.ic_image_placeholder)
-                    .apply(RequestOptions().transform(CenterCrop()))
-                    .into(binding.imageViewAlbumCover)
-            }
+            Glide.with(context)
+                .load(uri)
+                .apply(RequestOptions().transform(CenterCrop()))
+                .placeholder(R.drawable.ic_image_placeholder)
+                .error(R.drawable.ic_image_placeholder)
+                .into(binding.imageViewAlbumCover)
 
-            binding.root.setOnClickListener {
-                onItemClick(group)
-            }
+            binding.root.setOnClickListener { onItemClick(group) }
         }
     }
 
@@ -89,10 +128,16 @@ class GenericGroupAdapter(
             return when {
                 oldItem is GroupedLocationPhoto && newItem is GroupedLocationPhoto ->
                     oldItem.locationName == newItem.locationName
+
                 oldItem is PeopleGroup && newItem is PeopleGroup ->
                     oldItem.groupId == newItem.groupId
+
                 oldItem is DocumentGroup && newItem is DocumentGroup ->
                     oldItem.name == newItem.name
+
+                oldItem is FaceGroupingUtils.FaceGroup && newItem is FaceGroupingUtils.FaceGroup ->
+                    oldItem.groupId == newItem.groupId
+
                 else -> false
             }
         }
@@ -100,17 +145,17 @@ class GenericGroupAdapter(
         override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
             return when {
                 oldItem is GroupedLocationPhoto && newItem is GroupedLocationPhoto ->
-                    oldItem.locationName == newItem.locationName &&
-                            oldItem.representativeUri == newItem.representativeUri &&
-                            oldItem.allUris == newItem.allUris &&
-                            oldItem.latitude == newItem.latitude &&
-                            oldItem.longitude == newItem.longitude
+                    oldItem == newItem
+
                 oldItem is PeopleGroup && newItem is PeopleGroup ->
-                    oldItem.groupId == newItem.groupId &&
-                            oldItem.allUris == newItem.allUris
+                    oldItem == newItem
+
                 oldItem is DocumentGroup && newItem is DocumentGroup ->
-                    oldItem.name == newItem.name &&
-                            oldItem.allUris == newItem.allUris
+                    oldItem == newItem
+
+                oldItem is FaceGroupingUtils.FaceGroup && newItem is FaceGroupingUtils.FaceGroup ->
+                    oldItem == newItem
+
                 else -> false
             }
         }

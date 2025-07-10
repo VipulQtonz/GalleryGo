@@ -35,8 +35,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.photogallery.MyApplication
 import com.photogallery.MyApplication.Companion.setupTooltip
 import com.photogallery.R
-import com.photogallery.base.BaseActivity
 import com.photogallery.activity.CropImageActivity
+import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityEditImageBinding
 import com.photogallery.photoEditor.photoEditing.EmojiBSFragment.EmojiListener
 import com.photogallery.photoEditor.photoEditing.StickerBSFragment.StickerListener

@@ -1,19 +1,15 @@
 package com.photogallery.utils
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import androidx.annotation.Nullable
 import com.photogallery.R
-import java.util.ArrayList
+import androidx.core.content.withStyledAttributes
 
 class StoriesProgressView : LinearLayout {
-
     private val PROGRESS_BAR_LAYOUT_PARAM = LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f)
     private val SPACE_LAYOUT_PARAM = LayoutParams(5, LayoutParams.WRAP_CONTENT)
-
     private val progressBars = ArrayList<PausableProgressBar>()
     private var storiesCount = -1
     private var current = -1
@@ -29,18 +25,18 @@ class StoriesProgressView : LinearLayout {
     }
 
     constructor(context: Context) : this(context, null)
-    constructor(context: Context, @Nullable attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init(context, attrs)
     }
-    constructor(context: Context, @Nullable attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         init(context, attrs)
     }
 
-    private fun init(context: Context, @Nullable attrs: AttributeSet?) {
+    private fun init(context: Context, attrs: AttributeSet?) {
         orientation = HORIZONTAL
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.StoriesProgressView)
-        storiesCount = typedArray.getInt(R.styleable.StoriesProgressView_progressCount, 0)
-        typedArray.recycle()
+        context.withStyledAttributes(attrs, R.styleable.StoriesProgressView) {
+            storiesCount = getInt(R.styleable.StoriesProgressView_progressCount, 0)
+        }
         bindViews()
     }
 
@@ -79,18 +75,6 @@ class StoriesProgressView : LinearLayout {
         this.storiesListener = listener
     }
 
-    fun skip() {
-        if (isSkipStart || isReverseStart || isComplete || current < 0) return
-        isSkipStart = true
-        progressBars[current].setMax()
-    }
-
-    fun reverse() {
-        if (isSkipStart || isReverseStart || isComplete || current < 0) return
-        isReverseStart = true
-        progressBars[current].setMin()
-    }
-
     fun setStoryDuration(duration: Long) {
         for (i in progressBars.indices) {
             progressBars[i].setDuration(duration)
@@ -111,7 +95,6 @@ class StoriesProgressView : LinearLayout {
                         progressBars[current - 1].setMinWithoutCallback()
                         progressBars[--current].startProgress()
                     } else {
-                        // At the first item, stay there or navigate to previous Moment
                         progressBars[current].startProgress()
                     }
                     isReverseStart = false

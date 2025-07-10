@@ -6,13 +6,11 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -188,10 +186,6 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
         permissionDialog?.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         permissionDialog?.show()
     }
-
-    fun dpToPx(dp: Int): Int = TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), Resources.getSystem().displayMetrics
-    ).toInt()
 
     fun Activity.nextScreenAnimation() {
         overridePendingTransition(

@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.photogallery.MyApplication
 import com.photogallery.MyApplication.Companion.processDuplicates
+import com.photogallery.MyApplication.Companion.processFaceEmbeddings
 import com.photogallery.MyApplication.Companion.processLocationPhotos
 import com.photogallery.MyApplication.Companion.processMoments
 import com.photogallery.MyApplication.Companion.processPhotoClassification
@@ -72,6 +73,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
                 processPhotoClassification(requireContext())
                 processMoments(requireContext())
                 processDuplicates(requireContext())
+                processFaceEmbeddings(requireContext())
             }
         } else {
             showPermissionDialog()
@@ -133,7 +135,13 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
                     ePreferences?.getStringSet(SharedPreferenceHelper.ALBUMS_KEY) ?: emptySet()
                 val deviceAlbums = getAlbumsFromStorage(requireContext())
                 val allAlbums = mutableListOf<Album>().apply {
-                    add(Album(name = getString(R.string.add_album), photoUris = mutableListOf(), isAddAlbum = true))
+                    add(
+                        Album(
+                            name = getString(R.string.add_album),
+                            photoUris = mutableListOf(),
+                            isAddAlbum = true
+                        )
+                    )
                     addAll(savedAlbums.map { albumName ->
                         Album(
                             name = albumName,

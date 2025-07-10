@@ -1,4 +1,3 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
@@ -13,5 +12,6 @@ buildscript {
         classpath(libs.kotlin.gradle.plugin)
         classpath(libs.android.maven.gradle.plugin)
         classpath(libs.gradle.nexus.staging.plugin)
+        classpath("de.undercouch:gradle-download-task:5.6.0")
     }
 }

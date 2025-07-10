@@ -66,7 +66,6 @@ class StickerBSFragment : BottomSheetDialogFragment() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            // Load sticker image from remote url
             Glide.with(requireContext())
                     .asBitmap()
                     .load(stickerPathList[position])
@@ -101,7 +100,6 @@ class StickerBSFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        // Image Urls from flaticon(https://www.flaticon.com/stickers-pack/food-289)
         private val stickerPathList = arrayOf(
                 "https://cdn-icons-png.flaticon.com/256/4392/4392452.png",
                 "https://cdn-icons-png.flaticon.com/256/4392/4392455.png",

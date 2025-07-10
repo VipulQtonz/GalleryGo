@@ -26,9 +26,7 @@ class PhotoEditorView @JvmOverloads constructor(
     private var clipSourceImage = false
 
     init {
-        //Setup image attributes
         val sourceParam = setupImageSource(attrs)
-        //Setup GLSurface attributes
         mImageFilterView = ImageFilterView(context)
         val filterParam = setupFilterView()
 
@@ -41,17 +39,13 @@ class PhotoEditorView @JvmOverloads constructor(
         })
 
 
-        //Setup drawing view
         drawingView = DrawingView(context)
         val brushParam = setupDrawingView()
 
-        //Add image source
         addView(mImgSource, sourceParam)
 
-        //Add Gl FilterView
         addView(mImageFilterView, filterParam)
 
-        //Add brush view
         addView(drawingView, brushParam)
     }
 
@@ -69,12 +63,12 @@ class PhotoEditorView @JvmOverloads constructor(
             }
         }
 
-        var widthParam = ViewGroup.LayoutParams.MATCH_PARENT
+        var widthParam = LayoutParams.MATCH_PARENT
         if (clipSourceImage) {
-            widthParam = ViewGroup.LayoutParams.WRAP_CONTENT
+            widthParam = LayoutParams.WRAP_CONTENT
         }
         val params = LayoutParams(
-            widthParam, ViewGroup.LayoutParams.WRAP_CONTENT
+            widthParam, LayoutParams.WRAP_CONTENT
         )
         params.addRule(CENTER_IN_PARENT, TRUE)
         return params
@@ -84,9 +78,8 @@ class PhotoEditorView @JvmOverloads constructor(
         drawingView.visibility = GONE
         drawingView.id = shapeSrcId
 
-        // Align drawing view to the size of image view
         val params = LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
+            LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
         )
         params.addRule(CENTER_IN_PARENT, TRUE)
         params.addRule(ALIGN_TOP, imgSrcId)
@@ -100,9 +93,8 @@ class PhotoEditorView @JvmOverloads constructor(
         mImageFilterView.visibility = GONE
         mImageFilterView.id = glFilterId
 
-        //Align brush to the size of image view
         val params = LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
+            LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
         )
         params.addRule(CENTER_IN_PARENT, TRUE)
         params.addRule(ALIGN_TOP, imgSrcId)
@@ -110,11 +102,6 @@ class PhotoEditorView @JvmOverloads constructor(
         return params
     }
 
-    /**
-     * Source image which you want to edit
-     *
-     * @return source ImageView
-     */
     val source: ImageView
         get() = mImgSource
 

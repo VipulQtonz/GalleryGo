@@ -70,11 +70,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }
 
@@ -103,7 +103,6 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
-    annotationProcessor(libs.androidx.room.compiler)
 
     implementation(libs.library)
 
@@ -115,6 +114,7 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.config)
     implementation(libs.image.labeling)
+    implementation(libs.face.detection)
 
     implementation(libs.androidx.biometric)
 
@@ -132,4 +132,5 @@ dependencies {
 
     implementation(libs.balloon)
     implementation(libs.google.gson)
+    implementation(libs.tensorflow.lite)
 }

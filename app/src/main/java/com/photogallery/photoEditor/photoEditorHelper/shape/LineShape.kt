@@ -57,8 +57,6 @@ class LineShape(
     }
 
     private fun drawArrow(path: Path, fromX: Float, fromY: Float, toX: Float, toY: Float) {
-        // Based on: https://stackoverflow.com/a/41734848/1219654
-
         val xDistance = toX - fromX
         val yDistance = toY - fromY
 
@@ -86,15 +84,12 @@ class LineShape(
     }
 
     private companion object {
-
         const val ARROW_ANGLE = 30.0
         const val ANGLE_RAD = (PI * ARROW_ANGLE / 180.0).toFloat()
         const val MAX_ARROW_RADIUS_DP = 32.0f
 
         fun convertDpsToPixels(context: Context, sizeDp: Float): Int {
-            // Convert the dps to pixels
             val scale = context.resources.displayMetrics.density
-            // Use sizePx as a size in pixels
             return (sizeDp * scale + 0.5f).toInt()
         }
 

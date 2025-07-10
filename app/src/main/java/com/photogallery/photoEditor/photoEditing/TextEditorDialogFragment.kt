@@ -55,24 +55,19 @@ class TextEditorDialogFragment : DialogFragment() {
         val activity = requireActivity()
 
         mAddTextEditText = view.findViewById(R.id.edtAddText)
-        mInputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        mInputMethodManager =
+            activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         mAddTextDoneTextView = view.findViewById(R.id.tvAddTextDone)
 
-        // Ensure EditText is focusable and request focus
         mAddTextEditText.isFocusable = true
         mAddTextEditText.isFocusableInTouchMode = true
         mAddTextEditText.requestFocus()
-
-        // Force show the soft keyboard
         mInputMethodManager.showSoftInput(mAddTextEditText, InputMethodManager.SHOW_FORCED)
-
-        // Setup the color picker for text color
-        val addTextColorPickerRecyclerView: RecyclerView = view.findViewById(R.id.rwAddTextColorPicker)
+        val addTextColorPickerRecyclerView: RecyclerView =
+            view.findViewById(R.id.rwAddTextColorPicker)
         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         addTextColorPickerRecyclerView.layoutManager = layoutManager
         val colorPickerAdapter = ColorPickerAdapter(activity)
-
-        // This listener will change the text color when clicked on any color from picker
         colorPickerAdapter.setOnColorPickerClickListener(object : OnColorPickerClickListener {
             override fun onColorPickerClickListener(colorCode: Int) {
                 mColorCode = colorCode
@@ -88,7 +83,6 @@ class TextEditorDialogFragment : DialogFragment() {
         mColorCode = arguments.getInt(EXTRA_COLOR_CODE)
         mAddTextEditText.setTextColor(mColorCode)
 
-        // Make a callback on activity when user is done with text editing
         mAddTextDoneTextView.setOnClickListener { onClickListenerView ->
             mInputMethodManager.hideSoftInputFromWindow(onClickListenerView.windowToken, 0)
             dismiss()
@@ -100,7 +94,6 @@ class TextEditorDialogFragment : DialogFragment() {
         }
     }
 
-    // Callback to listener if user is done with text editing
     fun setOnTextEditorListener(textEditorListener: TextEditorListener) {
         mTextEditorListener = textEditorListener
     }

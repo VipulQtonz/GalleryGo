@@ -16,7 +16,6 @@ internal abstract class Graphic(
     val rootView: View
 
     open fun updateView(view: View) {
-        //Optional for subclass to override
     }
 
     init {
@@ -30,8 +29,6 @@ internal abstract class Graphic(
 
 
     private fun setupRemoveView(rootView: View) {
-        //We are setting tag as ViewType to identify what type of the view it is
-        //when we remove the view from stack i.e onRemoveViewListener(ViewType viewType, int numberOfAddedViews);
         rootView.tag = viewType
         val imgClose = rootView.findViewById<ImageView>(R.id.imgPhotoEditorClose)
         imgClose?.setOnClickListener { graphicManager?.removeView(this@Graphic) }
@@ -58,7 +55,6 @@ internal abstract class Graphic(
             override fun onClick() {
                 boxHelper.clearHelperBox()
                 toggleSelection()
-                // Change the in-focus view
                 viewState.currentSelectedView = rootView
             }
 

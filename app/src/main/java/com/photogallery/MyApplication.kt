@@ -27,9 +27,11 @@ import com.photogallery.model.GroupedLocationPhoto
 import com.photogallery.model.MediaData
 import com.photogallery.model.Moment
 import com.photogallery.model.MomentGroup
-import com.photogallery.utils.ClassificationUtils
-import com.photogallery.utils.LocationUtils
-import com.photogallery.utils.MomentsUtils
+import com.photogallery.process.ClassificationUtils
+import com.photogallery.process.FaceEmbeddingUtils
+import com.photogallery.process.FaceGroupingUtils
+import com.photogallery.process.LocationUtils
+import com.photogallery.process.MomentsUtils
 import com.photogallery.utils.SharedPreferenceHelper
 import com.photogallery.utils.SharedPreferenceHelper.Companion.PREF_THEME
 import com.photogallery.utils.SharedPreferenceHelper.Companion.THEME_DARK
@@ -42,11 +44,15 @@ import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonSizeSpec
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
+import java.util.concurrent.Executors
 
 class MyApplication : MultiDexApplication() {
     lateinit var pref: SharedPreferenceHelper
@@ -67,6 +73,7 @@ class MyApplication : MultiDexApplication() {
         private var hasProcessedClassification = false
         private var hasProcessedDuplicates = false
         private var hasProcessedMoments = false
+        private var hasProcessedFaceEmbeddings = false
         private val allImageUris: MutableList<Uri> = mutableListOf()
         val momentsLiveData: MutableLiveData<List<MomentGroup>> = MutableLiveData(emptyList())
         private var selectedMoment: Moment? = null
@@ -88,8 +95,25 @@ class MyApplication : MultiDexApplication() {
         val duplicateImageGroupsLiveData: MutableLiveData<List<DuplicateImageGroup>> =
             MutableLiveData(emptyList())
 
+        private val _faceGroups = MutableLiveData<List<FaceGroupingUtils.FaceGroup>>()
+        val faceGroups: LiveData<List<FaceGroupingUtils.FaceGroup>> get() = _faceGroups
+
         var PRIVACY_POLICY_LINK: String = "https://www.google.com/"
         var TERMS_OF_SERVICES_LINK: String = "https://www.google.com/"
+
+        private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+        private val databaseDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+
+        fun triggerFaceGrouping(context: Context) {
+            applicationScope.launch {
+                try {
+                    val groups = FaceGroupingUtils.groupSimilarFaces(context)
+                    _faceGroups.postValue(groups)
+                } catch (_: Exception) {
+                    _faceGroups.postValue(emptyList())
+                }
+            }
+        }
 
         fun updateAllImageUris(uris: List<Uri>) {
             synchronized(allImageUris) {
@@ -168,6 +192,21 @@ class MyApplication : MultiDexApplication() {
             duplicateImageGroupsLiveData.postValue(updatedGroups)
         }
 
+        fun processFaceEmbeddings(context: Context) {
+            synchronized(this) {
+                if (hasProcessedFaceEmbeddings) return
+                hasProcessedFaceEmbeddings = true
+            }
+            CoroutineScope(Dispatchers.Default).launch {
+                try {
+                    FaceEmbeddingUtils.processImagesForFaceEmbeddings(instance)
+                    triggerFaceGrouping(context)
+                } catch (_: Exception) {
+                    synchronized(this@launch) { hasProcessedFaceEmbeddings = false }
+                }
+            }
+        }
+
         fun processDuplicates(context: Context) {
             synchronized(this) {
                 if (hasProcessedDuplicates) return
@@ -196,7 +235,8 @@ class MyApplication : MultiDexApplication() {
                     }
                     // Compute duplicate groups after all hashes are calculated
                     ClassificationUtils.updateDuplicateGroupsLiveData()
-                } catch (_: Exception) {
+                } catch (e: Exception) {
+                    Log.e("MyApplication", "Duplicate processing failed", e)
                     hasProcessedDuplicates = false // Allow retry on failure
                 }
             }
@@ -270,7 +310,8 @@ class MyApplication : MultiDexApplication() {
                                 documentGroupsLiveData.postValue(tempDocumentGroupsList)
                             }
                         }
-                    } catch (_: Exception) {
+                    } catch (e: Exception) {
+                        Log.e("MyApplication", "Photo classification failed for URI $uri", e)
                     }
                 }
                 documentGroupsLiveData.postValue(tempDocumentGroups.values.filter { it.allUris.isNotEmpty() })
@@ -307,43 +348,24 @@ class MyApplication : MultiDexApplication() {
             context.theme.resolveAttribute(R.attr.colorApp, typedValue, true)
             val colorPrimary = typedValue.data
 
-            val balloon = Balloon.Builder(context)
-                .setWidthRatio(0f)
-                .setHeight(BalloonSizeSpec.WRAP)
-                .setText(text)
-                .setTextColorResource(R.color.white)
-                .setTextSize(15f)
-                .setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
-                .setArrowSize(10)
-                .setPadding(10)
-                .setArrowPosition(0.5f)
-                .setCornerRadius(8f)
-                .setArrowOrientation(orientation)
-                .setBackgroundColor(colorPrimary)
-                .setLifecycleOwner(activity as LifecycleOwner?)
-                .setDismissWhenLifecycleOnPause(true)
+            val balloon = Balloon.Builder(context).setWidthRatio(0f).setHeight(BalloonSizeSpec.WRAP)
+                .setText(text).setTextColorResource(R.color.white).setTextSize(15f)
+                .setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR).setArrowSize(10)
+                .setPadding(10).setArrowPosition(0.5f).setCornerRadius(8f)
+                .setArrowOrientation(orientation).setBackgroundColor(colorPrimary)
+                .setLifecycleOwner(activity as LifecycleOwner?).setDismissWhenLifecycleOnPause(true)
                 .setOnBalloonDismissListener {
                     ePreferences.putBoolean(prefKey, false)
                     onDismissCallback?.invoke()
-                }
-                .build()
+                }.build()
 
             view.post {
-                if (
-                    view.isAttachedToWindow &&
-                    view.windowToken != null &&
-                    activity.window?.decorView?.windowToken != null
-                ) {
+                if (view.isAttachedToWindow && view.windowToken != null && activity.window?.decorView?.windowToken != null) {
                     try {
                         balloon.showAlignBottom(view)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
-                } else {
-                    Log.w(
-                        "Tooltip",
-                        "Skipping balloon show: view is not attached or activity is finishing"
-                    )
                 }
             }
         }
@@ -354,6 +376,17 @@ class MyApplication : MultiDexApplication() {
             deleteDuplicateGroupByUri(uriToDelete)
             deleteLocationGroupByUri(uriToDelete)
             deleteDocumentGroupByUri(uriToDelete)
+
+            applicationScope.launch {
+                try {
+                    withContext(databaseDispatcher) {
+                        val database = PhotoGalleryDatabase.getDatabase(this@MyApplication)
+                        database.photoGalleryDao().deleteEmbeddingsByUri(uriToDelete.toString())
+                        triggerFaceGrouping(this@MyApplication)
+                    }
+                } catch (_: Exception) {
+                }
+            }
         }
     }
 
@@ -366,10 +399,12 @@ class MyApplication : MultiDexApplication() {
         setupNightMode()
 
         if (hasStoragePermission()) {
+            triggerFaceGrouping(this)
             processLocationPhotos(this)
             processPhotoClassification(this)
             processMoments(this)
             processDuplicates(this)
+            processFaceEmbeddings(this)
         }
     }
 
@@ -439,10 +474,9 @@ class MyApplication : MultiDexApplication() {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
                 (ContextCompat.checkSelfPermission(
                     this, Manifest.permission.READ_MEDIA_IMAGES
-                ) == PackageManager.PERMISSION_GRANTED &&
-                        ContextCompat.checkSelfPermission(
-                            this, Manifest.permission.READ_MEDIA_VIDEO
-                        ) == PackageManager.PERMISSION_GRANTED).also {
+                ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.READ_MEDIA_VIDEO
+                ) == PackageManager.PERMISSION_GRANTED).also {
                     Log.d("Permissions", "READ_MEDIA_IMAGES/VIDEO: $it")
                 }
             }
@@ -458,10 +492,9 @@ class MyApplication : MultiDexApplication() {
             else -> {
                 (ContextCompat.checkSelfPermission(
                     this, Manifest.permission.READ_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED &&
-                        ContextCompat.checkSelfPermission(
-                            this, Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        ) == PackageManager.PERMISSION_GRANTED).also {
+                ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED).also {
                     Log.d("Permissions", "READ/WRITE_EXTERNAL_STORAGE: $it")
                 }
             }

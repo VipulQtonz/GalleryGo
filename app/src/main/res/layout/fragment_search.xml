@@ -1,12 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorBgScreen"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:overScrollMode="never"
+    android:scrollbars="none">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/_12sdp">
 
@@ -36,18 +38,74 @@
                 android:visibility="gone" />
 
             <RelativeLayout
-                android:id="@+id/rlLocation"
+                android:id="@+id/rlPeople"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/searchBar"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:id="@+id/rlSeeAllPeople"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/CustomFontMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/tvSeeAllPeople"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:text="@string/people"
+                        android:textColor="?attr/colorTitleText"
+                        android:textSize="@dimen/_16ssp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSeeAllPeople"
+                        style="@style/CustomFontMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_rounded_corner_see_all"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingHorizontal="@dimen/_16sdp"
+                        android:paddingVertical="@dimen/_6sdp"
+                        android:text="@string/see_all"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorTitleText"
+                        android:textSize="@dimen/_12ssp" />
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerPeople"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlSeeAllPeople"
+                    android:layout_centerHorizontal="true"
+                    android:overScrollMode="never"
+                    android:scrollbars="none" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rlPeople"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:visibility="gone">
 
                 <RelativeLayout
                     android:id="@+id/tvSeeAll"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_10sdp">
+                    android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/CustomFontMedium"
@@ -97,13 +155,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rlLocation"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:visibility="gone">
 
                 <RelativeLayout
                     android:id="@+id/rvSeeAllDocuments"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_10sdp">
+                    android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/CustomFontMedium"
@@ -165,4 +223,4 @@
             android:layout_centerInParent="true"
             android:visibility="gone" />
     </RelativeLayout>
-</LinearLayout>
+</ScrollView>
