@@ -1,8 +1,8 @@
 package com.photogallery.process
 
 import android.content.Context
-import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import com.photogallery.db.PhotoGalleryDatabase
 import com.photogallery.db.model.FaceEmbedding
 import com.photogallery.utils.UriUtils
@@ -15,9 +15,9 @@ import kotlin.math.sqrt
 
 object FaceGroupingUtils {
     private const val TAG = "FaceGroupingUtils"
-    private const val BASE_SELFIE_SIMILARITY_THRESHOLD = 0.65f
-    private const val BASE_GENERAL_SIMILARITY_THRESHOLD = 0.70f
-    private const val MIN_SIMILARITY_THRESHOLD = 0.90f
+    private const val BASE_SELFIE_SIMILARITY_THRESHOLD = 0.60f
+    private const val BASE_GENERAL_SIMILARITY_THRESHOLD = 0.65f
+    private const val MIN_SIMILARITY_THRESHOLD = 0.85f
     private const val MERGE_THRESHOLD = 0.75f
 
     private val databaseDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
@@ -53,7 +53,10 @@ object FaceGroupingUtils {
 
             // Filter valid embeddings
             val (validEmbeddings, invalidUris) = filterValidEmbeddings(context, allEmbeddings)
-            Log.i(TAG, "Found ${validEmbeddings.size} valid embeddings, ${invalidUris.size} invalid URIs")
+            Log.i(
+                TAG,
+                "Found ${validEmbeddings.size} valid embeddings, ${invalidUris.size} invalid URIs"
+            )
 
             // Delete invalid embeddings
             if (invalidUris.isNotEmpty()) {
@@ -66,8 +69,13 @@ object FaceGroupingUtils {
             }
 
             // Separate selfies (single face) from multi-face images
-            val (selfieEmbeddings, multiFaceEmbeddings) = separateSelfiesFromMultiFace(validEmbeddings)
-            Log.i(TAG, "Identified ${selfieEmbeddings.size} selfie embeddings and ${multiFaceEmbeddings.size} multi-face embeddings")
+            val (selfieEmbeddings, multiFaceEmbeddings) = separateSelfiesFromMultiFace(
+                validEmbeddings
+            )
+            Log.i(
+                TAG,
+                "Identified ${selfieEmbeddings.size} selfie embeddings and ${multiFaceEmbeddings.size} multi-face embeddings"
+            )
 
             if (selfieEmbeddings.isEmpty()) {
                 Log.w(TAG, "No selfies found in database")
@@ -82,7 +90,8 @@ object FaceGroupingUtils {
             val selfieGroups = groupSelfies(selfieEmbeddings, expectedEmbeddingSize)
 
             // Step 2: Assign multi-face images to groups
-            val faceGroups = assignMultiFaceImages(multiFaceEmbeddings, selfieGroups, expectedEmbeddingSize)
+            val faceGroups =
+                assignMultiFaceImages(multiFaceEmbeddings, selfieGroups, expectedEmbeddingSize)
 
             // Step 3: Merge similar groups
             val mergedGroups = mergeSimilarGroups(faceGroups)
@@ -95,7 +104,7 @@ object FaceGroupingUtils {
         }
     }
 
-    private suspend fun filterValidEmbeddings(
+    private fun filterValidEmbeddings(
         context: Context,
         embeddings: List<FaceEmbedding>
     ): Pair<List<FaceEmbedding>, Set<String>> {
@@ -103,7 +112,7 @@ object FaceGroupingUtils {
         val invalidUris = mutableSetOf<String>()
 
         embeddings.forEach { embedding ->
-            val uri = Uri.parse(embedding.uri)
+            val uri = embedding.uri.toUri()
             if (UriUtils.isUriValid(context, uri)) {
                 validEmbeddings.add(embedding)
             } else {
@@ -161,12 +170,20 @@ object FaceGroupingUtils {
             when {
                 embeddingVector.all { it == 0f } -> {
                     zeroEmbeddingCount++
-                    Log.w(TAG, "Skipping zero-filled selfie embedding for URI: ${selfieEmbedding.uri}")
+                    Log.w(
+                        TAG,
+                        "Skipping zero-filled selfie embedding for URI: ${selfieEmbedding.uri}"
+                    )
                 }
+
                 embeddingVector.size != expectedEmbeddingSize -> {
                     invalidSizeEmbeddingCount++
-                    Log.w(TAG, "Skipping selfie embedding with size ${embeddingVector.size} (expected $expectedEmbeddingSize)")
+                    Log.w(
+                        TAG,
+                        "Skipping selfie embedding with size ${embeddingVector.size} (expected $expectedEmbeddingSize)"
+                    )
                 }
+
                 else -> {
                     var bestGroup: FaceGroup? = null
                     var bestSimilarity = -1f
@@ -200,7 +217,10 @@ object FaceGroupingUtils {
             }
         }
 
-        Log.i(TAG, "Skipped $zeroEmbeddingCount zero-filled and $invalidSizeEmbeddingCount invalid-sized selfie embeddings")
+        Log.i(
+            TAG,
+            "Skipped $zeroEmbeddingCount zero-filled and $invalidSizeEmbeddingCount invalid-sized selfie embeddings"
+        )
         return selfieGroups
     }
 
@@ -221,13 +241,19 @@ object FaceGroupingUtils {
                     zeroEmbeddingCount++
                     Log.w(TAG, "Skipping zero-filled embedding for URI: ${embedding.uri}")
                 }
+
                 embeddingVector.size != expectedEmbeddingSize -> {
                     invalidSizeEmbeddingCount++
-                    Log.w(TAG, "Skipping embedding with size ${embeddingVector.size} (expected $expectedEmbeddingSize)")
+                    Log.w(
+                        TAG,
+                        "Skipping embedding with size ${embeddingVector.size} (expected $expectedEmbeddingSize)"
+                    )
                 }
+
                 assignedUris.contains(embedding.uri) -> {
                     Log.d(TAG, "URI ${embedding.uri} already assigned to a group, skipping")
                 }
+
                 else -> {
                     var bestGroup: FaceGroup? = null
                     var bestSimilarity = -1f
@@ -255,7 +281,10 @@ object FaceGroupingUtils {
             }
         }
 
-        Log.i(TAG, "Skipped $zeroEmbeddingCount zero-filled and $invalidSizeEmbeddingCount invalid-sized multi-face embeddings")
+        Log.i(
+            TAG,
+            "Skipped $zeroEmbeddingCount zero-filled and $invalidSizeEmbeddingCount invalid-sized multi-face embeddings"
+        )
         return faceGroups
     }
 
@@ -334,17 +363,23 @@ object FaceGroupingUtils {
         }
     }
 
-    private fun calculateCentroid(embeddings: List<FloatArray>): FloatArray {
+    private fun calculateCentroid(
+        embeddings: List<FloatArray>,
+        isSelfieGroup: Boolean = false
+    ): FloatArray {
         if (embeddings.isEmpty()) return floatArrayOf()
         val size = embeddings.first().size
         val centroid = FloatArray(size)
+        var totalWeight = 0f
+
         embeddings.forEach { embedding ->
+            val weight = if (isSelfieGroup) 2.0f else 1.0f // Give selfies double weight
             for (i in embedding.indices) {
-                centroid[i] += embedding[i]
+                centroid[i] += embedding[i] * weight
             }
+            totalWeight += weight
         }
-        val count = embeddings.size.toFloat()
-        return normalizeEmbedding(centroid.map { it / count }.toFloatArray())
+        return normalizeEmbedding(centroid.map { it / totalWeight }.toFloatArray())
     }
 
     private fun normalizeEmbedding(embedding: FloatArray): FloatArray {
@@ -374,12 +409,5 @@ object FaceGroupingUtils {
             return 0f
         }
         return (dotProduct / (norm1 * norm2)).coerceIn(-1f, 1f)
-    }
-
-    private fun FloatArray.toReadableString(maxElements: Int = 10): String {
-        return take(maxElements)
-            .joinToString(", ", prefix = "[", postfix = if (size > maxElements) ", ..." else "]") {
-                String.format("%.3f", it)
-            }
     }
 }

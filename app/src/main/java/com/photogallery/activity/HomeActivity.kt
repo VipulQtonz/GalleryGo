@@ -63,7 +63,6 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>() {
-
     private var currentSelectedItemId: Int = 0
     private var popupMenuItemSelectedId: Int = 1
     private var currentFragment: Fragment? = null
@@ -449,80 +448,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         ivClose.setOnClickListener { dialog.dismiss() }
         dialog.show()
     }
-
-//    private fun lockSelectedMedia() {
-//        val selectedMedia = getSelectedMedia()
-//        if (selectedMedia.isEmpty()) return
-//
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val lockedDir = File(
-//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-//                "LockedMedia"
-//            )
-//            if (!lockedDir.exists()) lockedDir.mkdirs()
-//
-//            val database = PhotoGalleryDatabase.getDatabase(this@HomeActivity)
-//            var count = 0
-//            for (media in selectedMedia) {
-//                // First check and remove from favorites if exists
-//                MyApplication.instance.notifyFileDeleted(media.uri)
-//                val favorite = database.photoGalleryDao().getFavoriteById(media.id)
-//                if (favorite != null) {
-//                    database.photoGalleryDao().deleteFavorite(favorite)
-//                }
-//
-//                val originalFile = File(media.path)
-//                val encryptedFile = File(lockedDir, originalFile.name + ".lockimg")
-//
-//                try {
-//                    FileEncryptor.encryptFile(originalFile, encryptedFile)
-//                    count++
-//
-//                    // Delete original file after successful encryption
-//                    if (originalFile.exists()) {
-//                        originalFile.delete()
-//                    }
-//
-//                    // Notify MediaStore of the deletion
-//                    val contentResolver = this@HomeActivity.contentResolver
-//                    try {
-//                        val uri = media.uri
-//                        contentResolver.delete(uri, null, null)
-//                    } catch (e: Exception) {
-//                        e.printStackTrace()
-//                        // Optionally, use MediaScannerConnection to scan the new file location
-//                        MediaScannerConnection.scanFile(
-//                            this@HomeActivity,
-//                            arrayOf(lockedDir.absolutePath),
-//                            arrayOf(if (media.isVideo) "video/*" else "image/*")
-//                        ) { _, _ ->
-//                            // Scan complete, no action needed
-//                        }
-//                    }
-//                    // Notify fragment to remove the item
-//                    withContext(Dispatchers.Main) {
-//                        (supportFragmentManager.findFragmentById(binding.frameLayoutHome.id) as? PhotosFragment)?.removeMedia(
-//                            media
-//                        )
-//                        (supportFragmentManager.findFragmentById(binding.frameLayoutHome.id) as? VideosFragment)?.removeMedia(
-//                            media
-//                        )
-//                    }
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                }
-//            }
-//
-//            withContext(Dispatchers.Main) {
-//                clearSelection()
-//                if (count > 0) {
-//                    Toast.makeText(this@HomeActivity, "$count items locked", Toast.LENGTH_SHORT)
-//                        .show()
-//                }
-//            }
-//        }
-//    }
-
 
     private fun lockSelectedMedia() {
         val selectedMedia = getSelectedMedia()

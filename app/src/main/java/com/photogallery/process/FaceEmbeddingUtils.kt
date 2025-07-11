@@ -3,6 +3,11 @@ package com.photogallery.process
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Matrix
+import android.graphics.Paint
 import android.util.Log
 import androidx.core.graphics.scale
 import com.google.android.gms.tasks.Task
@@ -25,6 +30,9 @@ import java.util.UUID
 import java.util.concurrent.Executors
 import kotlin.math.max
 import kotlin.math.min
+import androidx.core.graphics.createBitmap
+import com.google.mlkit.vision.face.FaceLandmark
+import kotlin.math.atan2
 
 object FaceEmbeddingUtils {
     private const val TAG = "FaceEmbeddingUtils"
@@ -38,7 +46,7 @@ object FaceEmbeddingUtils {
     private val databaseDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
     private val faceDetectorOptions = FaceDetectorOptions.Builder()
         .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE) // Switched to accurate
-        .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_NONE)
+        .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
         .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_NONE)
         .enableTracking()
         .build()
@@ -87,16 +95,17 @@ object FaceEmbeddingUtils {
 
                     Log.d(TAG, "Processing image ${index + 1}/${unprocessedUris.size}: $uri")
                     try {
-                        val bitmap = context.contentResolver.openInputStream(uri)?.use { inputStream ->
-                            BitmapFactory.decodeStream(inputStream)
-                        } ?: run {
-                            withContext(databaseDispatcher) {
-                                database.photoGalleryDao().insertSkippedImage(
-                                    SkippedImage(uri.toString(), "Failed to load bitmap")
-                                )
+                        val bitmap =
+                            context.contentResolver.openInputStream(uri)?.use { inputStream ->
+                                BitmapFactory.decodeStream(inputStream)
+                            } ?: run {
+                                withContext(databaseDispatcher) {
+                                    database.photoGalleryDao().insertSkippedImage(
+                                        SkippedImage(uri.toString(), "Failed to load bitmap")
+                                    )
+                                }
+                                return@forEachIndexed
                             }
-                            return@forEachIndexed
-                        }
 
                         val resizedBitmap = resizeBitmap(bitmap)
                         val inputImage = InputImage.fromBitmap(resizedBitmap, 0)
@@ -136,7 +145,8 @@ object FaceEmbeddingUtils {
                                 return@forEachIndexed
                             }
 
-                            val faceId = "${UUID.randomUUID()}${face.trackingId?.let { "_$it" } ?: ""}"
+                            val faceId =
+                                "${UUID.randomUUID()}${face.trackingId?.let { "_$it" } ?: ""}"
                             val faceEmbedding = FaceEmbedding(
                                 faceId = faceId,
                                 uri = uri.toString(),
@@ -185,7 +195,32 @@ object FaceEmbeddingUtils {
         val width = min(boundingBox.width() + 2 * padding, bitmap.width - x)
         val height = min(boundingBox.height() + 2 * padding, bitmap.height - y)
 
-        return Bitmap.createBitmap(bitmap, x, y, width, height)
+        val croppedBitmap = Bitmap.createBitmap(bitmap, x, y, width, height)
+        val alignedBitmap = alignFaceBitmap(croppedBitmap, face)
+        croppedBitmap.recycle()
+        return alignedBitmap
+    }
+
+    private fun alignFaceBitmap(bitmap: Bitmap, face: Face): Bitmap {
+        val landmarks = face.allLandmarks
+        if (landmarks.isEmpty()) return bitmap
+
+        // Get eye landmarks for alignment
+        val leftEye = landmarks.find { it.landmarkType == FaceLandmark.LEFT_EYE }
+        val rightEye = landmarks.find { it.landmarkType == FaceLandmark.RIGHT_EYE }
+        if (leftEye == null || rightEye == null) return bitmap
+
+        val leftEyePos = leftEye.position
+        val rightEyePos = rightEye.position
+        val angle = atan2(
+            (rightEyePos.y - leftEyePos.y).toDouble(),
+            (rightEyePos.x - leftEyePos.x).toDouble()
+        ).toFloat() * 180 / Math.PI.toFloat()
+
+        // Rotate bitmap to align eyes horizontally
+        val matrix = Matrix()
+        matrix.postRotate(-angle, bitmap.width / 2f, bitmap.height / 2f)
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 
     private fun resizeBitmap(bitmap: Bitmap): Bitmap {
@@ -212,9 +247,11 @@ object FaceEmbeddingUtils {
         detector: SimilarityClassifier,
         faceBitmap: Bitmap
     ): FloatArray {
-        val resizedBitmap = faceBitmap.scale(TF_OD_API_INPUT_SIZE, TF_OD_API_INPUT_SIZE)
+        val preprocessedBitmap = preprocessBitmap(faceBitmap)
+        val resizedBitmap = preprocessedBitmap.scale(TF_OD_API_INPUT_SIZE, TF_OD_API_INPUT_SIZE)
         val results = detector.recognizeImage(resizedBitmap, true)
         resizedBitmap.recycle()
+        preprocessedBitmap.recycle()
 
         if (results.isNotEmpty()) {
             val result = results[0]
@@ -224,5 +261,34 @@ object FaceEmbeddingUtils {
             }
         }
         return FloatArray(128) // Return all zeros if failed
+    }
+
+    private fun preprocessBitmap(bitmap: Bitmap): Bitmap {
+        // Convert to grayscale and apply histogram equalization
+        val grayscaleBitmap = createBitmap(bitmap.width, bitmap.height)
+        val canvas = Canvas(grayscaleBitmap)
+        val paint = Paint()
+        val colorMatrix = ColorMatrix().apply { setSaturation(0f) } // Grayscale
+        paint.colorFilter = ColorMatrixColorFilter(colorMatrix)
+        canvas.drawBitmap(bitmap, 0f, 0f, paint)
+
+        // Apply histogram equalization (using OpenCV or simple contrast adjustment)
+        // For simplicity, we'll use a basic contrast adjustment here
+        val contrastedBitmap = createBitmap(bitmap.width, bitmap.height)
+        val contrastPaint = Paint()
+        val contrastMatrix = ColorMatrix().apply {
+            set(
+                floatArrayOf(
+                    1.2f, 0f, 0f, 0f, 0f,  // Increase contrast slightly
+                    0f, 1.2f, 0f, 0f, 0f,
+                    0f, 0f, 1.2f, 0f, 0f,
+                    0f, 0f, 0f, 1f, 0f
+                )
+            )
+        }
+        contrastPaint.colorFilter = ColorMatrixColorFilter(contrastMatrix)
+        Canvas(contrastedBitmap).drawBitmap(grayscaleBitmap, 0f, 0f, contrastPaint)
+        grayscaleBitmap.recycle()
+        return contrastedBitmap
     }
 }

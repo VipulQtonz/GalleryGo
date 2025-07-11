@@ -8,8 +8,8 @@ import com.photogallery.R
 import androidx.core.content.withStyledAttributes
 
 class StoriesProgressView : LinearLayout {
-    private val PROGRESS_BAR_LAYOUT_PARAM = LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f)
-    private val SPACE_LAYOUT_PARAM = LayoutParams(5, LayoutParams.WRAP_CONTENT)
+    private val progressBarLayoutParam = LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f)
+    private val spaceLayoutParam = LayoutParams(5, LayoutParams.WRAP_CONTENT)
     private val progressBars = ArrayList<PausableProgressBar>()
     private var storiesCount = -1
     private var current = -1
@@ -56,13 +56,13 @@ class StoriesProgressView : LinearLayout {
 
     private fun createProgressBar(): PausableProgressBar {
         val p = PausableProgressBar(context)
-        p.layoutParams = PROGRESS_BAR_LAYOUT_PARAM
+        p.layoutParams = progressBarLayoutParam
         return p
     }
 
     private fun createSpace(): View {
         val v = View(context)
-        v.layoutParams = SPACE_LAYOUT_PARAM
+        v.layoutParams = spaceLayoutParam
         return v
     }
 
