@@ -86,139 +86,67 @@ public class OverlayView extends View {
         init();
     }
 
-    public OverlayViewChangeListener getOverlayViewChangeListener() {
-        return mCallback;
-    }
 
     public void setOverlayViewChangeListener(OverlayViewChangeListener callback) {
         mCallback = callback;
     }
 
-    @NonNull
-    public RectF getCropViewRect() {
-        return mCropViewRect;
-    }
-
     @Deprecated
-    /***
-     * Please use the new method {@link #getFreestyleCropMode() getFreestyleCropMode} method as we have more than 1 freestyle crop mode.
-     */
     public boolean isFreestyleCropEnabled() {
         return mFreestyleCropMode == FREESTYLE_CROP_MODE_ENABLE;
     }
 
     @Deprecated
-    /***
-     * Please use the new method {@link #setFreestyleCropMode setFreestyleCropMode} method as we have more than 1 freestyle crop mode.
-     */
     public void setFreestyleCropEnabled(boolean freestyleCropEnabled) {
         mFreestyleCropMode = freestyleCropEnabled ? FREESTYLE_CROP_MODE_ENABLE : FREESTYLE_CROP_MODE_DISABLE;
     }
 
-    @FreestyleMode
-    public int getFreestyleCropMode() {
-        return mFreestyleCropMode;
-    }
-
-    public void setFreestyleCropMode(@FreestyleMode int mFreestyleCropMode) {
-        this.mFreestyleCropMode = mFreestyleCropMode;
-        postInvalidate();
-    }
-
-    /**
-     * Setter for {@link #mCircleDimmedLayer} variable.
-     *
-     * @param circleDimmedLayer - set it to true if you want dimmed layer to be an circle
-     */
     public void setCircleDimmedLayer(boolean circleDimmedLayer) {
         mCircleDimmedLayer = circleDimmedLayer;
     }
 
-    /**
-     * Setter for crop grid rows count.
-     * Resets {@link #mGridPoints} variable because it is not valid anymore.
-     */
     public void setCropGridRowCount(@IntRange(from = 0) int cropGridRowCount) {
         mCropGridRowCount = cropGridRowCount;
         mGridPoints = null;
     }
 
-    /**
-     * Setter for crop grid columns count.
-     * Resets {@link #mGridPoints} variable because it is not valid anymore.
-     */
     public void setCropGridColumnCount(@IntRange(from = 0) int cropGridColumnCount) {
         mCropGridColumnCount = cropGridColumnCount;
         mGridPoints = null;
     }
 
-    /**
-     * Setter for {@link #mShowCropFrame} variable.
-     *
-     * @param showCropFrame - set to true if you want to see a crop frame rectangle on top of an image
-     */
     public void setShowCropFrame(boolean showCropFrame) {
         mShowCropFrame = showCropFrame;
     }
 
-    /**
-     * Setter for {@link #mShowCropGrid} variable.
-     *
-     * @param showCropGrid - set to true if you want to see a crop grid on top of an image
-     */
     public void setShowCropGrid(boolean showCropGrid) {
         mShowCropGrid = showCropGrid;
     }
 
-    /**
-     * Setter for {@link #mDimmedColor} variable.
-     *
-     * @param dimmedColor - desired color of dimmed area around the crop bounds
-     */
     public void setDimmedColor(@ColorInt int dimmedColor) {
         mDimmedColor = dimmedColor;
     }
 
-    /**
-     * Setter for crop frame stroke width
-     */
     public void setCropFrameStrokeWidth(@IntRange(from = 0) int width) {
         mCropFramePaint.setStrokeWidth(width);
     }
 
-    /**
-     * Setter for crop grid stroke width
-     */
     public void setCropGridStrokeWidth(@IntRange(from = 0) int width) {
         mCropGridPaint.setStrokeWidth(width);
     }
 
-    /**
-     * Setter for crop frame color
-     */
     public void setCropFrameColor(@ColorInt int color) {
         mCropFramePaint.setColor(color);
     }
 
-    /**
-     * Setter for crop grid color
-     */
     public void setCropGridColor(@ColorInt int color) {
         mCropGridPaint.setColor(color);
     }
 
-    /**
-     * Setter for crop grid corner color
-     */
     public void setCropGridCornerColor(@ColorInt int color) {
         mCropFrameCornersPaint.setColor(color);
     }
 
-    /**
-     * This method sets aspect ratio for crop bounds.
-     *
-     * @param targetAspectRatio - aspect ratio for image crop (e.g. 1.77(7) for 16:9)
-     */
     public void setTargetAspectRatio(final float targetAspectRatio) {
         mTargetAspectRatio = targetAspectRatio;
         if (mThisWidth > 0) {
@@ -229,10 +157,6 @@ public class OverlayView extends View {
         }
     }
 
-    /**
-     * This method setups crop bounds rectangles for given aspect ratio and view size.
-     * {@link #mCropViewRect} is used to draw crop bounds - uses padding.
-     */
     public void setupCropBounds() {
         int height = (int) (mThisWidth / mTargetAspectRatio);
         if (height > mThisHeight) {
@@ -287,9 +211,6 @@ public class OverlayView extends View {
         }
     }
 
-    /**
-     * Along with image there are dimmed layer, crop bounds and crop guidelines that must be drawn.
-     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -347,14 +268,6 @@ public class OverlayView extends View {
         return false;
     }
 
-    /**
-     * * The order of the corners is:
-     * 0------->1
-     * ^        |
-     * |   4    |
-     * |        v
-     * 3<-------2
-     */
     private void updateCropViewRect(float touchX, float touchY) {
         mTempRect.set(mCropViewRect);
 
@@ -398,16 +311,6 @@ public class OverlayView extends View {
         }
     }
 
-    /**
-     * * The order of the corners in the float array is:
-     * 0------->1
-     * ^        |
-     * |   4    |
-     * |        v
-     * 3<-------2
-     *
-     * @return - index of corner that is being dragged
-     */
     private int getCurrentTouchIndex(float touchX, float touchY) {
         int closestPointIndex = -1;
         double closestPointDistance = mTouchPointThreshold;
@@ -424,29 +327,9 @@ public class OverlayView extends View {
             return 4;
         }
 
-//        for (int i = 0; i <= 8; i += 2) {
-//
-//            double distanceToCorner;
-//            if (i < 8) { // corners
-//                distanceToCorner = Math.sqrt(Math.pow(touchX - mCropGridCorners[i], 2)
-//                        + Math.pow(touchY - mCropGridCorners[i + 1], 2));
-//            } else { // center
-//                distanceToCorner = Math.sqrt(Math.pow(touchX - mCropGridCenter[0], 2)
-//                        + Math.pow(touchY - mCropGridCenter[1], 2));
-//            }
-//            if (distanceToCorner < closestPointDistance) {
-//                closestPointDistance = distanceToCorner;
-//                closestPointIndex = i / 2;
-//            }
-//        }
         return closestPointIndex;
     }
 
-    /**
-     * This method draws dimmed area around the crop bounds.
-     *
-     * @param canvas - valid canvas object
-     */
     protected void drawDimmedLayer(@NonNull Canvas canvas) {
         canvas.save();
         if (mCircleDimmedLayer) {
@@ -463,12 +346,6 @@ public class OverlayView extends View {
         }
     }
 
-    /**
-     * This method draws crop bounds (empty rectangle)
-     * and crop guidelines (vertical and horizontal lines inside the crop bounds) if needed.
-     *
-     * @param canvas - valid canvas object
-     */
     protected void drawCropGrid(@NonNull Canvas canvas) {
         if (mShowCropGrid) {
             if (mGridPoints == null && !mCropViewRect.isEmpty()) {
@@ -517,11 +394,6 @@ public class OverlayView extends View {
         }
     }
 
-    /**
-     * This method extracts all needed values from the styled attributes.
-     * Those are used to configure the view.
-     */
-    @SuppressWarnings("deprecation")
     protected void processStyledAttributes(@NonNull TypedArray a) {
         mCircleDimmedLayer = a.getBoolean(R.styleable.CropView_crop_circle_dimmed_layer, DEFAULT_CIRCLE_DIMMED_LAYER);
         mDimmedColor = a.getColor(R.styleable.CropView_crop_dimmed_color,
@@ -537,10 +409,6 @@ public class OverlayView extends View {
         mShowCropGrid = a.getBoolean(R.styleable.CropView_crop_show_grid, DEFAULT_SHOW_CROP_GRID);
     }
 
-    /**
-     * This method setups Paint object for the crop bounds.
-     */
-    @SuppressWarnings("deprecation")
     private void initCropFrameStyle(@NonNull TypedArray a) {
         int cropFrameStrokeSize = a.getDimensionPixelSize(R.styleable.CropView_crop_frame_stroke_size,
                 getResources().getDimensionPixelSize(R.dimen.crop_default_crop_frame_stoke_width));
@@ -556,10 +424,6 @@ public class OverlayView extends View {
         mCropFrameCornersPaint.setStyle(Paint.Style.STROKE);
     }
 
-    /**
-     * This method setups Paint object for the crop guidelines.
-     */
-    @SuppressWarnings("deprecation")
     private void initCropGridStyle(@NonNull TypedArray a) {
         int cropGridStrokeSize = a.getDimensionPixelSize(R.styleable.CropView_crop_grid_stroke_size,
                 getResources().getDimensionPixelSize(R.dimen.crop_default_crop_grid_stoke_width));
@@ -577,5 +441,4 @@ public class OverlayView extends View {
     @IntDef({FREESTYLE_CROP_MODE_DISABLE, FREESTYLE_CROP_MODE_ENABLE, FREESTYLE_CROP_MODE_ENABLE_WITH_PASS_THROUGH})
     public @interface FreestyleMode {
     }
-
 }

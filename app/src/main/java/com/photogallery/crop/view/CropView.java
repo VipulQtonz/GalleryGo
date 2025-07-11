@@ -57,16 +57,4 @@ public class CropView extends FrameLayout {
     public OverlayView getOverlayView() {
         return mViewOverlay;
     }
-
-    /**
-     * Method for reset state for UCropImageView such as rotation, scale, translation.
-     * Be careful: this method recreate UCropImageView instance and reattach it to layout.
-     */
-    public void resetCropImageView() {
-        removeView(mGestureCropImageView);
-        mGestureCropImageView = new GestureCropImageView(getContext());
-        setListenersToViews();
-        mGestureCropImageView.setCropRect(getOverlayView().getCropViewRect());
-        addView(mGestureCropImageView, 0);
-    }
 }

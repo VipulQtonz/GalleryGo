@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.graphics.Matrix;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.exifinterface.media.ExifInterface;
@@ -22,31 +23,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-/**
- * Crops part of image that fills the crop bounds.
- * <p/>
- * First image is downscaled if max size was set and if resulting image is larger that max size.
- * Then image is rotated accordingly.
- * Finally new Bitmap object is created and saved to file.
- */
 public class BitmapCropTask extends AsyncTask<Void, Void, Throwable> {
-
     private static final String TAG = "BitmapCropTask";
-
     private Bitmap mViewBitmap;
-
     private final RectF mCropRect;
     private final RectF mCurrentImageRect;
-
     private float mCurrentScale, mCurrentAngle;
     private final int mMaxResultImageSizeX, mMaxResultImageSizeY;
-
     private final Bitmap.CompressFormat mCompressFormat;
     private final int mCompressQuality;
     private final String mImageInputPath, mImageOutputPath;
     private final ExifInfo mExifInfo;
     private final BitmapCropCallback mCropCallback;
-
     private int mCroppedImageWidth, mCroppedImageHeight;
     private int cropOffsetX, cropOffsetY;
 
@@ -68,7 +56,6 @@ public class BitmapCropTask extends AsyncTask<Void, Void, Throwable> {
         mImageInputPath = cropParameters.getImageInputPath();
         mImageOutputPath = cropParameters.getImageOutputPath();
         mExifInfo = cropParameters.getExifInfo();
-
         mCropCallback = cropCallback;
     }
 
@@ -84,7 +71,6 @@ public class BitmapCropTask extends AsyncTask<Void, Void, Throwable> {
         }
 
         float resizeScale = resize();
-
         try {
             crop(resizeScale);
             mViewBitmap = null;
@@ -105,9 +91,7 @@ public class BitmapCropTask extends AsyncTask<Void, Void, Throwable> {
         float scaleY = (swapSides ? options.outWidth : options.outHeight) / (float) mViewBitmap.getHeight();
 
         float resizeScale = Math.min(scaleX, scaleY);
-
         mCurrentScale /= resizeScale;
-
         resizeScale = 1;
         if (mMaxResultImageSizeX > 0 && mMaxResultImageSizeY > 0) {
             float cropWidth = mCropRect.width() / mCurrentScale;
@@ -173,14 +157,6 @@ public class BitmapCropTask extends AsyncTask<Void, Void, Throwable> {
         }
     }
 
-    /**
-     * Check whether an image should be cropped at all or just file can be copied to the destination path.
-     * For each 1000 pixels there is one pixel of error due to matrix calculations etc.
-     *
-     * @param width  - crop area width
-     * @param height - crop area height
-     * @return - true if image must be cropped, false - if original image fits requirements
-     */
     private boolean shouldCrop(int width, int height) {
         int pixelError = 1;
         pixelError += Math.round(Math.max(width, height) / 1000f);
@@ -211,5 +187,4 @@ public class BitmapCropTask extends AsyncTask<Void, Void, Throwable> {
             }
         }
     }
-
 }

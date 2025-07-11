@@ -5,11 +5,10 @@ import androidx.annotation.NonNull;
 import okhttp3.OkHttpClient;
 
 public class CropHttpClientStore {
-
-    private CropHttpClientStore() {}
+    private CropHttpClientStore() {
+    }
 
     public final static CropHttpClientStore INSTANCE = new CropHttpClientStore();
-
     private OkHttpClient client;
 
     @NonNull
@@ -18,9 +17,5 @@ public class CropHttpClientStore {
             client = new OkHttpClient();
         }
         return client;
-    }
-
-    public void setClient(@NonNull OkHttpClient client) {
-        this.client = client;
     }
 }

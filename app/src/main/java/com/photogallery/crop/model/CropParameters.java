@@ -2,18 +2,12 @@ package com.photogallery.crop.model;
 
 import android.graphics.Bitmap;
 
-/**
- * Created by Oleksii Shliama [https://github.com/shliama] on 6/21/16.
- */
 public class CropParameters {
-
     private int mMaxResultImageSizeX, mMaxResultImageSizeY;
-
     private Bitmap.CompressFormat mCompressFormat;
     private int mCompressQuality;
     private String mImageInputPath, mImageOutputPath;
     private ExifInfo mExifInfo;
-
 
     public CropParameters(int maxResultImageSizeX, int maxResultImageSizeY,
                           Bitmap.CompressFormat compressFormat, int compressQuality,
@@ -54,5 +48,4 @@ public class CropParameters {
     public ExifInfo getExifInfo() {
         return mExifInfo;
     }
-
 }

@@ -24,9 +24,6 @@ import com.photogallery.crop.view.CropImageView;
 
 import java.util.Locale;
 
-/**
- * Created by Oleksii Shliama (https://github.com/shliama).
- */
 public class AspectRatioTextView extends AppCompatTextView {
 
     private final float MARGIN_MULTIPLIER = 1.5f;
@@ -52,10 +49,6 @@ public class AspectRatioTextView extends AppCompatTextView {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.crop_AspectRatioTextView);
         init(context,a);
     }
-
-    /**
-     * @param activeColor the resolved color for active elements
-     */
 
     public void setActiveColor(@ColorInt int activeColor) {
         applyActiveColor(activeColor);
@@ -162,5 +155,4 @@ public class AspectRatioTextView extends AppCompatTextView {
             setText(String.format(Locale.US, "%d:%d", (int) mAspectRatioX, (int) mAspectRatioY));
         }
     }
-
 }

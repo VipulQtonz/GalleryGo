@@ -32,6 +32,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.photogallery.MyApplication
@@ -54,7 +55,7 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
     private var googleMap: GoogleMap? = null
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
-    private var currentMarker: com.google.android.gms.maps.model.Marker? = null
+    private var currentMarker: Marker? = null
     var personaliseLayoutDialog: AlertDialog? = null
     var googleMapType = GoogleMap.MAP_TYPE_NORMAL
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -289,7 +290,6 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
                 onItemClick = { uri ->
                     val position = imageUris.indexOf(uri)
                     if (position != -1) {
-                        updateMarkerAndCamera(position)
                         val intent = Intent(this, PhotoViewActivity::class.java).apply {
                             putExtra("selected_position", position)
                             putExtra("fromAlbum", true)
@@ -466,5 +466,20 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
             e.printStackTrace()
             null
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onStop() {
+        mapView.onStop()
+        super.onStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 }

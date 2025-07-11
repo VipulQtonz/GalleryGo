@@ -4,11 +4,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 
-/**
- * Hack class to properly support state drawable back to Android 1.6
- */
 public class SelectedStateListDrawable extends StateListDrawable {
-
     private int mSelectionColor;
 
     public SelectedStateListDrawable(Drawable drawable, int selectionColor) {
@@ -38,5 +34,4 @@ public class SelectedStateListDrawable extends StateListDrawable {
     public boolean isStateful() {
         return true;
     }
-
 }

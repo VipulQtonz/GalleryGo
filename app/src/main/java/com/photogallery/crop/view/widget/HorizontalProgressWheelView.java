@@ -1,33 +1,28 @@
 package com.photogallery.crop.view.widget;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+
 import androidx.annotation.ColorInt;
+
 import com.photogallery.R;
 
 public class HorizontalProgressWheelView extends View {
-
     private final Rect mCanvasClipBounds = new Rect();
-
     private ScrollingListener mScrollingListener;
     private float mLastTouchedPosition;
-
     private Paint mProgressLinePaint;
     private Paint mProgressMiddleLinePaint;
     private int mProgressLineWidth, mProgressLineHeight;
     private int mProgressLineMargin;
-
     private boolean mScrollStarted;
     private float mTotalScrollDistance;
-
     private int mMiddleLineColor;
 
     public HorizontalProgressWheelView(Context context) {
@@ -41,11 +36,6 @@ public class HorizontalProgressWheelView extends View {
     public HorizontalProgressWheelView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public HorizontalProgressWheelView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     public void setScrollingListener(ScrollingListener scrollingListener) {
@@ -150,5 +140,4 @@ public class HorizontalProgressWheelView extends View {
 
         void onScrollEnd();
     }
-
 }

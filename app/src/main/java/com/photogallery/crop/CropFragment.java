@@ -194,34 +194,24 @@ public class CropFragment extends Fragment {
         }
     }
 
-    /**
-     * This method extracts {@link Crop.Options #optionsBundle} from incoming bundle
-     * and setups fragment, {@link OverlayView} and {@link CropImageView} properly.
-     */
     @SuppressWarnings("deprecation")
     private void processOptions(@NonNull Bundle bundle) {
-        // Bitmap compression options
         String compressionFormatName = bundle.getString(Crop.Options.EXTRA_COMPRESSION_FORMAT_NAME);
         Bitmap.CompressFormat compressFormat = null;
         if (!TextUtils.isEmpty(compressionFormatName)) {
             compressFormat = Bitmap.CompressFormat.valueOf(compressionFormatName);
         }
         mCompressFormat = (compressFormat == null) ? DEFAULT_COMPRESS_FORMAT : compressFormat;
-
         mCompressQuality = bundle.getInt(Crop.Options.EXTRA_COMPRESSION_QUALITY, CropActivity.DEFAULT_COMPRESS_QUALITY);
-
-        // Gestures options
         int[] allowedGestures = bundle.getIntArray(Crop.Options.EXTRA_ALLOWED_GESTURES);
         if (allowedGestures != null && allowedGestures.length == TABS_COUNT) {
             mAllowedGestures = allowedGestures;
         }
 
-        // Crop image view options
         mGestureCropImageView.setMaxBitmapSize(bundle.getInt(Crop.Options.EXTRA_MAX_BITMAP_SIZE, CropImageView.DEFAULT_MAX_BITMAP_SIZE));
         mGestureCropImageView.setMaxScaleMultiplier(bundle.getFloat(Crop.Options.EXTRA_MAX_SCALE_MULTIPLIER, CropImageView.DEFAULT_MAX_SCALE_MULTIPLIER));
         mGestureCropImageView.setImageToWrapCropBoundsAnimDuration(bundle.getInt(Crop.Options.EXTRA_IMAGE_TO_CROP_BOUNDS_ANIM_DURATION, CropImageView.DEFAULT_IMAGE_TO_CROP_BOUNDS_ANIM_DURATION));
 
-        // Overlay view options
         mOverlayView.setFreestyleCropEnabled(bundle.getBoolean(Crop.Options.EXTRA_FREE_STYLE_CROP, OverlayView.DEFAULT_FREESTYLE_CROP_MODE != OverlayView.FREESTYLE_CROP_MODE_DISABLE));
 
         mOverlayView.setDimmedColor(bundle.getInt(Crop.Options.EXTRA_DIMMED_LAYER_COLOR, getResources().getColor(R.color.crop_color_default_dimmed)));
@@ -237,7 +227,6 @@ public class CropFragment extends Fragment {
         mOverlayView.setCropGridColor(bundle.getInt(Crop.Options.EXTRA_CROP_GRID_COLOR, getResources().getColor(R.color.crop_color_default_crop_grid)));
         mOverlayView.setCropGridStrokeWidth(bundle.getInt(Crop.Options.EXTRA_CROP_GRID_STROKE_WIDTH, getResources().getDimensionPixelSize(R.dimen.crop_default_crop_grid_stoke_width)));
 
-        // Aspect ratio options
         float aspectRatioX = bundle.getFloat(Crop.EXTRA_ASPECT_RATIO_X, -1);
         float aspectRatioY = bundle.getFloat(Crop.EXTRA_ASPECT_RATIO_Y, -1);
 
@@ -257,7 +246,6 @@ public class CropFragment extends Fragment {
             mGestureCropImageView.setTargetAspectRatio(CropImageView.SOURCE_IMAGE_ASPECT_RATIO);
         }
 
-        // Result bitmap max size options
         int maxSizeX = bundle.getInt(Crop.EXTRA_MAX_SIZE_X, 0);
         int maxSizeY = bundle.getInt(Crop.EXTRA_MAX_SIZE_Y, 0);
 
@@ -512,11 +500,6 @@ public class CropFragment extends Fragment {
         mGestureCropImageView.setRotateEnabled(mAllowedGestures[tab] == ALL || mAllowedGestures[tab] == ROTATE);
     }
 
-    /**
-     * Adds view that covers everything below the Toolbar.
-     * When it's clickable - user won't be able to click/touch anything below the Toolbar.
-     * Need to block user input while loading and cropping an image.
-     */
     private void addBlockingView(View view) {
         if (mBlockingView == null) {
             mBlockingView = new View(getContext());
@@ -526,36 +509,6 @@ public class CropFragment extends Fragment {
         }
 
         ((RelativeLayout) view.findViewById(R.id.rlCrop)).addView(mBlockingView);
-    }
-
-    public void cropAndSaveImage() {
-        mBlockingView.setClickable(true);
-        callback.loadingProgress(true);
-
-        mGestureCropImageView.cropAndSaveImage(mCompressFormat, mCompressQuality, new BitmapCropCallback() {
-
-            @Override
-            public void onBitmapCropped(@NonNull Uri resultUri, int offsetX, int offsetY, int imageWidth, int imageHeight) {
-                callback.onCropFinish(getResult(resultUri, mGestureCropImageView.getTargetAspectRatio(), offsetX, offsetY, imageWidth, imageHeight));
-                callback.loadingProgress(false);
-            }
-
-            @Override
-            public void onCropFailure(@NonNull Throwable t) {
-                callback.onCropFinish(getError(t));
-            }
-        });
-    }
-
-    protected UCropResult getResult(Uri uri, float resultAspectRatio, int offsetX, int offsetY, int imageWidth, int imageHeight) {
-        return new UCropResult(RESULT_OK, new Intent()
-                .putExtra(Crop.EXTRA_OUTPUT_URI, uri)
-                .putExtra(Crop.EXTRA_OUTPUT_CROP_ASPECT_RATIO, resultAspectRatio)
-                .putExtra(Crop.EXTRA_OUTPUT_IMAGE_WIDTH, imageWidth)
-                .putExtra(Crop.EXTRA_OUTPUT_IMAGE_HEIGHT, imageHeight)
-                .putExtra(Crop.EXTRA_OUTPUT_OFFSET_X, offsetX)
-                .putExtra(Crop.EXTRA_OUTPUT_OFFSET_Y, offsetY)
-        );
     }
 
     protected UCropResult getError(Throwable throwable) {
@@ -570,7 +523,6 @@ public class CropFragment extends Fragment {
             mResultCode = resultCode;
             mResultData = data;
         }
-
     }
 }
 

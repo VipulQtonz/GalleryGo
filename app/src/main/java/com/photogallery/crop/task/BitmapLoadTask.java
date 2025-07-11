@@ -29,27 +29,17 @@ import okio.BufferedSource;
 import okio.Okio;
 import okio.Sink;
 
-/**
- * Creates and returns a Bitmap for a given Uri(String url).
- * inSampleSize is calculated based on requiredWidth property. However can be adjusted if OOM occurs.
- * If any EXIF config is found - bitmap is transformed properly.
- */
 public class BitmapLoadTask extends AsyncTask<Void, Void, BitmapLoadTask.BitmapWorkerResult> {
-
     private static final String TAG = "BitmapWorkerTask";
-
     private static final int MAX_BITMAP_SIZE = 100 * 1024 * 1024;   // 100 MB
-
     private final Context mContext;
     private Uri mInputUri;
     private Uri mOutputUri;
     private final int mRequiredWidth;
     private final int mRequiredHeight;
-
     private final BitmapLoadCallback mBitmapLoadCallback;
 
     public static class BitmapWorkerResult {
-
         Bitmap mBitmapResult;
         ExifInfo mExifInfo;
         Exception mBitmapWorkerException;
@@ -65,10 +55,7 @@ public class BitmapLoadTask extends AsyncTask<Void, Void, BitmapLoadTask.BitmapW
 
     }
 
-    public BitmapLoadTask(@NonNull Context context,
-                          @NonNull Uri inputUri, @Nullable Uri outputUri,
-                          int requiredWidth, int requiredHeight,
-                          BitmapLoadCallback loadCallback) {
+    public BitmapLoadTask(@NonNull Context context, @NonNull Uri inputUri, @Nullable Uri outputUri, int requiredWidth, int requiredHeight, BitmapLoadCallback loadCallback) {
         mContext = context;
         mInputUri = inputUri;
         mOutputUri = outputUri;
@@ -96,7 +83,6 @@ public class BitmapLoadTask extends AsyncTask<Void, Void, BitmapLoadTask.BitmapW
         options.inJustDecodeBounds = false;
 
         Bitmap decodeSampledBitmap = null;
-
         boolean decodeAttemptSuccess = false;
         while (!decodeAttemptSuccess) {
             try {
@@ -196,9 +182,6 @@ public class BitmapLoadTask extends AsyncTask<Void, Void, BitmapLoadTask.BitmapW
         } finally {
             BitmapLoadUtils.close(outputStream);
             BitmapLoadUtils.close(inputStream);
-
-            // swap uris, because input image was copied to the output destination
-            // (cropped image will override it later)
             mInputUri = mOutputUri;
         }
     }
@@ -211,19 +194,14 @@ public class BitmapLoadTask extends AsyncTask<Void, Void, BitmapLoadTask.BitmapW
         }
 
         OkHttpClient client = CropHttpClientStore.INSTANCE.getClient();
-
         BufferedSource source = null;
         Sink sink = null;
         Response response = null;
         try {
-            Request request = new Request.Builder()
-                .url(inputUri.toString())
-                .build();
+            Request request = new Request.Builder().url(inputUri.toString()).build();
             response = client.newCall(request).execute();
             source = response.body().source();
-
             OutputStream outputStream;
-
             if (isContentUri(mOutputUri)) {
                 outputStream = mContext.getContentResolver().openOutputStream(outputUri);
             } else {
@@ -244,8 +222,6 @@ public class BitmapLoadTask extends AsyncTask<Void, Void, BitmapLoadTask.BitmapW
             }
             client.dispatcher().cancelAll();
 
-            // swap uris, because input image was downloaded to the output destination
-            // (cropped image will override it later)
             mInputUri = mOutputUri;
         }
     }

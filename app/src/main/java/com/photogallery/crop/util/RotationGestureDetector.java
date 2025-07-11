@@ -5,17 +5,12 @@ import android.view.MotionEvent;
 import androidx.annotation.NonNull;
 
 public class RotationGestureDetector {
-
     private static final int INVALID_POINTER_INDEX = -1;
-
     private float fX, fY, sX, sY;
-
     private int mPointerIndex1, mPointerIndex2;
     private float mAngle;
     private boolean mIsFirstTouch;
-
     private OnRotationGestureListener mListener;
-
     public RotationGestureDetector(OnRotationGestureListener listener) {
         mListener = listener;
         mPointerIndex1 = INVALID_POINTER_INDEX;
@@ -108,5 +103,4 @@ public class RotationGestureDetector {
 
         boolean onRotation(RotationGestureDetector rotationDetector);
     }
-
 }

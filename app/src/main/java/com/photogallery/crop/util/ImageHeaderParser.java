@@ -1,33 +1,3 @@
-/*
- * Copyright 2015 Google, Inc. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification, are
- * permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this list of
- * conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other materials
- * provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY GOOGLE, INC. ``AS IS'' AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL GOOGLE, INC. OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- * The views and conclusions contained in the software and documentation are those of the
- * authors and should not be interpreted as representing official policies, either expressed
- * or implied, of Google, Inc.
- *
- * Adapted for the uCrop library.
- */
-
 package com.photogallery.crop.util;
 
 import android.text.TextUtils;
@@ -41,22 +11,12 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 
-/**
- * A class for parsing the exif orientation from an image header.
- */
 public class ImageHeaderParser {
     private static final String TAG = "ImageHeaderParser";
-    /**
-     * A constant indicating we were unable to parse the orientation from the image either because
-     * no exif segment containing orientation data existed, or because of an I/O error attempting to
-     * read the exif segment.
-     */
     public static final int UNKNOWN_ORIENTATION = -1;
 
     private static final int EXIF_MAGIC_NUMBER = 0xFFD8;
-    // "MM".
     private static final int MOTOROLA_TIFF_MAGIC_NUMBER = 0x4D4D;
-    // "II".
     private static final int INTEL_TIFF_MAGIC_NUMBER = 0x4949;
     private static final String JPEG_EXIF_SEGMENT_PREAMBLE = "Exif\0\0";
     private static final byte[] JPEG_EXIF_SEGMENT_PREAMBLE_BYTES =
@@ -67,21 +27,12 @@ public class ImageHeaderParser {
     private static final int EXIF_SEGMENT_TYPE = 0xE1;
     private static final int ORIENTATION_TAG_TYPE = 0x0112;
     private static final int[] BYTES_PER_FORMAT = {0, 1, 1, 2, 4, 8, 1, 1, 2, 4, 8, 4, 8};
-
     private final Reader reader;
 
     public ImageHeaderParser(InputStream is) {
         reader = new StreamReader(is);
     }
 
-    /**
-     * Parse the orientation from the image header. If it doesn't handle this image type (or this is
-     * not an image) it will return a default value rather than throwing an exception.
-     *
-     * @return The exif orientation if present or -1 if the header couldn't be parsed or doesn't
-     * contain an orientation
-     * @throws IOException
-     */
     public int getOrientation() throws IOException {
         final int magicNumber = reader.getUInt16();
 
@@ -140,10 +91,6 @@ public class ImageHeaderParser {
         return result;
     }
 
-    /**
-     * Moves reader to the start of the exif segment and returns the length of the exif segment or
-     * {@code -1} if no exif segment is found.
-     */
     private int moveToExifSegmentAndGetLength() throws IOException {
         short segmentId, segmentType;
         int segmentLength;
@@ -167,7 +114,6 @@ public class ImageHeaderParser {
                 return -1;
             }
 
-            // Segment length includes bytes for segment length.
             segmentLength = reader.getUInt16() - 2;
 
             if (segmentType != EXIF_SEGMENT_TYPE) {
@@ -267,7 +213,6 @@ public class ImageHeaderParser {
                 continue;
             }
 
-            //assume componentCount == 1 && fmtCode == 3
             return segmentData.getInt16(tagValueOffset);
         }
 
@@ -323,7 +268,6 @@ public class ImageHeaderParser {
     private static class StreamReader implements Reader {
         private final InputStream is;
 
-        // Motorola / big endian byte order.
         public StreamReader(InputStream is) {
             this.is = is;
         }
@@ -350,10 +294,6 @@ public class ImageHeaderParser {
                 if (skipped > 0) {
                     toSkip -= skipped;
                 } else {
-                    // Skip has no specific contract as to what happens when you reach the end of
-                    // the stream. To differentiate between temporarily not having more data and
-                    // having finished the stream, we read a single byte when we fail to skip any
-                    // amount of data.
                     int testEofByte = is.read();
                     if (testEofByte == -1) {
                         break;
@@ -421,6 +361,5 @@ public class ImageHeaderParser {
             Log.d(TAG, e.getMessage());
         }
     }
-
 }
 

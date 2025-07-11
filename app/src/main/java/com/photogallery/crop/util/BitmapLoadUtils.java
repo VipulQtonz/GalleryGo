@@ -23,11 +23,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by Oleksii Shliama (https://github.com/shliama).
- */
 public class BitmapLoadUtils {
-
     private static final String TAG = "BitmapLoadUtils";
 
     public static void decodeBitmapInBackground(@NonNull Context context,
@@ -52,14 +48,11 @@ public class BitmapLoadUtils {
     }
 
     public static int calculateInSampleSize(@NonNull BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
 
         if (height > reqHeight || width > reqWidth) {
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width lower or equal to the requested height and width.
             while ((height / inSampleSize) > reqHeight || (width / inSampleSize) > reqWidth) {
                 inSampleSize *= 2;
             }
@@ -118,13 +111,6 @@ public class BitmapLoadUtils {
         return translation;
     }
 
-    /**
-     * This method calculates maximum size of both width and height of bitmap.
-     * It is twice the device screen diagonal for default implementation (extra quality to zoom image).
-     * Size cannot exceed max texture size.
-     *
-     * @return - max bitmap size in pixels.
-     */
     @SuppressWarnings({"SuspiciousNameCombination", "deprecation"})
     public static int calculateMaxBitmapSize(@NonNull Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -166,7 +152,6 @@ public class BitmapLoadUtils {
             try {
                 c.close();
             } catch (IOException e) {
-                // silence
             }
         }
     }

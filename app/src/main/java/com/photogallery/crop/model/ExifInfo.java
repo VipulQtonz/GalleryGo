@@ -1,10 +1,6 @@
 package com.photogallery.crop.model;
 
-/**
- * Created by Oleksii Shliama [https://github.com/shliama] on 6/21/16.
- */
 public class ExifInfo {
-
     private int mExifOrientation;
     private int mExifDegrees;
     private int mExifTranslation;
@@ -15,28 +11,8 @@ public class ExifInfo {
         mExifTranslation = exifTranslation;
     }
 
-    public int getExifOrientation() {
-        return mExifOrientation;
-    }
-
     public int getExifDegrees() {
         return mExifDegrees;
-    }
-
-    public int getExifTranslation() {
-        return mExifTranslation;
-    }
-
-    public void setExifOrientation(int exifOrientation) {
-        mExifOrientation = exifOrientation;
-    }
-
-    public void setExifDegrees(int exifDegrees) {
-        mExifDegrees = exifDegrees;
-    }
-
-    public void setExifTranslation(int exifTranslation) {
-        mExifTranslation = exifTranslation;
     }
 
     @Override
@@ -59,5 +35,4 @@ public class ExifInfo {
         result = 31 * result + mExifTranslation;
         return result;
     }
-
 }
