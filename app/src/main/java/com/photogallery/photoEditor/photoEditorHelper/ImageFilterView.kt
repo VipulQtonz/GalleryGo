@@ -234,8 +234,4 @@ internal class ImageFilterView @JvmOverloads constructor(
             mTexRenderer.renderTexture(mTextures[0])
         }
     }
-
-    companion object {
-        private const val TAG = "ImageFilterView"
-    }
 }

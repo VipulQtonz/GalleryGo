@@ -55,6 +55,8 @@ import com.photogallery.photoEditor.photoEditorHelper.TextStyleBuilder
 import com.photogallery.photoEditor.photoEditorHelper.ViewType
 import com.photogallery.photoEditor.photoEditorHelper.shape.ShapeBuilder
 import com.photogallery.photoEditor.photoEditorHelper.shape.ShapeType
+import com.photogallery.utils.Const.PINCH_TEXT_SCALABLE_INTENT_KEY
+import com.photogallery.utils.Const.REQUEST_CROP_IMAGE
 import com.skydoves.balloon.ArrowOrientation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -660,10 +662,5 @@ class EditImageActivity : BaseActivity<ActivityEditImageBinding>(), OnPhotoEdito
                 this, getString(R.string.failed_to_apply_transformation), Toast.LENGTH_SHORT
             ).show()
         }
-    }
-
-    companion object {
-        const val PINCH_TEXT_SCALABLE_INTENT_KEY = "PINCH_TEXT_SCALABLE"
-        private const val REQUEST_CROP_IMAGE = 101
     }
 }

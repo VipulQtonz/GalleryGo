@@ -17,6 +17,7 @@ import com.photogallery.photoEditor.photoEditorHelper.shape.RectangleShape
 import com.photogallery.photoEditor.photoEditorHelper.shape.ShapeAndPaint
 import com.photogallery.photoEditor.photoEditorHelper.shape.ShapeBuilder
 import com.photogallery.photoEditor.photoEditorHelper.shape.ShapeType
+import com.photogallery.utils.Const.DEFAULT_ERASER_SIZE
 import java.util.Stack
 
 class DrawingView @JvmOverloads constructor(
@@ -181,10 +182,6 @@ class DrawingView @JvmOverloads constructor(
         if (brushDrawMode) {
             visibility = VISIBLE
         }
-    }
-
-    companion object {
-        const val DEFAULT_ERASER_SIZE = 50.0f
     }
 
     init {

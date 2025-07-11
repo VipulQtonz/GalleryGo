@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
+import com.photogallery.utils.Const.TOUCH_TOLERANCE
 
 abstract class AbstractShape(protected val tag: String) : Shape {
     protected var path = Path()
@@ -34,9 +35,5 @@ abstract class AbstractShape(protected val tag: String) : Shape {
                 " - top: " + top +
                 " - right: " + right +
                 " - bottom: " + bottom
-    }
-
-    companion object {
-        const val TOUCH_TOLERANCE = 4f
     }
 }

@@ -3,6 +3,7 @@ package com.photogallery.photoEditor.photoEditorHelper.shape
 import android.content.Context
 import android.graphics.Path
 import android.util.Log
+import com.photogallery.utils.Const.TOUCH_TOLERANCE
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan2

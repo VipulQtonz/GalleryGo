@@ -76,10 +76,4 @@ class RotateBSFragment : BottomSheetDialogFragment() {
     fun setRotatePropertiesListener(listener: RotateProperties) {
         this.rotateListener = listener
     }
-
-    companion object {
-        fun newInstance(): RotateBSFragment {
-            return RotateBSFragment()
-        }
-    }
 }

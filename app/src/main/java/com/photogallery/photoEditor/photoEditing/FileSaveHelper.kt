@@ -8,12 +8,10 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.OnLifecycleEvent
 import java.io.IOException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -40,11 +38,6 @@ class FileSaveHelper(private val mContentResolver: ContentResolver) : LifecycleO
     private fun addObserver(lifecycleOwner: LifecycleOwner) {
         fileCreatedResult.observe(lifecycleOwner, observer)
         lifecycleOwner.lifecycle.addObserver(this)
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun release() {
-        executor?.shutdownNow()
     }
 
     fun createFile(fileNameToSave: String, listener: OnFileCreateResult?) {

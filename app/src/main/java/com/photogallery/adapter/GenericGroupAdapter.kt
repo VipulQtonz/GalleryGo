@@ -16,16 +16,13 @@ import com.photogallery.model.DocumentGroup
 import com.photogallery.model.GroupedLocationPhoto
 import com.photogallery.model.PeopleGroup
 import com.photogallery.process.FaceGroupingUtils
+import com.photogallery.utils.Const.TYPE_FACE_GROUP
+import com.photogallery.utils.Const.TYPE_OTHER_GROUP
 
 class GenericGroupAdapter(
     private val context: Context,
     private val onItemClick: (Any) -> Unit
 ) : ListAdapter<Any, RecyclerView.ViewHolder>(GroupDiffCallback()) {
-
-    companion object {
-        private const val TYPE_FACE_GROUP = 0
-        private const val TYPE_OTHER_GROUP = 1
-    }
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {

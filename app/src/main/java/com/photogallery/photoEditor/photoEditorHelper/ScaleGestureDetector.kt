@@ -1,8 +1,8 @@
 package com.photogallery.photoEditor.photoEditorHelper
 
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import com.photogallery.utils.Const.PRESSURE_THRESHOLD
 import kotlin.math.sqrt
 
 internal class ScaleGestureDetector(private val mListener: OnScaleGestureListener) {
@@ -207,7 +207,6 @@ internal class ScaleGestureDetector(private val mListener: OnScaleGestureListene
         val currIndex1 = curr.findPointerIndex(mActiveId1)
         if (prevIndex0 < 0 || prevIndex1 < 0 || currIndex0 < 0 || currIndex1 < 0) {
             mInvalidGesture = true
-            Log.e(TAG, "Invalid MotionEvent stream detected.", Throwable())
             if (isInProgress) {
                 mListener.onScaleEnd(view, this)
             }
@@ -283,10 +282,5 @@ internal class ScaleGestureDetector(private val mListener: OnScaleGestureListene
             mScaleFactor = getCurrentSpan() / getPreviousSpan()
         }
         return mScaleFactor
-    }
-
-    companion object {
-        private const val TAG = "ScaleGestureDetector"
-        private const val PRESSURE_THRESHOLD = 0.67f
     }
 }

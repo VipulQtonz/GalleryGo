@@ -30,8 +30,8 @@ import com.photogallery.databinding.DialogPersonaliseGridBinding
 import com.photogallery.databinding.FragmentPhotosBinding
 import com.photogallery.model.GalleryListItem
 import com.photogallery.model.MediaData
+import com.photogallery.utils.Const.SPAN_COUNT_DEFAULT
 import com.photogallery.utils.LayoutMode
-import com.photogallery.utils.SharedPreferenceHelper.Companion.SPAN_COUNT_DEFAULT
 import com.photogallery.utils.ViewMode
 import com.photogallery.utils.isInternet
 import kotlinx.coroutines.Dispatchers

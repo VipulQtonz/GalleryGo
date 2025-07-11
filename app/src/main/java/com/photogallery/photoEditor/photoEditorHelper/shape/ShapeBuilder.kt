@@ -1,7 +1,9 @@
 package com.photogallery.photoEditor.photoEditorHelper.shape
 
-import android.graphics.Color
 import androidx.annotation.ColorInt
+import com.photogallery.utils.Const.DEFAULT_SHAPE_COLOR
+import com.photogallery.utils.Const.DEFAULT_SHAPE_OPACITY
+import com.photogallery.utils.Const.DEFAULT_SHAPE_SIZE
 
 class ShapeBuilder {
 
@@ -44,11 +46,4 @@ class ShapeBuilder {
         shapeColor = color
         return this
     }
-
-    companion object {
-        const val DEFAULT_SHAPE_SIZE = 25.0f
-        val DEFAULT_SHAPE_OPACITY = null
-        const val DEFAULT_SHAPE_COLOR = Color.BLACK
-    }
-
 }

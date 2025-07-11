@@ -289,7 +289,7 @@ class AddToAlbumActivity : BaseActivity<ActivityAddToAlbumBinding>() {
                         val newFile = File(albumDir, originalFile.name)
                         Log.d("AddToAlbumActivity", "Moving ${originalFile.absolutePath} to ${newFile.absolutePath}")
                         if (originalFile.renameTo(newFile)) {
-                            val contentUri = if (media.isVideo == true) {
+                            val contentUri = if (media.isVideo) {
                                 MediaStore.Video.Media.EXTERNAL_CONTENT_URI
                             } else {
                                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI

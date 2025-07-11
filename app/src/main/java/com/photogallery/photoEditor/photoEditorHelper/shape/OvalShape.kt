@@ -3,6 +3,7 @@ package com.photogallery.photoEditor.photoEditorHelper.shape
 import android.graphics.Path
 import android.graphics.RectF
 import android.util.Log
+import com.photogallery.utils.Const.TOUCH_TOLERANCE
 import kotlin.math.abs
 
 class OvalShape : AbstractShape("OvalShape") {

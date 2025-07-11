@@ -22,12 +22,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.net.toUri
 import androidx.viewbinding.ViewBinding
 import com.photogallery.MyApplication
 import com.photogallery.R
+import com.photogallery.utils.Const.THEME_SYSTEM_DEFAULT
 import com.photogallery.utils.SharedPreferenceHelper
 import java.io.File
 
@@ -181,9 +181,9 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
         val currentTheme = ePreferences.getInt(
             SharedPreferenceHelper.Companion.PREF_THEME,
-            SharedPreferenceHelper.Companion.THEME_SYSTEM_DEFAULT
+            THEME_SYSTEM_DEFAULT
         )
-        if (currentTheme == SharedPreferenceHelper.Companion.THEME_SYSTEM_DEFAULT) {
+        if (currentTheme == THEME_SYSTEM_DEFAULT) {
             recreate()
         }
     }

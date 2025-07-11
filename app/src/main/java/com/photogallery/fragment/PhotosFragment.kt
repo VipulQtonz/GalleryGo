@@ -39,8 +39,8 @@ import com.photogallery.model.GalleryListItem
 import com.photogallery.model.MediaData
 import com.photogallery.model.Moment
 import com.photogallery.utils.Const.PERMISSION_REQUEST_CODE
+import com.photogallery.utils.Const.SPAN_COUNT_DEFAULT
 import com.photogallery.utils.LayoutMode
-import com.photogallery.utils.SharedPreferenceHelper.Companion.SPAN_COUNT_DEFAULT
 import com.photogallery.utils.ViewMode
 import com.photogallery.utils.isInternet
 import kotlinx.coroutines.Dispatchers

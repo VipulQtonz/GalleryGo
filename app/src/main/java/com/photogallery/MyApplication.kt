@@ -32,11 +32,11 @@ import com.photogallery.process.FaceEmbeddingUtils
 import com.photogallery.process.FaceGroupingUtils
 import com.photogallery.process.LocationUtils
 import com.photogallery.process.MomentsUtils
+import com.photogallery.utils.Const.THEME_DARK
+import com.photogallery.utils.Const.THEME_LIGHT
+import com.photogallery.utils.Const.THEME_SYSTEM_DEFAULT
 import com.photogallery.utils.SharedPreferenceHelper
 import com.photogallery.utils.SharedPreferenceHelper.Companion.PREF_THEME
-import com.photogallery.utils.SharedPreferenceHelper.Companion.THEME_DARK
-import com.photogallery.utils.SharedPreferenceHelper.Companion.THEME_LIGHT
-import com.photogallery.utils.SharedPreferenceHelper.Companion.THEME_SYSTEM_DEFAULT
 import com.photogallery.utils.UriUtils
 import com.skydoves.balloon.ArrowOrientation
 import com.skydoves.balloon.ArrowPositionRules

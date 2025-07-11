@@ -9,11 +9,11 @@ import com.photogallery.R
 import com.photogallery.adapter.ThemeColorAdapter
 import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivityAppThemAndColorBinding
+import com.photogallery.utils.Const.THEME_DARK
+import com.photogallery.utils.Const.THEME_LIGHT
+import com.photogallery.utils.Const.THEME_SYSTEM_DEFAULT
 import com.photogallery.utils.SharedPreferenceHelper.Companion.PREF_APP_COLOR
 import com.photogallery.utils.SharedPreferenceHelper.Companion.PREF_THEME
-import com.photogallery.utils.SharedPreferenceHelper.Companion.THEME_DARK
-import com.photogallery.utils.SharedPreferenceHelper.Companion.THEME_LIGHT
-import com.photogallery.utils.SharedPreferenceHelper.Companion.THEME_SYSTEM_DEFAULT
 import com.skydoves.balloon.ArrowOrientation
 
 class AppThemAndColorActivity : BaseActivity<ActivityAppThemAndColorBinding>() {

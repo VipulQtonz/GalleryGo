@@ -4,12 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.AttributeSet
-import android.util.Log
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.photogallery.R
 import com.photogallery.photoEditor.photoEditorHelper.FilterImageView.OnImageChangedListener
+import com.photogallery.utils.Const.GL_FILTER_ID
+import com.photogallery.utils.Const.IMG_SRC_ID
+import com.photogallery.utils.Const.SHAPE_SRC_ID
 
 class PhotoEditorView @JvmOverloads constructor(
     context: Context,
@@ -34,7 +35,6 @@ class PhotoEditorView @JvmOverloads constructor(
             override fun onBitmapLoaded(sourceBitmap: Bitmap?) {
                 mImageFilterView.setFilterEffect(PhotoFilter.NONE)
                 mImageFilterView.setSourceBitmap(sourceBitmap)
-                Log.d(TAG, "onBitmapLoaded() called with: sourceBitmap = [$sourceBitmap]")
             }
         })
 
@@ -51,7 +51,7 @@ class PhotoEditorView @JvmOverloads constructor(
 
     @SuppressLint("Recycle")
     private fun setupImageSource(attrs: AttributeSet?): LayoutParams {
-        mImgSource.id = imgSrcId
+        mImgSource.id = IMG_SRC_ID
         mImgSource.adjustViewBounds = true
         mImgSource.scaleType = ImageView.ScaleType.CENTER_INSIDE
 
@@ -76,29 +76,29 @@ class PhotoEditorView @JvmOverloads constructor(
 
     private fun setupDrawingView(): LayoutParams {
         drawingView.visibility = GONE
-        drawingView.id = shapeSrcId
+        drawingView.id = SHAPE_SRC_ID
 
         val params = LayoutParams(
             LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
         )
         params.addRule(CENTER_IN_PARENT, TRUE)
-        params.addRule(ALIGN_TOP, imgSrcId)
-        params.addRule(ALIGN_BOTTOM, imgSrcId)
-        params.addRule(ALIGN_LEFT, imgSrcId)
-        params.addRule(ALIGN_RIGHT, imgSrcId)
+        params.addRule(ALIGN_TOP, IMG_SRC_ID)
+        params.addRule(ALIGN_BOTTOM, IMG_SRC_ID)
+        params.addRule(ALIGN_LEFT, IMG_SRC_ID)
+        params.addRule(ALIGN_RIGHT, IMG_SRC_ID)
         return params
     }
 
     private fun setupFilterView(): LayoutParams {
         mImageFilterView.visibility = GONE
-        mImageFilterView.id = glFilterId
+        mImageFilterView.id = GL_FILTER_ID
 
         val params = LayoutParams(
             LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
         )
         params.addRule(CENTER_IN_PARENT, TRUE)
-        params.addRule(ALIGN_TOP, imgSrcId)
-        params.addRule(ALIGN_BOTTOM, imgSrcId)
+        params.addRule(ALIGN_TOP, IMG_SRC_ID)
+        params.addRule(ALIGN_BOTTOM, IMG_SRC_ID)
         return params
     }
 
@@ -135,11 +135,4 @@ class PhotoEditorView @JvmOverloads constructor(
         val param = setupImageSource(null)
         mImgSource.layoutParams = param
     } // endregion
-
-    companion object {
-        private const val TAG = "PhotoEditorView"
-        private const val imgSrcId = 1
-        private const val shapeSrcId = 2
-        private const val glFilterId = 3
-    }
 }

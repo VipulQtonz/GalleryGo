@@ -64,10 +64,4 @@ class BlurBSFragment : BottomSheetDialogFragment() {
     fun setBlurPropertiesListener(listener: BlurProperties) {
         this.blurListener = listener
     }
-
-    companion object {
-        fun newInstance(): BlurBSFragment {
-            return BlurBSFragment()
-        }
-    }
 }

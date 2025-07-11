@@ -85,11 +85,6 @@ private constructor(
         private const val MODE_PRIVATE = 0
         internal const val ALBUMS_KEY = "albums_key"
         const val PREF_THEME = "app_theme"
-        const val SPAN_COUNT_DEFAULT = 3
-
-        const val THEME_LIGHT = 0
-        const val THEME_DARK = 1
-        const val THEME_SYSTEM_DEFAULT = 2
 
         const val RATE_US = "RATE_US"
         const val IS_NOTIFICATION_ON = "is_notification_on"

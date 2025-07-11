@@ -11,6 +11,7 @@ import com.photogallery.databinding.ActivityCropImageBinding
 import com.photogallery.crop.Crop
 import com.photogallery.crop.CropFragment
 import com.photogallery.crop.CropFragmentCallback
+import com.photogallery.utils.Const.REQUEST_SELECT_PICTURE_FOR_FRAGMENT
 import java.io.File
 
 class CropImageActivity : BaseActivity<ActivityCropImageBinding>(), CropFragmentCallback {
@@ -153,9 +154,5 @@ class CropImageActivity : BaseActivity<ActivityCropImageBinding>(), CropFragment
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment!!, CropFragment.TAG)
             .commitAllowingStateLoss()
-    }
-
-    companion object {
-        private const val REQUEST_SELECT_PICTURE_FOR_FRAGMENT = 0x02
     }
 }

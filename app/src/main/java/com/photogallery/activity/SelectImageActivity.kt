@@ -24,9 +24,9 @@ import com.photogallery.databinding.DialogPersonaliseGridBinding
 import com.photogallery.model.GalleryListItem
 import com.photogallery.model.MediaData
 import com.photogallery.utils.Const.PERMISSION_REQUEST_CODE
+import com.photogallery.utils.Const.SPAN_COUNT_DEFAULT
 import com.photogallery.utils.LayoutMode
 import com.photogallery.utils.MediaDataSerializer
-import com.photogallery.utils.SharedPreferenceHelper
 import com.photogallery.utils.ViewMode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -95,7 +95,7 @@ class SelectImageActivity : BaseActivity<ActivitySelectImageBinding>() {
                 }
             })
 
-        spanCount = ePreferences.getInt("span_count", SharedPreferenceHelper.SPAN_COUNT_DEFAULT)
+        spanCount = ePreferences.getInt("span_count", SPAN_COUNT_DEFAULT)
         shortOrder = ePreferences.getInt("SortOrder", 0)
         val savedViewMode = ePreferences.getString("view_mode", "DAY")
         viewMode = when (savedViewMode) {

@@ -14,6 +14,8 @@ import com.google.android.material.shape.CornerFamily
 import com.photogallery.R
 import com.photogallery.model.GalleryListItem
 import com.photogallery.model.MediaData
+import com.photogallery.utils.Const.TYPE_HEADER
+import com.photogallery.utils.Const.TYPE_IMAGE
 import com.photogallery.utils.LayoutMode
 import com.photogallery.utils.ViewMode
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
@@ -45,11 +47,6 @@ class GalleryVideoAdapter(
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         attachedRecyclerView = null
-    }
-
-    companion object {
-        private const val TYPE_HEADER = 0
-        private const val TYPE_IMAGE = 1
     }
 
     override fun getItemViewType(position: Int): Int {
