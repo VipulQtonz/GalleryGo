@@ -39,7 +39,7 @@ class ImageAdapter(
         holder.imageView.setOnClickListener { onItemClick(uri) }
         holder.imageView.setOnLongClickListener {
             onItemLongClick(uri)
-            true // Consume the long click event
+            true
         }
     }
 

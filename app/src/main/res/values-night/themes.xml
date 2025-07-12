@@ -311,7 +311,6 @@
         <item name="colorStroke">@color/color_stroke_dark</item>
     </style>
 
-
     <style name="AppTheme.VideoPlayerActivity" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>

@@ -136,7 +136,6 @@
     <string name="crop">Crop</string>
     <string name="flip_horizontal">Flip Horizontal</string>
     <string name="flip_vertical">Flip Vertical</string>
-    <string name="no_media_selected">No Media Selected</string>
     <string name="invalid_video_uri">Invalid video URI</string>
     <string name="share_video_via">Share video via</string>
     <string name="lock_video">Lock Video!</string>
@@ -610,7 +609,6 @@
     <string name="newest_at_top">Newest at top</string>
     <string name="newest_at_bottom">Newest at bottom</string>
     <string name="apply">Apply</string>
-    <string name="no">No</string>
     <string name="please_enter_your_requirements">please enter your requirements</string>
     <string name="feedback_submit_successfully">Feedback Submit successfully</string>
     <string name="feedback_submit_error">Feedback Submit Error</string>
@@ -662,8 +660,6 @@
     <string name="got_it">Got It!</string>
     <string name="double_tap_to_zoom">Double Tap to Zoom</string>
     <string name="quickly_zoom_in_with_a_double_tap_on_the_screen">Quickly zoom in with a double tap on the screen</string>
-    <string name="tap_to_undo">Tap to Undo</string>
-    <string name="tap_to_redo">Tap to Redo</string>
     <string name="failed_to_apply_transformation">Failed to apply transformation</string>
     <string name="failed_to_save_blur">Failed to save blur</string>
     <string name="failed_to_revert_blur">Failed to revert blur</string>
@@ -711,7 +707,6 @@
     <string name="select_media_type">Select Media Type</string>
     <string name="select_grid_type">Select Grid Type</string>
     <string name="select_all_photos">Select all photos</string>
-    <string name="long_press_to_select">Long Press To Select</string>
     <string name="scroll_horizontal_for_available_options">Scroll Horizontal for available options</string>
     <string name="rotate_image">Rotate Image</string>
     <string name="click_to_add_to_favorites">Click to add to favorites</string>

@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +36,7 @@ import com.photogallery.utils.ConnectivityObserver
 import com.photogallery.utils.isInternet
 import com.skydoves.balloon.ArrowOrientation
 import kotlinx.coroutines.Job
+import androidx.core.net.toUri
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private lateinit var locationPhotosAdapter: LocationPhotosAdapter
@@ -137,7 +140,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         faceGroupAdapter = FaceGroupAdapter(
             MyApplication.faceGroups.value ?: emptyList(), requireContext()
         ) { group ->
-            MyApplication.selectedAlbumImages = group.uris.map { Uri.parse(it) }
+            MyApplication.selectedAlbumImages = group.uris.map { it.toUri() }
             val intent = Intent(requireActivity(), AlbumViewerActivity::class.java).apply {
                 putExtra("albumName", "Face Group ${group.groupId.takeLast(8)}")
                 putExtra("isWhat", "FaceGroup")
@@ -190,15 +193,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     "isFirstTimeSearchFragmnetLocation",
                     true
                 ) && binding.tvSeeAllLocation.isVisible
+                && photos.isNotEmpty()
             ) {
-                setupTooltip(
-                    requireContext(),
-                    binding.tvSeeAllLocation,
-                    getString(R.string.click_to_see_all_locations),
-                    ArrowOrientation.BOTTOM,
-                    ePreferences!!,
-                    "isFirstTimeSearchFragmnetLocation"
-                )
+                Handler(Looper.getMainLooper()).postDelayed({
+                    setupTooltip(
+                        requireContext(),
+                        binding.tvSeeAllLocation,
+                        getString(R.string.click_to_see_all_locations),
+                        ArrowOrientation.BOTTOM,
+                        ePreferences!!,
+                        "isFirstTimeSearchFragmnetLocation"
+                    )
+                }, 2000)
             }
         })
 
@@ -217,21 +223,27 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     "isFirstTimeSearchFragmnetDocument",
                     true
                 ) && binding.tvSeeAllDocuments.isVisible
+                && documents.isNotEmpty()
             ) {
-                setupTooltip(
-                    requireContext(),
-                    binding.tvSeeAllDocuments,
-                    getString(R.string.click_to_see_all_documents),
-                    ArrowOrientation.BOTTOM,
-                    ePreferences!!,
-                    "isFirstTimeSearchFragmnetDocument"
-                )
+                Handler(Looper.getMainLooper()).postDelayed({
+                    setupTooltip(
+                        requireContext(),
+                        binding.tvSeeAllDocuments,
+                        getString(R.string.click_to_see_all_documents),
+                        ArrowOrientation.BOTTOM,
+                        ePreferences!!,
+                        "isFirstTimeSearchFragmnetDocument"
+                    )
+                }, 2000)
             }
         })
 
         MyApplication.faceGroups.observe(viewLifecycleOwner, Observer { faceGroups ->
             if (faceGroups.isEmpty()) {
-                Log.w("TAGG", "Face groups list is empty. Check FaceEmbeddingUtils or database.")
+                Log.w(
+                    "TAGG",
+                    "Face groups list is empty. Check FaceEmbeddingUtils or database."
+                )
                 binding.rlPeople.visibility = View.GONE
             } else {
                 binding.rlPeople.visibility = View.VISIBLE
@@ -243,15 +255,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     "isFirstTimeSearchFragmnetPeople",
                     true
                 ) && binding.tvSeeAllDocuments.isVisible
+                && faceGroups.isNotEmpty()
             ) {
-                setupTooltip(
-                    requireContext(),
-                    binding.tvSeeAllPeople,
-                    getString(R.string.click_to_see_all_people),
-                    ArrowOrientation.BOTTOM,
-                    ePreferences!!,
-                    "isFirstTimeSearchFragmnetPeople"
-                )
+                Handler(Looper.getMainLooper()).postDelayed({
+                    setupTooltip(
+                        requireContext(),
+                        binding.tvSeeAllPeople,
+                        getString(R.string.click_to_see_all_people),
+                        ArrowOrientation.BOTTOM,
+                        ePreferences!!,
+                        "isFirstTimeSearchFragmnetPeople"
+                    )
+                }, 2000)
             }
         })
     }

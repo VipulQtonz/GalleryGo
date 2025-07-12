@@ -255,7 +255,7 @@ class MyApplication : MultiDexApplication() {
                     if (location != null) {
                         val locationName =
                             LocationUtils.getLocationName(context, location.first, location.second)
-                        val key = locationName ?: "Unknown Location"
+                        val key = locationName ?: context.getString(R.string.unknown_location)
                         synchronized(locationMap) {
                             if (locationMap.containsKey(key)) {
                                 locationMap[key]!!.allUris.add(uri)

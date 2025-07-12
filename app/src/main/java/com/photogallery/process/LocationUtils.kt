@@ -7,6 +7,7 @@ import android.location.Location
 import android.media.ExifInterface
 import android.net.Uri
 import android.provider.MediaStore
+import com.photogallery.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.Locale
@@ -107,7 +108,7 @@ object LocationUtils {
                     } else if (address.adminArea != null && address.countryName != null) {
                         "${address.adminArea}, ${address.countryName}"
                     } else {
-                        address.countryName ?: "Unknown Location"
+                        address.countryName ?: context.getString(R.string.unknown_location)
                     }
                 } else {
                     null

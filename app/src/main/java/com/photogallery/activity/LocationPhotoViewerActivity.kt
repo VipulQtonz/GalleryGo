@@ -12,8 +12,12 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
+import android.media.ExifInterface
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.RequiresPermission
@@ -23,7 +27,6 @@ import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.graphics.scale
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -32,7 +35,6 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.photogallery.MyApplication
@@ -55,7 +57,6 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
     private var googleMap: GoogleMap? = null
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
-    private var currentMarker: Marker? = null
     var personaliseLayoutDialog: AlertDialog? = null
     var googleMapType = GoogleMap.MAP_TYPE_NORMAL
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -75,18 +76,56 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        // Initialize BottomSheetBehavior
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
-        bottomSheetBehavior.isHideable = false // Prevent fully collapsing
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED // Start at 50% expanded
+        bottomSheetBehavior.isHideable = true // Allow hiding to peek height
+        bottomSheetBehavior.state =
+            BottomSheetBehavior.STATE_HALF_EXPANDED // Start at half-expanded
+
+        // Calculate half screen height
+        val displayMetrics = resources.displayMetrics
+        val halfScreenHeight = displayMetrics.heightPixels / 2
+
+        // Set max height to prevent full expansion
+        bottomSheetBehavior.maxHeight = halfScreenHeight
+
+        // Set peek height to the height of the drag handle
+        binding.dragHandle.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+        val dragHandleHeight = binding.dragHandle.measuredHeight
+        bottomSheetBehavior.peekHeight = dragHandleHeight
+
+        // Add callback to manage state transitions
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+                when (newState) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        // Ensure it collapses to peek height (drag handle)
+                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    }
+
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        // Prevent full expansion by forcing back to half-expanded
+                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+                    }
+
+                    BottomSheetBehavior.STATE_DRAGGING, BottomSheetBehavior.STATE_SETTLING -> {
+                        // Allow dragging but enforce constraints
+                    }
+
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                        // Desired default state
+                    }
+
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        // When hidden, immediately set to collapsed to show drag handle
+                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    }
                 }
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                // Optional: Add smooth transitions or animations if needed
             }
         })
     }
@@ -123,36 +162,41 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
-        updateMarkerAndCamera(0) // Initialize with the first image
+        val location = LatLng(latitude, longitude)
+
+        val markerOptions = MarkerOptions().position(location).title(albumName).anchor(0.5f, 1.0f)
+        if (MyApplication.selectedAlbumImages.isNotEmpty()) {
+            val bitmap = createCircularBitmapFromUri(MyApplication.selectedAlbumImages[0])
+            if (bitmap != null) {
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+            }
+        }
+        googleMap?.addMarker(markerOptions)
+        googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
 
         if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                this, Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             googleMap?.isMyLocationEnabled = true
             addCurrentLocationMarker()
         } else {
             ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                100
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 100
             )
         }
     }
 
     private fun addCurrentLocationMarker() {
         if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                this, Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
                     val currentLocation = LatLng(location.latitude, location.longitude)
                     googleMap?.addMarker(
-                        MarkerOptions()
-                            .position(currentLocation)
+                        MarkerOptions().position(currentLocation)
                             .title(getString(R.string.my_location))
                     )
                 }
@@ -164,9 +208,7 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
 
     @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 100 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -204,18 +246,6 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
         binding.flMap.setOnClickListener {
             showPersonaliseLayoutDialog()
         }
-
-        // Add scroll listener to RecyclerView
-        binding.rvBottomSheetImages.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val layoutManager = recyclerView.layoutManager as GridLayoutManager
-                val firstVisiblePosition = layoutManager.findFirstCompletelyVisibleItemPosition()
-                if (firstVisiblePosition != -1) {
-                    updateMarkerAndCamera(firstVisiblePosition)
-                }
-            }
-        })
     }
 
     override fun onBackPressedDispatcher() {
@@ -233,8 +263,6 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
                         MediaStore.Images.Media.DISPLAY_NAME,
                         MediaStore.Images.Media.DATA,
                         MediaStore.Images.Media.DATE_TAKEN,
-                        MediaStore.Images.Media.LATITUDE,
-                        MediaStore.Images.Media.LONGITUDE
                     ), null, null, null
                 )?.use { cursor ->
                     if (cursor.moveToFirst()) {
@@ -246,10 +274,6 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
                             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
                         val dateTaken =
                             cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN))
-                        val latitude =
-                            cursor.getDouble(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.LATITUDE))
-                        val longitude =
-                            cursor.getDouble(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.LONGITUDE))
 
                         newMediaList.add(
                             MediaData(
@@ -262,8 +286,6 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
                                 duration = 0L,
                                 daysRemaining = 0,
                                 isFavorite = false,
-                                latitude = latitude,
-                                longitude = longitude
                             )
                         )
                     }
@@ -285,52 +307,23 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
             binding.llEmptyBottomSheet.llEmptyLayout.visibility = View.GONE
             binding.rvBottomSheetImages.visibility = View.VISIBLE
             binding.rvBottomSheetImages.layoutManager = GridLayoutManager(this, 3)
-            val adapter = ImageAdapter(
-                imageUris,
-                onItemClick = { uri ->
-                    val position = imageUris.indexOf(uri)
-                    if (position != -1) {
-                        val intent = Intent(this, PhotoViewActivity::class.java).apply {
-                            putExtra("selected_position", position)
-                            putExtra("fromAlbum", true)
-                            putExtra("FromSearch", true)
-                            putExtra("isWhat", isWhat)
-                        }
-                        startActivity(intent)
-                        nextScreenAnimation()
+            val adapter = ImageAdapter(imageUris, onItemClick = {
+                val position = imageUris.indexOf(it)
+                if (position != -1) {
+                    val intent = Intent(this, PhotoViewActivity::class.java).apply {
+                        putExtra("selected_position", position)
+                        putExtra("fromAlbum", true)
+                        putExtra("FromSearch", true)
+                        putExtra("isWhat", isWhat)
                     }
-                },
-                onItemLongClick = { uri ->
-                    val position = imageUris.indexOf(uri)
-                    if (position != -1) {
-                        updateMarkerAndCamera(position)
-                    }
+                    startActivity(intent)
+                    nextScreenAnimation()
                 }
-            )
+            }, onItemLongClick = {
+                updateMarkerAndCamera(it)
+            })
             binding.rvBottomSheetImages.adapter = adapter
         }
-    }
-
-    fun updateMarkerAndCamera(position: Int) {
-        if (position < 0 || position >= MyApplication.mediaList.size) return
-
-        val mediaData = MyApplication.mediaList[position]
-        val location = LatLng(mediaData.latitude, mediaData.longitude)
-
-        // Remove the previous marker
-        currentMarker?.remove()
-
-        // Create new marker
-        val markerOptions = MarkerOptions()
-            .position(location)
-            .title(albumName)
-            .anchor(0.5f, 1.0f)
-        val bitmap = createCircularBitmapFromUri(mediaData.uri)
-        if (bitmap != null) {
-            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bitmap))
-        }
-        currentMarker = googleMap?.addMarker(markerOptions)
-        googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
     }
 
     private fun showPersonaliseLayoutDialog() {
@@ -406,7 +399,7 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
         personaliseLayoutDialog?.show()
     }
 
-    private fun createCircularBitmapFromUri(uri: android.net.Uri): Bitmap? {
+    private fun createCircularBitmapFromUri(uri: Uri): Bitmap? {
         return try {
             val inputStream = contentResolver.openInputStream(uri)
             val originalBitmap = BitmapFactory.decodeStream(inputStream)
@@ -439,10 +432,7 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
             photoCanvas.drawBitmap(scaledBitmap, 0f, 0f, paint)
             paint.xfermode = null
             canvas.drawBitmap(
-                photoBitmap,
-                (markerSize - photoSize) / 2f,
-                (markerSize - photoSize) / 2f,
-                paint
+                photoBitmap, (markerSize - photoSize) / 2f, (markerSize - photoSize) / 2f, paint
             )
 
             // Draw the black dot at the bottom of the circle
@@ -452,9 +442,7 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
             canvas.drawCircle(dotCenterX, dotCenterY, dotRadius, paint)
 
             // Draw the pointer tip (triangle) below the dot
-            val
-
-                    path = Path()
+            val path = Path()
             path.moveTo(dotCenterX, markerSize.toFloat()) // Top of the triangle (at the dot)
             path.lineTo(dotCenterX - dotRadius * 2, markerSize + pointerHeight) // Bottom left
             path.lineTo(dotCenterX + dotRadius * 2, markerSize + pointerHeight) // Bottom right
@@ -468,18 +456,46 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        mapView.onStart()
-    }
+    private fun updateMarkerAndCamera(imageUri: Uri) {
+        // Work off the main thread
+        CoroutineScope(Dispatchers.IO).launch {
+            val latLon = FloatArray(2)
+            var latitude = 0.0
+            var longitude = 0.0
 
-    override fun onStop() {
-        mapView.onStop()
-        super.onStop()
-    }
+            try {
+                val originalUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    MediaStore.setRequireOriginal(imageUri)
+                } else imageUri
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        mapView.onSaveInstanceState(outState)
+                contentResolver.openInputStream(originalUri)?.use { stream ->
+                    val exif = ExifInterface(stream)
+                    if (exif.getLatLong(latLon)) {
+                        latitude = latLon[0].toDouble()
+                        longitude = latLon[1].toDouble()
+                    }
+                }
+            } catch (t: Throwable) {
+                Log.e("LocationPhotoViewer", "EXIF read failed", t)
+            }
+
+            // Nothing to draw?
+            if (latitude == 0.0 && longitude == 0.0) return@launch
+
+            // Switch back to the UI thread
+            withContext(Dispatchers.Main) {
+                val point = LatLng(latitude, longitude)
+                googleMap?.clear()
+
+                val icon = createCircularBitmapFromUri(imageUri)?.let {
+                    BitmapDescriptorFactory.fromBitmap(it)
+                }
+
+                googleMap?.addMarker(
+                    MarkerOptions().position(point).title(albumName).icon(icon).anchor(0.5f, 1f)
+                )
+                googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 15f))
+            }
+        }
     }
 }
