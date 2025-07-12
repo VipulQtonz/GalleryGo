@@ -408,7 +408,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
                             )
                             database.photoGalleryDao().insertDeletedMedia(mediaDataEntity)
 
-                            // Notify MediaStore of the deletion
                             val contentResolver = this@HomeActivity.contentResolver
                             try {
                                 val uri = media.uri
@@ -420,7 +419,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
                                     arrayOf(newFile.absolutePath),
                                     arrayOf(if (media.isVideo) "video/*" else "image/*")
                                 ) { _, _ ->
-                                    // Scan complete, no action needed
                                 }
                             }
                             withContext(Dispatchers.Main) {
@@ -473,27 +471,22 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
                 val newFile = File(lockedDir, originalFile.name + ".lockimg")
 
                 try {
-                    // Move and rename file
                     originalFile.renameTo(newFile)
                     count++
 
-                    // Notify MediaStore of the deletion
                     val contentResolver = this@HomeActivity.contentResolver
                     try {
                         val uri = media.uri
                         contentResolver.delete(uri, null, null)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        // Optionally, use MediaScannerConnection to scan the new file location
                         MediaScannerConnection.scanFile(
                             this@HomeActivity,
                             arrayOf(lockedDir.absolutePath),
                             arrayOf(if (media.isVideo) "video/*" else "image/*")
                         ) { _, _ ->
-                            // Scan complete, no action needed
                         }
                     }
-                    // Notify fragment to remove the item
                     withContext(Dispatchers.Main) {
                         hideLoading()
                         (supportFragmentManager.findFragmentById(binding.frameLayoutHome.id) as? PhotosFragment)?.removeMedia(

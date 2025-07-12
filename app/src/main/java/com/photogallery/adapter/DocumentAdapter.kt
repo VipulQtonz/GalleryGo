@@ -49,11 +49,9 @@ class DocumentAdapter(
                 )
                 .into(holder.imageView)
         } else {
-            // Set a default image if no URIs are available
             holder.imageView.setImageResource(R.drawable.ic_image_placeholder)
         }
 
-        // Set click listener
         holder.itemView.setOnClickListener { onItemClick(group) }
     }
 

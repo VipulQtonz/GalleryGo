@@ -70,7 +70,6 @@ class FavoriteActivity : BaseActivity<ActivityFavoriteBinding>() {
             this,
             ePreferences,
             onItemClick = { media ->
-                // Filter based on media type
                 MyApplication.mediaList = adapter.currentList
                     .filter { it.isVideo == media.isVideo }
                     .map { entity ->
@@ -87,9 +86,7 @@ class FavoriteActivity : BaseActivity<ActivityFavoriteBinding>() {
                         )
                     }
 
-                // Get correct position in the filtered list
                 val position = MyApplication.mediaList.indexOfFirst { it.uri == media.uri }
-
                 if (position != -1) {
                     val intent = if (media.isVideo) {
                         Intent(this@FavoriteActivity, VideoPlayerActivity::class.java)
@@ -103,7 +100,7 @@ class FavoriteActivity : BaseActivity<ActivityFavoriteBinding>() {
                 }
             },
             onUnFavoriteClick = { media ->
-                if (media.isFavorite == true) {
+                if (media.isFavorite) {
                     removeFromFavorites(media)
                 }
             }

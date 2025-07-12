@@ -32,10 +32,8 @@ class MomentAdapter(
             .load(moment)
             .into(holder.ivRepresentative)
 
-        // Clear any existing zoom state
         holder.clearZoom()
 
-        // Only start zoom if this is the current active item
         if (position == currentPosition) {
             holder.startZoom()
         }
@@ -43,7 +41,6 @@ class MomentAdapter(
 
     override fun onViewAttachedToWindow(holder: ViewHolder) {
         super.onViewAttachedToWindow(holder)
-        // When view becomes attached, check if it's the current position
         if (holder.adapterPosition == currentPosition) {
             holder.startZoom()
         }

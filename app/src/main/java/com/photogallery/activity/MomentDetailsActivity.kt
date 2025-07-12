@@ -116,7 +116,6 @@ class MomentDetailsActivity : BaseActivity<ActivityMomentDetailsBinding>() {
     }
 
     override fun addListener() {
-
     }
 
     override fun onBackPressedDispatcher() {

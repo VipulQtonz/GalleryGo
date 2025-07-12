@@ -44,13 +44,8 @@ class EnterPinActivity : BaseActivity<ActivityEnterPinBinding>() {
         ivDigitThree = binding.ivDigitThree
         ivDigitFour = binding.ivDigitFour
 
-        // Set toolbar title
         binding.toolbarEnterPin.tvToolbarTitle.text = getString(R.string.enter_pin)
-
-        // Set up keypad buttons
         setupKeypad()
-
-        // Submit button click
         binding.btnSubmit.setOnClickListener {
             if (pin.length == 4) {
                 verifyPin(pin)

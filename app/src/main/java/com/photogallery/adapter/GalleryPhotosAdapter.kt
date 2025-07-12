@@ -318,10 +318,8 @@ class GalleryPhotosAdapter(
             ivItem.setOnClickListener {
                 val now = System.currentTimeMillis()
                 if (isSelectionMode) {
-                    // Immediate action in selection mode
                     onImageClick(adapterPosition)
                 } else {
-                    // Debounce logic for normal mode
                     if (now - lastClickTime > 800) {
                         lastClickTime = now
                         onImageClick(adapterPosition)
@@ -358,13 +356,11 @@ class GalleryPhotosAdapter(
             val context = ivItem.context
             val params = ivItem.layoutParams
 
-            // Dynamic sizing calculation
             if (layoutMode == LayoutMode.GRID) {
                 val displayMetrics = context.resources.displayMetrics
                 val screenWidth = displayMetrics.widthPixels
                 val spacing = context.resources.getDimensionPixelSize(R.dimen.grid_spacing)
 
-                // Calculate square dimensions based on spanCount
                 val itemSize = (screenWidth - (spacing * (spanCount + 1))) / spanCount
 
                 params.width = itemSize
@@ -380,7 +376,6 @@ class GalleryPhotosAdapter(
                     .override(itemSize, itemSize) // Square image
                     .into(ivItem)
             } else {
-                // List view layout
                 params.width = ViewGroup.LayoutParams.MATCH_PARENT
                 params.height = ViewGroup.LayoutParams.WRAP_CONTENT
                 ivItem.layoutParams = params
@@ -394,7 +389,6 @@ class GalleryPhotosAdapter(
                     .into(ivItem)
             }
 
-            // Selection styling - only apply padding when selected
             if (isSelected) {
                 val padding =
                     context.resources.getDimensionPixelSize(R.dimen.selected_image_padding)
@@ -407,7 +401,6 @@ class GalleryPhotosAdapter(
                     )
                     .build()
             } else {
-                // No padding when not selected
                 ivItem.setPadding(0, 0, 0, 0)
                 ivItem.background = null
                 ivItem.shapeAppearanceModel = ivItem.shapeAppearanceModel
@@ -416,7 +409,6 @@ class GalleryPhotosAdapter(
                     .build()
             }
 
-            // Selection indicator
             ivSelectOption.visibility = if (isSelectionMode) View.VISIBLE else View.GONE
             ivSelectOption.setImageResource(
                 if (isSelected) R.drawable.ic_select_active else R.drawable.ic_select_inactive

@@ -133,7 +133,6 @@ class ImagePagerAdapter(
 
         fun setVideoViewVolume(volume: Float) {
             try {
-                // Using reflection to access VideoView's internal MediaPlayer
                 val mMediaPlayerField = VideoView::class.java.getDeclaredField("mMediaPlayer")
                 mMediaPlayerField.isAccessible = true
                 val mediaPlayer = mMediaPlayerField.get(videoView) as MediaPlayer?
@@ -500,7 +499,6 @@ class ImagePagerAdapter(
         isMuted = !isMuted
         ePreferences.putBoolean("isMuted", isMuted)
 
-        // Update all active media players
         activeMediaPlayers.forEach { mp ->
             try {
                 mp.setVolume(if (isMuted) 0f else 1f, if (isMuted) 0f else 1f)
@@ -509,7 +507,6 @@ class ImagePagerAdapter(
             }
         }
 
-        // Update all active view holders
         activeViewHolders.forEach { holder ->
             holder.updateSoundIcon(isMuted)
             holder.setVideoViewVolume(if (isMuted) 0f else 1f)

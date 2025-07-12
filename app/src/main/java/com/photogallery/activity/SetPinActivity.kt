@@ -386,7 +386,6 @@ class SetPinActivity : BaseActivity<ActivitySetPinBinding>() {
     }
 
     private fun saveData() {
-        // For complete setup, save all data at the end
         if (isCompleteSetup && currentStep == CHANGE_SECURITY_QUESTION_STEP) {
             ePreferences.putString("hashed_pin", hashPin(originalPin))
             ePreferences.putString("recovery_email", recoveryEmail)
@@ -399,7 +398,6 @@ class SetPinActivity : BaseActivity<ActivitySetPinBinding>() {
             Toast.makeText(this, getString(R.string.security_setup_completed), Toast.LENGTH_SHORT)
                 .show()
         } else {
-            // Individual flows
             when (currentStep) {
                 in MODIFY_PIN_STEP..(MODIFY_PIN_STEP + 1) -> {
                     ePreferences.putString("hashed_pin", hashPin(originalPin))

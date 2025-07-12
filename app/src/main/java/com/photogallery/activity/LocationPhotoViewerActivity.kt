@@ -76,56 +76,41 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        // Initialize BottomSheetBehavior
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
         bottomSheetBehavior.isHideable = true // Allow hiding to peek height
         bottomSheetBehavior.state =
             BottomSheetBehavior.STATE_HALF_EXPANDED // Start at half-expanded
-
-        // Calculate half screen height
         val displayMetrics = resources.displayMetrics
         val halfScreenHeight = displayMetrics.heightPixels / 2
-
-        // Set max height to prevent full expansion
         bottomSheetBehavior.maxHeight = halfScreenHeight
-
-        // Set peek height to the height of the drag handle
         binding.dragHandle.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         val dragHandleHeight = binding.dragHandle.measuredHeight
         bottomSheetBehavior.peekHeight = dragHandleHeight
-
-        // Add callback to manage state transitions
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     BottomSheetBehavior.STATE_COLLAPSED -> {
-                        // Ensure it collapses to peek height (drag handle)
                         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                     }
 
                     BottomSheetBehavior.STATE_EXPANDED -> {
-                        // Prevent full expansion by forcing back to half-expanded
                         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
                     }
 
                     BottomSheetBehavior.STATE_DRAGGING, BottomSheetBehavior.STATE_SETTLING -> {
-                        // Allow dragging but enforce constraints
                     }
 
                     BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                        // Desired default state
                     }
 
                     BottomSheetBehavior.STATE_HIDDEN -> {
-                        // When hidden, immediately set to collapsed to show drag handle
                         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                     }
                 }
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                // Optional: Add smooth transitions or animations if needed
             }
         })
     }
@@ -405,7 +390,6 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
             val originalBitmap = BitmapFactory.decodeStream(inputStream)
             inputStream?.close()
 
-            // Define dimensions
             val markerSize = 120 // Total width/height of the marker (circle)
             val photoSize = 100 // Size of the photo inside the marker
             val dotRadius = 5f // Radius of the black dot
@@ -457,7 +441,6 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
     }
 
     private fun updateMarkerAndCamera(imageUri: Uri) {
-        // Work off the main thread
         CoroutineScope(Dispatchers.IO).launch {
             val latLon = FloatArray(2)
             var latitude = 0.0
@@ -479,10 +462,8 @@ class LocationPhotoViewerActivity : BaseActivity<ActivityLocationPhotoViewerBind
                 Log.e("LocationPhotoViewer", "EXIF read failed", t)
             }
 
-            // Nothing to draw?
             if (latitude == 0.0 && longitude == 0.0) return@launch
 
-            // Switch back to the UI thread
             withContext(Dispatchers.Main) {
                 val point = LatLng(latitude, longitude)
                 googleMap?.clear()

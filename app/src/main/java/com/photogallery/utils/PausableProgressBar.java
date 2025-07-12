@@ -33,6 +33,7 @@ public final class PausableProgressBar extends FrameLayout {
 
         void onFinishProgress();
     }
+
     public PausableProgressBar(Context context) {
         this(context, null);
     }
@@ -107,27 +108,19 @@ public final class PausableProgressBar extends FrameLayout {
     }
 
     public void setProgress(float progress) {
-        // Ensure progress is within valid range
         progress = Math.max(0f, Math.min(1f, progress));
 
-        // Clear any existing animation
         clear();
 
-        // Create a new animation that starts from 0 and goes to the specified progress
         animation = new PausableScaleAnimation(0, progress, 1, 1,
                 Animation.ABSOLUTE, 0, Animation.RELATIVE_TO_SELF, 0);
-        animation.setDuration(1); // Very short duration for immediate effect
+        animation.setDuration(1);
         animation.setInterpolator(new LinearInterpolator());
         animation.setFillAfter(true);
 
-        // Start the animation
         frontProgressView.startAnimation(animation);
-
-        // Immediately complete the animation to show the progress
         animation.start();
         animation.getTransformation(AnimationUtils.currentAnimationTimeMillis(), null);
-
-        // Pause the animation so it doesn't continue running
         animation.pause();
     }
 
@@ -137,7 +130,7 @@ public final class PausableProgressBar extends FrameLayout {
         }
     }
 
-    public void clear() { // Changed to public
+    public void clear() {
         if (animation != null) {
             animation.setAnimationListener(null);
             animation.cancel();

@@ -29,24 +29,19 @@ class ForgotPinActivity : BaseActivity<ActivityForgotPinBinding>() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        // Initialize views
         etRecoveryEmail = binding.etRecoveryEmail
         tvQuestion = binding.tvQuestion1
         etAnswer = binding.etAnswer1
         btnVerify = binding.btnVerify
         btnResetPin = binding.btnResetPin
-
-        // Hide unused question fields
         binding.tvQuestion2.visibility = View.GONE
         binding.etAnswer2.visibility = View.GONE
         binding.tvQuestion3.visibility = View.GONE
         binding.etAnswer3.visibility = View.GONE
-
         binding.toolbarForgotPin.tvToolbarTitle.text =
             getString(R.string.forgot_pin)
 
         setSecurityQuestionVisibility(View.GONE)
-
         btnVerify.setOnClickListener {
             if (securityQuestions == null) {
                 fetchSecurityQuestions()
@@ -129,7 +124,6 @@ class ForgotPinActivity : BaseActivity<ActivityForgotPinBinding>() {
         etAnswer.visibility = visibility
     }
 
-    // Helper function to convert JSONObject to Map
     private fun JSONObject.toMap(): Map<String, String> {
         val map = mutableMapOf<String, String>()
         for (key in keys()) {

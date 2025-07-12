@@ -71,7 +71,6 @@ class SelectImageActivity : BaseActivity<ActivitySelectImageBinding>() {
             binding.emptyViewLayout.ivIllustrator.setImageResource(R.drawable.ic_photos_empty)
         }
 
-        // Initialize pinch-to-zoom detector
         scaleGestureDetector = ScaleGestureDetector(
             this, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
                 override fun onScale(detector: ScaleGestureDetector): Boolean {

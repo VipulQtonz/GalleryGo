@@ -280,10 +280,8 @@ class GalleryVideoAdapter(
             ivItem.setOnClickListener {
                 val now = System.currentTimeMillis()
                 if (isSelectionMode) {
-                    // Immediate action in selection mode
                     onImageClick(adapterPosition)
                 } else {
-                    // Debounce logic for normal mode
                     if (now - lastClickTime > 800) {
                         lastClickTime = now
                         onImageClick(adapterPosition)
@@ -320,18 +318,12 @@ class GalleryVideoAdapter(
             val context = ivItem.context
             val params = ivItem.layoutParams
             tvDuration.text = formatedDuration(media.duration)
-//            if (spanCount == 5 || spanCount == 6) {
-//                ivPlayIcon.visibility = View.GONE
-//            } else {
-//                ivPlayIcon.visibility = View.VISIBLE
-//            }
 
             if (layoutMode == LayoutMode.GRID) {
                 val displayMetrics = context.resources.displayMetrics
                 val screenWidth = displayMetrics.widthPixels
                 val spacing = context.resources.getDimensionPixelSize(R.dimen.grid_spacing)
 
-                // Calculate square dimensions based on spanCount
                 val itemSize = (screenWidth - (spacing * (spanCount + 1))) / spanCount
 
                 params.width = itemSize
@@ -347,7 +339,6 @@ class GalleryVideoAdapter(
                     .override(itemSize, itemSize) // Load square image
                     .into(ivItem)
             } else {
-                // For non-grid layouts (like list view)
                 params.width = ViewGroup.LayoutParams.MATCH_PARENT
                 params.height = ViewGroup.LayoutParams.WRAP_CONTENT
                 ivItem.layoutParams = params
@@ -361,7 +352,6 @@ class GalleryVideoAdapter(
                     .into(ivItem)
             }
 
-            // Selection styling - only apply padding when selected
             if (isSelected) {
                 val padding =
                     context.resources.getDimensionPixelSize(R.dimen.selected_image_padding)
@@ -374,7 +364,6 @@ class GalleryVideoAdapter(
                     )
                     .build()
             } else {
-                // No padding when not selected
                 ivItem.setPadding(0, 0, 0, 0)
                 ivItem.background = null
                 ivItem.shapeAppearanceModel = ivItem.shapeAppearanceModel

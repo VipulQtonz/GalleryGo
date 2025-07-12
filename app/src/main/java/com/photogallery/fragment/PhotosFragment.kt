@@ -97,14 +97,12 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
             requireContext(),
             object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
                 override fun onScale(detector: ScaleGestureDetector): Boolean {
-                    if (!hasScaled) { // Only process if no scale action has occurred in this gesture
+                    if (!hasScaled) {
                         if (detector.scaleFactor > 1.0f && spanCount > 1) {
-                            // Zoom in: Decrease span count (e.g., 3 -> 2)
                             spanCount--
                             updateGridLayout()
                             hasScaled = true
                         } else if (detector.scaleFactor < 1.0f && spanCount < 5) {
-                            // Zoom out: Increase span count (e.g., 3 -> 4)
                             spanCount++
                             updateGridLayout()
                             hasScaled = true
@@ -114,7 +112,7 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
                 }
 
                 override fun onScaleEnd(detector: ScaleGestureDetector) {
-                    hasScaled = false // Reset flag when the scale gesture ends
+                    hasScaled = false
                     ePreferences?.putInt("span_count", spanCount)
                 }
             }
@@ -129,9 +127,9 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
         binding.rvPhotos.setOnTouchListener { _, event ->
             if (event.pointerCount >= 2) {
                 scaleGestureDetector.onTouchEvent(event)
-                true // Consume multi-touch events
+                true
             } else {
-                false // Let RecyclerView handle single-touch events (scroll, click, long press)
+                false
             }
         }
     }
@@ -334,14 +332,12 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
 
             if (itemList.isEmpty()) {
                 withContext(Dispatchers.Main) {
-//                    binding.rlMain.visibility = View.GONE
                     binding.emptyViewLayout.llEmptyLayout.visibility = View.VISIBLE
                 }
                 return@launch
             }
 
             withContext(Dispatchers.Main) {
-//                binding.rlMain.visibility = View.VISIBLE
                 binding.emptyViewLayout.llEmptyLayout.visibility = View.GONE
 
                 MyApplication.isPhotoFetchReload = false
@@ -387,8 +383,8 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
                 layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         return when (galleryPhotosAdapter.getItemViewType(position)) {
-                            0 -> spanCount // e.g., header or full-span items
-                            else -> 1       // regular grid items
+                            0 -> spanCount
+                            else -> 1
                         }
                     }
                 }
@@ -404,8 +400,8 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return when (galleryPhotosAdapter.getItemViewType(position)) {
-                    0 -> spanCount // Header spans full width
-                    else -> 1      // Media items take one span
+                    0 -> spanCount
+                    else -> 1
                 }
             }
         }
@@ -437,10 +433,9 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
         val dateFormat = SimpleDateFormat("EEE, dd MMM yyyy", Locale.getDefault())
         val monthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
 
-        // Determine sort order based on shortOrder preference
         val sortOrder = when (shortOrder) {
-            0 -> MediaStore.Images.Media.DATE_ADDED + " DESC" // Newest first (default)
-            1 -> MediaStore.Images.Media.DATE_ADDED + " ASC"  // Oldest first
+            0 -> MediaStore.Images.Media.DATE_ADDED + " DESC"
+            1 -> MediaStore.Images.Media.DATE_ADDED + " ASC"
             else -> MediaStore.Images.Media.DATE_ADDED + " DESC"
         }
 
@@ -484,14 +479,11 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
 
         MyApplication.updateAllImageUris(allUris)
 
-        // Return empty list if no images found
         if (imageMap.isEmpty()) {
             return emptyList()
         }
 
-        // Sort date keys based on shortOrder
         val sortedDateKeys = if (shortOrder == 0) {
-            // Default order (newest first)
             imageMap.keys.sortedByDescending {
                 when (viewMode) {
                     ViewMode.DAY -> dateFormat.parse(it)
@@ -500,7 +492,6 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
                 }
             }
         } else {
-            // Reverse order (oldest first)
             imageMap.keys.sortedBy {
                 when (viewMode) {
                     ViewMode.DAY -> dateFormat.parse(it)
@@ -513,7 +504,6 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
         val itemList = mutableListOf<GalleryListItem>()
         for (date in sortedDateKeys) {
             itemList.add(GalleryListItem.DateHeader(date))
-            // Add media items in the order they appear in the map (already sorted by cursor)
             imageMap[date]?.forEach {
                 itemList.add(GalleryListItem.MediaItem(it))
             }
@@ -574,7 +564,6 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
             updateMediaLists(itemList)
 
             if (itemList.isEmpty()) {
-//                binding.rlMain.visibility = View.GONE
                 binding.emptyViewLayout.llEmptyLayout.visibility = View.VISIBLE
             }
 

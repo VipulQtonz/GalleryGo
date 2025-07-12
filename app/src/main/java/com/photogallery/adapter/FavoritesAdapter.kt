@@ -87,7 +87,6 @@ class FavoritesAdapter(
         val columnCount = 3 // Default grid columns
         val spacing = context.resources.getDimensionPixelSize(R.dimen.grid_spacing)
 
-        // Calculate square dimensions
         val itemSize = (screenWidth - (spacing * (columnCount + 1))) / columnCount
 
         params.width = itemSize

@@ -205,7 +205,6 @@ object FaceEmbeddingUtils {
         val landmarks = face.allLandmarks
         if (landmarks.isEmpty()) return bitmap
 
-        // Get eye landmarks for alignment
         val leftEye = landmarks.find { it.landmarkType == FaceLandmark.LEFT_EYE }
         val rightEye = landmarks.find { it.landmarkType == FaceLandmark.RIGHT_EYE }
         if (leftEye == null || rightEye == null) return bitmap
@@ -217,7 +216,6 @@ object FaceEmbeddingUtils {
             (rightEyePos.x - leftEyePos.x).toDouble()
         ).toFloat() * 180 / Math.PI.toFloat()
 
-        // Rotate bitmap to align eyes horizontally
         val matrix = Matrix()
         matrix.postRotate(-angle, bitmap.width / 2f, bitmap.height / 2f)
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
@@ -260,11 +258,10 @@ object FaceEmbeddingUtils {
                 return extra[0] as FloatArray
             }
         }
-        return FloatArray(128) // Return all zeros if failed
+        return FloatArray(128)
     }
 
     private fun preprocessBitmap(bitmap: Bitmap): Bitmap {
-        // Convert to grayscale and apply histogram equalization
         val grayscaleBitmap = createBitmap(bitmap.width, bitmap.height)
         val canvas = Canvas(grayscaleBitmap)
         val paint = Paint()
@@ -272,14 +269,12 @@ object FaceEmbeddingUtils {
         paint.colorFilter = ColorMatrixColorFilter(colorMatrix)
         canvas.drawBitmap(bitmap, 0f, 0f, paint)
 
-        // Apply histogram equalization (using OpenCV or simple contrast adjustment)
-        // For simplicity, we'll use a basic contrast adjustment here
         val contrastedBitmap = createBitmap(bitmap.width, bitmap.height)
         val contrastPaint = Paint()
         val contrastMatrix = ColorMatrix().apply {
             set(
                 floatArrayOf(
-                    1.2f, 0f, 0f, 0f, 0f,  // Increase contrast slightly
+                    1.2f, 0f, 0f, 0f, 0f,
                     0f, 1.2f, 0f, 0f, 0f,
                     0f, 0f, 1.2f, 0f, 0f,
                     0f, 0f, 0f, 1f, 0f

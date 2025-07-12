@@ -26,14 +26,12 @@ class FaceGroupAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val group = faceGroups[position]
         with(holder.binding) {
-            // Display the first URI as the representative image
             val representativeUri = group.uris.firstOrNull()
             if (representativeUri != null) {
                 Glide.with(context).load(representativeUri).into(imageView)
             } else {
                 imageView.setImageResource(android.R.color.transparent) // Fallback if no URI
             }
-            // Show group ID (last 8 chars) and image count
             tvGroupName.text = context.getString(R.string.add_name)
             root.setOnClickListener { onClick(group) }
         }

@@ -251,7 +251,6 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
     private fun dismissWithAnimation() {
         isSwipeDismiss = true
 
-        // Start from current values
         val startTranslationY = binding.root.translationY
         val startScaleX = binding.root.scaleX
         val startAlpha = binding.root.alpha
@@ -261,16 +260,13 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
             duration = 300
             addUpdateListener { animation ->
                 val progress = animation.animatedValue as Float
-                // Animate translationY to screenHeight (or slightly beyond to ensure it disappears)
                 binding.root.translationY =
                     startTranslationY + (screenHeight - startTranslationY) * progress
-                // Animate scale down to 0.7f (or any small value to ensure it shrinks)
                 val targetScale = 0.7f
                 val scale = startScaleX - (startScaleX - targetScale) * progress
                 binding.root.scaleX = scale
                 binding.root.scaleY = scale
                 binding.root.scaleY = scale
-                // Fade out
                 binding.root.alpha = startAlpha - (startAlpha - 0f) * progress
             }
             addListener(object : AnimatorListenerAdapter() {
@@ -357,7 +353,6 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
         database: PhotoGalleryDatabase, favorite: MediaFavoriteData, position: Int
     ) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_remove_favorites, null)
-
         val dialog = Dialog(this).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setContentView(dialogView)
@@ -639,13 +634,11 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
 
                 if (newFile != null) {
                     try {
-                        // Remove from favorites if it exists
                         database.photoGalleryDao().getFavoriteById(selectedMedia.id)
                             ?.let { favorite ->
                                 database.photoGalleryDao().deleteFavorite(favorite)
                             }
 
-                        // Insert into deleted items
                         val mediaDataEntity = MediaDataEntity(
                             id = selectedMedia.id,
                             name = selectedMedia.name,
@@ -659,27 +652,22 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
                         )
                         database.photoGalleryDao().insertDeletedMedia(mediaDataEntity)
 
-                        // Notify MediaStore of the deletion
                         val contentResolver = this@PhotoViewActivity.contentResolver
                         try {
                             val uri = selectedMedia.uri
                             contentResolver.delete(uri, null, null)
                         } catch (e: Exception) {
                             e.printStackTrace()
-                            // Optionally, use MediaScannerConnection to scan the new file location
                             MediaScannerConnection.scanFile(
                                 this@PhotoViewActivity,
                                 arrayOf(newFile.absolutePath),
                                 arrayOf(if (selectedMedia.isVideo) "video/*" else "image/*")
                             ) { _, _ ->
-                                // Scan complete, no action needed
                             }
                         }
 
-                        // Update UI
                         withContext(Dispatchers.Main) {
                             hideLoading()
-                            // Remove from current list
                             mediaList.removeAt(currentPosition)
                             if (fromAlbum) {
                                 if (MyApplication.selectedAlbumImages.isNotEmpty()) {
@@ -688,13 +676,10 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
                                     )
                                 }
                             }
-                            // Replace notifyFileDeleted with MediaStore notification
                             MyApplication.instance.notifyFileDeleted(selectedMedia.uri)
                             MyApplication.isPhotoFetchReload = true
-                            // Update adapter
                             (binding.viewPager.adapter as ImagePagerAdapter).notifyDataSetChanged()
 
-                            // Close activity if no more items
                             if (mediaList.isEmpty()) {
                                 backScreenAnimation()
                                 finish()
@@ -737,96 +722,6 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
         dialog.show()
     }
 
-//    private fun lockSelectedMedia() {
-//        val currentPosition = binding.viewPager.currentItem
-//        if (currentPosition !in mediaList.indices) {
-//            Toast.makeText(this, getString(R.string.no_image_selected), Toast.LENGTH_SHORT).show()
-//            return
-//        }
-//
-//        val media = mediaList[currentPosition]
-//        if (media.path.isEmpty()) return
-//
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val lockedDir = File(
-//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-//                "LockedMedia"
-//            ).apply {
-//                if (!exists()) mkdirs()
-//            }
-//
-//            val database = PhotoGalleryDatabase.getDatabase(this@PhotoViewActivity)
-//            val originalFile = File(media.path)
-//
-//            if (!originalFile.exists()) {
-//                withContext(Dispatchers.Main) {
-//                    Toast.makeText(this@PhotoViewActivity, "File not found", Toast.LENGTH_SHORT).show()
-//                }
-//                return@launch
-//            }
-//
-//            try {
-//                // 1. First encrypt the file
-//                val encryptedFile = File(lockedDir, originalFile.name + ".lockimg")
-//                FileEncryptor.encryptFile(originalFile, encryptedFile)
-//
-//                // 2. Then remove from favorites if exists
-//                database.photoGalleryDao().getFavoriteById(media.id)?.let { favorite ->
-//                    database.photoGalleryDao().deleteFavorite(favorite)
-//                }
-//
-//                // 3. Delete original file only after successful encryption
-//                if (originalFile.exists()) {
-//                    if (!originalFile.delete()) {
-//                        Log.e("PhotoViewActivity", "Failed to delete original file")
-//                    }
-//                }
-//
-//                // 4. Update MediaStore
-//                try {
-//                    contentResolver.delete(media.uri, null, null)
-//                } catch (e: Exception) {
-//                    MediaScannerConnection.scanFile(
-//                        this@PhotoViewActivity,
-//                        arrayOf(lockedDir.absolutePath),
-//                        arrayOf(if (media.isVideo) "video/*" else "image/*")
-//                    ) { _, _ -> }
-//                }
-//
-//                // 5. Update UI and data
-//                withContext(Dispatchers.Main) {
-//                    // Remove from current list
-//                    mediaList.removeAt(currentPosition)
-//
-//                    if (fromAlbum) {
-//                        (MyApplication.selectedAlbumImages as? MutableList)?.removeAt(currentPosition)
-//                    }
-//
-//                    MyApplication.instance.notifyFileDeleted(media.uri)
-//                    MyApplication.isPhotoFetchReload = true
-//
-//                    // Update adapter
-//                    (binding.viewPager.adapter as? ImagePagerAdapter)?.notifyDataSetChanged()
-//
-//                    if (mediaList.isEmpty()) {
-//                        finish()
-//                    } else {
-//                        val newPosition = currentPosition.coerceAtMost(mediaList.size - 1)
-//                        binding.viewPager.setCurrentItem(newPosition, false)
-//                    }
-//                }
-//            } catch (e: Exception) {
-//                withContext(Dispatchers.Main) {
-//                    Toast.makeText(
-//                        this@PhotoViewActivity,
-//                        "Failed to lock media: ${e.message}",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            }
-//        }
-//    }
-
     private fun lockSelectedMedia() {
         val currentPosition = binding.viewPager.currentItem
         if (currentPosition !in mediaList.indices) {
@@ -860,16 +755,13 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
             }
 
             try {
-                // 1. Move and rename the file
                 val newFile = File(lockedDir, originalFile.name + ".lockimg")
                 originalFile.renameTo(newFile)
 
-                // 2. Remove from favorites if exists
                 database.photoGalleryDao().getFavoriteById(media.id)?.let { favorite ->
                     database.photoGalleryDao().deleteFavorite(favorite)
                 }
 
-                // 3. Update MediaStore
                 try {
                     contentResolver.delete(media.uri, null, null)
                 } catch (_: Exception) {
@@ -880,10 +772,8 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
                     ) { _, _ -> }
                 }
 
-                // 4. Update UI and data
                 withContext(Dispatchers.Main) {
                     hideLoading()
-                    // Remove from current list
                     mediaList.removeAt(currentPosition)
 
                     if (fromAlbum) {
@@ -895,7 +785,6 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
                     MyApplication.instance.notifyFileDeleted(media.uri)
                     MyApplication.isPhotoFetchReload = true
 
-                    // Update adapter
                     (binding.viewPager.adapter as? ImagePagerAdapter)?.notifyDataSetChanged()
 
                     if (mediaList.isEmpty()) {
@@ -974,7 +863,6 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
         val btnCreate = dialogView.findViewById<AppCompatButton>(R.id.btnCreateNewAlbum)
         val ivClear = dialogView.findViewById<ImageView>(R.id.ivClear)
 
-        // Update UI elements for rename operation
         ivClear.visibility = View.VISIBLE
         tvTitle.text = getString(R.string.rename)
         etName.setText(originalName)
@@ -999,16 +887,13 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
                     val newFile = File(originalFile.parent, "$newName.$extension")
 
                     if (originalFile.renameTo(newFile)) {
-                        // Check if this media is in favorites
                         val existingFavorite =
                             database.photoGalleryDao().getFavoriteById(selectedMedia.id)
 
-                        // Update the media data
                         val updatedMedia = selectedMedia.copy(
                             path = newFile.absolutePath, name = newFile.name
                         )
 
-                        // Update in database if it's a favorite
                         existingFavorite?.let { favorite ->
                             val updatedFavorite = favorite.copy(
                                 originalPath = newFile.absolutePath, name = newFile.name
@@ -1016,7 +901,6 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
                             database.photoGalleryDao().updateFavorite(updatedFavorite)
                         }
 
-                        // Update in the current list
                         withContext(Dispatchers.Main) {
                             MyApplication.isPhotoFetchReload = true
                             mediaList[currentPosition] = updatedMedia
@@ -1116,19 +1000,15 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
             return
         }
 
-        // Store current position before updating
         val currentPosition = binding.viewPager.currentItem
         val currentMediaId =
             if (currentPosition in mediaList.indices) mediaList[currentPosition].id else -1
 
-        // Update the local list
         mediaList.clear()
         mediaList.addAll(updatedMediaList)
 
-        // Update the adapter
         (binding.viewPager.adapter as ImagePagerAdapter).updateMediaList(updatedMediaList)
 
-        // Find the position of the previously viewed media (if it still exists)
         val newPosition = if (currentMediaId.toInt() != -1) {
             updatedMediaList.indexOfFirst { it.id == currentMediaId }.takeIf { it != -1 }
                 ?: if (currentPosition < updatedMediaList.size) currentPosition else updatedMediaList.size - 1

@@ -36,7 +36,6 @@ class SetAsActivity : BaseActivity<ActivitySetAsBinding>() {
             .into(binding.ivImage)
 
         binding.tvCarouselWallpaper.visibility = View.GONE
-//            isCarouselWallpaperSupported()
 
         if (ePreferences.getBoolean("isFirstTimeSetAsApply", true)) {
             setupTooltip(
@@ -65,14 +64,12 @@ class SetAsActivity : BaseActivity<ActivitySetAsBinding>() {
             binding.llApplyOptions.isVisible = false
         }
 
-        // Lock Screen
         binding.tvLockScreen.setOnClickListener {
             showLoading()
             setWallpaper(WallpaperManager.FLAG_LOCK)
             binding.llApplyOptions.isVisible = false
         }
 
-        // Carousel Wallpaper (not supported, show Toast)
         binding.tvCarouselWallpaper.setOnClickListener {
             showLoading()
             if (isCarouselWallpaperSupported()) {
@@ -88,14 +85,12 @@ class SetAsActivity : BaseActivity<ActivitySetAsBinding>() {
             binding.llApplyOptions.isVisible = false
         }
 
-        // Home and Lock Screens
         binding.tvHomeAndLockScreens.setOnClickListener {
             showLoading()
             setWallpaper(WallpaperManager.FLAG_SYSTEM or WallpaperManager.FLAG_LOCK)
             binding.llApplyOptions.isVisible = false
         }
 
-        // Cancel (hide llApplyOptions)
         binding.tvCancel.setOnClickListener {
             binding.llApplyOptions.isVisible = false
         }
@@ -139,10 +134,7 @@ class SetAsActivity : BaseActivity<ActivitySetAsBinding>() {
     }
 
     private fun setCarouselWallpaper() {
-        // Placeholder for carousel wallpaper implementation
-        // Since there’s no standard API, show a toast or fall back to static wallpaper
         try {
-            // Example: Fall back to setting a static wallpaper for home screen
             val wallpaperManager = WallpaperManager.getInstance(this)
             contentResolver.openInputStream(imageUri)?.use { inputStream ->
                 val bitmap = BitmapFactory.decodeStream(inputStream)

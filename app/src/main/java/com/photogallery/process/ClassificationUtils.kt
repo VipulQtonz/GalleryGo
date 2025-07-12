@@ -275,7 +275,7 @@ object ClassificationUtils {
                         allUris = uris.toMutableList()
                     )
                 }
-                .distinctBy { it.allUris.toSet() } // Deduplicate based on URI set
+                .distinctBy { it.allUris.toSet() }
             duplicateImageGroupsLiveData.postValue(duplicateGroups)
         }
     }

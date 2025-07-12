@@ -61,7 +61,6 @@ class LockedMediaAdapter(
             val columnCount = 3 // Default grid columns
             val spacing = context.resources.getDimensionPixelSize(R.dimen.grid_spacing)
 
-            // Calculate square dimensions
             val itemSize = (screenWidth - (spacing * (columnCount + 1))) / columnCount
 
             params.width = itemSize
@@ -82,7 +81,6 @@ class LockedMediaAdapter(
                     )
                     .build()
             } else {
-                // No padding when not selected
                 imageView.setPadding(0, 0, 0, 0)
                 imageView.background = null
                 imageView.shapeAppearanceModel = imageView.shapeAppearanceModel
@@ -157,29 +155,6 @@ class LockedMediaAdapter(
         }
     }
 
-//    private fun toggleSelection(media: File) {
-//        if (selectedMedia.contains(media)) {
-//            selectedMedia.remove(media)
-//            if (selectedMedia.isEmpty()) {
-//                isSelectionMode = false
-//                onSelectionModeChange(false)
-//                notifyDataSetChanged()
-//            }
-//        } else {
-//            selectedMedia.add(media)
-//            if (!isSelectionMode) {
-//                isSelectionMode = true
-//                onSelectionModeChange(true)
-//                notifyDataSetChanged()
-//            }
-//        }
-//        onSelectionCountChange(selectedMedia.size)
-//        val index = currentList.indexOf(media)
-//        if (index != -1) {
-//            notifyItemChanged(index)
-//        }
-//    }
-
     private fun toggleSelection(media: File) {
         val index = currentList.indexOf(media)
         if (index == -1) return // Item not found
@@ -203,10 +178,8 @@ class LockedMediaAdapter(
         onSelectionCountChange(selectedMedia.size)
 
         if (wasInSelectionMode != isSelectionMode) {
-            // Notify all items when entering/exiting selection mode to update ivSelect visibility
             notifyDataSetChanged()
         } else {
-            // Notify only the toggled item when staying in selection mode
             notifyItemChanged(index)
         }
     }

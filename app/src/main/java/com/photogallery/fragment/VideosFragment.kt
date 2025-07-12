@@ -75,14 +75,12 @@ class VideosFragment : BaseFragment<FragmentPhotosBinding>() {
             requireContext(),
             object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
                 override fun onScale(detector: ScaleGestureDetector): Boolean {
-                    if (!hasScaled) { // Only process if no scale action has occurred in this gesture
+                    if (!hasScaled) {
                         if (detector.scaleFactor > 1.0f && spanCount > 1) {
-                            // Zoom in: Decrease span count (e.g., 3 -> 2)
                             spanCount--
                             updateGridLayout()
                             hasScaled = true
                         } else if (detector.scaleFactor < 1.0f && spanCount < 5) {
-                            // Zoom out: Increase span count (e.g., 3 -> 4)
                             spanCount++
                             updateGridLayout()
                             hasScaled = true
@@ -92,7 +90,7 @@ class VideosFragment : BaseFragment<FragmentPhotosBinding>() {
                 }
 
                 override fun onScaleEnd(detector: ScaleGestureDetector) {
-                    hasScaled = false // Reset flag when the scale gesture ends
+                    hasScaled = false
                     ePreferences?.putInt("span_count", spanCount)
                 }
             }
@@ -278,12 +276,10 @@ class VideosFragment : BaseFragment<FragmentPhotosBinding>() {
             withContext(Dispatchers.Main) {
                 MyApplication.isVideoFetchReload = false
                 if (itemList.isEmpty()) {
-//                    binding.rlMain.visibility = View.GONE
                     binding.emptyViewLayout.llEmptyLayout.visibility = View.VISIBLE
                     return@withContext
                 }
 
-//                binding.rlMain.visibility = View.VISIBLE
                 binding.emptyViewLayout.llEmptyLayout.visibility = View.GONE
 
                 galleryVideosAdapter = GalleryVideoAdapter(
@@ -410,9 +406,7 @@ class VideosFragment : BaseFragment<FragmentPhotosBinding>() {
             return emptyList()
         }
 
-        // Fix the date sorting based on shortOrder
         val sortedDateKeys = if (shortOrder == 0) {
-            // Default order (newest first)
             videoMap.keys.sortedByDescending {
                 when (viewMode) {
                     ViewMode.DAY -> dateFormat.parse(it)
@@ -420,7 +414,6 @@ class VideosFragment : BaseFragment<FragmentPhotosBinding>() {
                 }
             }
         } else {
-            // Reverse order (oldest first)
             videoMap.keys.sortedBy {
                 when (viewMode) {
                     ViewMode.DAY -> dateFormat.parse(it)
@@ -432,7 +425,6 @@ class VideosFragment : BaseFragment<FragmentPhotosBinding>() {
         val itemList = mutableListOf<GalleryListItem>()
         for (date in sortedDateKeys) {
             itemList.add(GalleryListItem.DateHeader(date))
-            // Maintain the order from the cursor (already sorted)
             videoMap[date]?.forEach {
                 itemList.add(GalleryListItem.MediaItem(it))
             }
@@ -457,7 +449,7 @@ class VideosFragment : BaseFragment<FragmentPhotosBinding>() {
         return if (::galleryVideosAdapter.isInitialized) {
             galleryVideosAdapter.getSelectedMedia()
         } else {
-            emptyList() // Return empty list if adapter is not initialized
+            emptyList()
         }
     }
 
@@ -493,9 +485,7 @@ class VideosFragment : BaseFragment<FragmentPhotosBinding>() {
             galleryVideosAdapter.galleryImgList = itemList
             updateMediaLists(itemList)
 
-            // Check if the list is now empty after deletion
             if (itemList.isEmpty()) {
-//                binding.rlMain.visibility = View.GONE
                 binding.emptyViewLayout.llEmptyLayout.visibility = View.VISIBLE
             }
 

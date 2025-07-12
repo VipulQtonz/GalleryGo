@@ -144,7 +144,6 @@ class MomentGroupAdapter(
         holder.vpMoments.setCurrentItem(0, false)
 
         if (group.allUris.isNotEmpty()) {
-            // Reset StoriesProgressView and set up from scratch
             holder.storiesProgressView.destroy() // Clear any existing state
             holder.storiesProgressView.setStoriesCount(group.allUris.size)
             holder.storiesProgressView.setStoryDuration(autoAdvanceDelay)

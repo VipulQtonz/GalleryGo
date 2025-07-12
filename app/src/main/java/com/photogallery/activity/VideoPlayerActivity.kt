@@ -245,7 +245,6 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>() {
     private fun dismissWithAnimation() {
         isSwipeDismiss = true
 
-        // Start from current values
         val startTranslationY = binding.root.translationY
         val startScaleX = binding.root.scaleX
         val startAlpha = binding.root.alpha
@@ -255,16 +254,13 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>() {
             duration = 300
             addUpdateListener { animation ->
                 val progress = animation.animatedValue as Float
-                // Animate translationY to screenHeight (or slightly beyond to ensure it disappears)
                 binding.root.translationY =
                     startTranslationY + (screenHeight - startTranslationY) * progress
-                // Animate scale down to 0.7f (or any small value to ensure it shrinks)
                 val targetScale = 0.7f
                 val scale = startScaleX - (startScaleX - targetScale) * progress
                 binding.root.scaleX = scale
                 binding.root.scaleY = scale
                 binding.root.scaleY = scale
-                // Fade out
                 binding.root.alpha = startAlpha - (startAlpha - 0f) * progress
             }
             addListener(object : AnimatorListenerAdapter() {
@@ -351,7 +347,6 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>() {
         database: PhotoGalleryDatabase, favorite: MediaFavoriteData, position: Int
     ) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_remove_favorites, null)
-
         val dialog = Dialog(this).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setContentView(dialogView)
@@ -392,7 +387,6 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>() {
         val newState = !isLoopingEnabled // Flip current global state
         isLoopingEnabled = newState
 
-        // Update the UI
         if (newState) {
             editOptions[2] =
                 EditOptionItems(R.drawable.ic_loop_video_on, getString(R.string.loop_video_off))
@@ -401,11 +395,7 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>() {
                 EditOptionItems(R.drawable.ic_loop_video_off, getString(R.string.loop_video_on))
         }
         ePreferences.putBoolean("IsLoop", isLoopingEnabled)
-
-        // Update all items in adapter
         (binding.viewPager.adapter as? ImagePagerAdapter)?.updateLoopingForAllItems(newState)
-
-        // Update icon
         editOptionsAdapter.notifyItemChanged(2)
     }
 
@@ -504,7 +494,6 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>() {
         val sizeFormatted = formatImageFileSize(file.length())
         val fullPath = file.absolutePath
 
-        // Get current media item to check if it's a video
         val currentPosition = binding.viewPager.currentItem
         val isVideo = if (currentPosition in mediaList.indices) {
             mediaList[currentPosition].isVideo
@@ -512,9 +501,7 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>() {
             false
         }
 
-        // Set dimensions based on media type
         val dimensions = if (isVideo) {
-            // For videos, you can show duration or resolution if available
             val duration = if (currentPosition in mediaList.indices) {
                 formatDuration(mediaList[currentPosition].duration)
             } else {
@@ -522,7 +509,6 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>() {
             }
             "$duration"
         } else {
-            // For images, show dimensions
             val bitmap = BitmapFactory.decodeFile(file.absolutePath)
             if (bitmap != null) {
                 "${bitmap.width} x ${bitmap.height}"
@@ -620,13 +606,11 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>() {
 
                 if (newFile != null) {
                     try {
-                        // Remove from favorites if it exists
                         database.photoGalleryDao().getFavoriteById(selectedMedia.id)
                             ?.let { favorite ->
                                 database.photoGalleryDao().deleteFavorite(favorite)
                             }
                         MyApplication.isVideoFetchReload = true
-                        // Insert into deleted items
                         val mediaDataEntity = MediaDataEntity(
                             id = selectedMedia.id,
                             name = selectedMedia.name,
@@ -641,31 +625,23 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>() {
                         database.photoGalleryDao().insertDeletedMedia(mediaDataEntity)
 
 
-                        // Notify MediaStore of the deletion
                         val contentResolver = this@VideoPlayerActivity.contentResolver
                         try {
                             val uri = selectedMedia.uri
                             contentResolver.delete(uri, null, null)
                         } catch (e: Exception) {
                             e.printStackTrace()
-                            // Optionally, use MediaScannerConnection to scan the new file location
                             MediaScannerConnection.scanFile(
                                 this@VideoPlayerActivity,
                                 arrayOf(newFile.absolutePath),
                                 arrayOf(if (selectedMedia.isVideo) "video/*" else "image/*")
                             ) { _, _ ->
-                                // Scan complete, no action needed
                             }
                         }
-                        // Update UI
                         withContext(Dispatchers.Main) {
-                            // Remove from current list
                             mediaList.removeAt(currentPosition)
                             hideLoading()
-                            // Update adapter
                             (binding.viewPager.adapter as ImagePagerAdapter).notifyDataSetChanged()
-
-                            // Close activity if no more items
                             if (mediaList.isEmpty()) {
                                 backScreenAnimation()
                                 finish()
@@ -727,38 +703,30 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>() {
             val newFile = File(lockedDir, originalFile.name + ".lockimg")
 
             try {
-                // Move and rename file
                 originalFile.renameTo(newFile)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
-            // Notify MediaStore of the deletion
             val contentResolver = this@VideoPlayerActivity.contentResolver
             try {
                 val uri = media.uri
                 contentResolver.delete(uri, null, null)
             } catch (e: Exception) {
                 e.printStackTrace()
-                // Optionally, use MediaScannerConnection to scan the new file location
                 MediaScannerConnection.scanFile(
                     this@VideoPlayerActivity,
                     arrayOf(lockedDir.absolutePath),
                     arrayOf(if (media.isVideo) "video/*" else "image/*")
                 ) { _, _ ->
-                    // Scan complete, no action needed
                 }
             }
             withContext(Dispatchers.Main) {
                 hideLoading()
                 MyApplication.isVideoFetchReload = true
-                // Remove from current list
                 mediaList.removeAt(currentPosition)
 
-                // Update adapter
                 (binding.viewPager.adapter as ImagePagerAdapter).notifyDataSetChanged()
-
-                // Close activity if no more items
                 if (mediaList.isEmpty()) {
                     backScreenAnimation()
                     finish()
@@ -777,7 +745,6 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>() {
     private fun addToAlbumSelected() {
         val currentPosition = binding.viewPager.currentItem
 
-        // Validate position
         if (currentPosition !in mediaList.indices) {
             Toast.makeText(this, getString(R.string.no_image_selected), Toast.LENGTH_SHORT).show()
             return

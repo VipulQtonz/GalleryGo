@@ -51,14 +51,12 @@ object FaceGroupingUtils {
                 return@withContext emptyList()
             }
 
-            // Filter valid embeddings
             val (validEmbeddings, invalidUris) = filterValidEmbeddings(context, allEmbeddings)
             Log.i(
                 TAG,
                 "Found ${validEmbeddings.size} valid embeddings, ${invalidUris.size} invalid URIs"
             )
 
-            // Delete invalid embeddings
             if (invalidUris.isNotEmpty()) {
                 deleteInvalidEmbeddings(database, invalidUris)
             }
@@ -68,7 +66,6 @@ object FaceGroupingUtils {
                 return@withContext emptyList()
             }
 
-            // Separate selfies (single face) from multi-face images
             val (selfieEmbeddings, multiFaceEmbeddings) = separateSelfiesFromMultiFace(
                 validEmbeddings
             )
@@ -82,21 +79,16 @@ object FaceGroupingUtils {
                 return@withContext emptyList()
             }
 
-            // Get expected embedding size from first valid embedding
             val expectedEmbeddingSize = getExpectedEmbeddingSize(selfieEmbeddings)
                 ?: return@withContext emptyList()
 
-            // Step 1: Group selfies
             val selfieGroups = groupSelfies(selfieEmbeddings, expectedEmbeddingSize)
 
-            // Step 2: Assign multi-face images to groups
             val faceGroups =
                 assignMultiFaceImages(multiFaceEmbeddings, selfieGroups, expectedEmbeddingSize)
 
-            // Step 3: Merge similar groups
             val mergedGroups = mergeSimilarGroups(faceGroups)
 
-            // Filter and validate final groups
             val validGroups = filterAndValidateGroups(mergedGroups)
 
             logGroupingResults(validGroups)
@@ -334,7 +326,6 @@ object FaceGroupingUtils {
 
     private fun filterAndValidateGroups(groups: List<FaceGroup>): List<FaceGroup> {
         return groups.filter { it.uris.size > 1 }.map { group ->
-            // Ensure representative URI is valid
             val validRepresentativeUri = group.uris.firstOrNull { uri ->
                 group.representativeUri == uri || group.representativeUri == null
             } ?: group.uris.firstOrNull()
@@ -373,7 +364,7 @@ object FaceGroupingUtils {
         var totalWeight = 0f
 
         embeddings.forEach { embedding ->
-            val weight = if (isSelfieGroup) 2.0f else 1.0f // Give selfies double weight
+            val weight = if (isSelfieGroup) 2.0f else 1.0f
             for (i in embedding.indices) {
                 centroid[i] += embedding[i] * weight
             }

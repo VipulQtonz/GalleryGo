@@ -386,9 +386,6 @@ open class CropActivity : BaseActivity<CropActivityBinding>() {
         }
     }
 
-    /**
-     * Configures and styles both status bar and toolbar.
-     */
     private fun initiateRootViews() {
         mCropView = findViewById(R.id.crop)
         mGestureCropImageView = mCropView!!.cropImageView

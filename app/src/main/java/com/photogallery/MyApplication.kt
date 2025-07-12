@@ -236,7 +236,7 @@ class MyApplication : MultiDexApplication() {
                     ClassificationUtils.updateDuplicateGroupsLiveData()
                 } catch (e: Exception) {
                     Log.e("MyApplication", "Duplicate processing failed", e)
-                    hasProcessedDuplicates = false // Allow retry on failure
+                    hasProcessedDuplicates = false
                 }
             }
         }

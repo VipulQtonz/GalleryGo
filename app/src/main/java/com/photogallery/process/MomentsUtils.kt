@@ -50,7 +50,6 @@ object MomentsUtils {
             val usedUris = mutableSetOf<Uri>()
             val moments = mutableListOf<Moment>()
 
-            // Create moments in priority order
             moments.addAll(createSpecialOccasionMoments(context, metadataList, usedUris))
             moments.addAll(createTripMoments(context, metadataList, usedUris))
             moments.addAll(createEventBasedMoments(context, metadataList, usedUris))
@@ -58,7 +57,6 @@ object MomentsUtils {
             moments.addAll(createLocationBasedMoments(context, metadataList, usedUris))
             moments.addAll(createTimeBasedMoments(context, metadataList, usedUris))
 
-            // Handle remaining photos
             val remainingPhotos = metadataList.filter { it.uri !in usedUris }
                 .groupBy { SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(it.date) }
 
@@ -137,14 +135,11 @@ object MomentsUtils {
                                 val height = cursor.getInt(heightCol)
                                 val isFavorite = cursor.getInt(favoriteCol) == 1
 
-                                // Check for HDR using alternative methods
                                 val isHdr = try {
                                     context.contentResolver.openInputStream(uri)?.use { stream ->
                                         val exif = ExifInterface(stream)
-                                        // Method 1: Check for HDR in software tag
                                         exif.getAttribute("Software")
                                             ?.contains("HDR", ignoreCase = true) == true ||
-                                                // Method 2: Check for known HDR camera models
                                                 exif.getAttribute(ExifInterface.TAG_MODEL)
                                                     ?.let { model ->
                                                         model.contains("HDR", ignoreCase = true) ||
@@ -158,14 +153,13 @@ object MomentsUtils {
                                     false
                                 }
 
-                                // Detect objects
                                 val detectedObjects = try {
                                     val image = InputImage.fromFilePath(context, uri)
                                     val labeler =
                                         ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
                                     labeler.process(image).await()
                                         .map { it.text.lowercase(Locale.getDefault()) }
-                                        .filter { it.length > 3 } // Filter out short labels
+                                        .filter { it.length > 3 }
                                 } catch (_: Exception) {
                                     null
                                 }
