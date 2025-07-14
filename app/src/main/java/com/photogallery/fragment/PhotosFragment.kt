@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.graphics.drawable.toDrawable
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -80,7 +81,14 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
     }
 
     override fun init() {
-        setMoments()
+        if (isGIF) {
+            binding.appBar.isVisible = false
+            binding.ivStickyMenuOption.isVisible = false
+        } else {
+            binding.appBar.isVisible = true
+            binding.ivStickyMenuOption.isVisible = true
+            setMoments()
+        }
         if (isGIF) {
             binding.emptyViewLayout.tvTitle.text = getString(R.string.no_gifs_yet)
             binding.emptyViewLayout.tvDescription.text =
