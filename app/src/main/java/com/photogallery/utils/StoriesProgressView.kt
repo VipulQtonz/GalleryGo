@@ -114,7 +114,7 @@ class StoriesProgressView : LinearLayout {
     }
 
     fun startStories(from: Int = 0) {
-        resetProgress() // Reset progress to start from first item
+        resetProgress()
         if (from < progressBars.size) {
             progressBars[from].startProgress()
         }
@@ -155,12 +155,12 @@ class StoriesProgressView : LinearLayout {
         isComplete = false
         for (i in progressBars.indices) {
             when {
-                i < position -> progressBars[i].setMaxWithoutCallback() // Fill previous
+                i < position -> progressBars[i].setMaxWithoutCallback()
                 i == position -> {
-                    progressBars[i].clear() // Reset current
-                    progressBars[i].startProgress() // Start current
+                    progressBars[i].clear()
+                    progressBars[i].startProgress()
                 }
-                else -> progressBars[i].clear() // Empty next
+                else -> progressBars[i].clear()
             }
         }
     }

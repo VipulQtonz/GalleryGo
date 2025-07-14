@@ -58,13 +58,13 @@ class LockedMediaAdapter(
             val params = imageView.layoutParams
             val displayMetrics = context.resources.displayMetrics
             val screenWidth = displayMetrics.widthPixels
-            val columnCount = 3 // Default grid columns
+            val columnCount = 3
             val spacing = context.resources.getDimensionPixelSize(R.dimen.grid_spacing)
 
             val itemSize = (screenWidth - (spacing * (columnCount + 1))) / columnCount
 
             params.width = itemSize
-            params.height = itemSize // Make it square
+            params.height = itemSize
             imageView.layoutParams = params
             imageView.scaleType = ImageView.ScaleType.CENTER_CROP
             imageView.adjustViewBounds = false
@@ -157,7 +157,7 @@ class LockedMediaAdapter(
 
     private fun toggleSelection(media: File) {
         val index = currentList.indexOf(media)
-        if (index == -1) return // Item not found
+        if (index == -1) return
 
         val wasInSelectionMode = isSelectionMode
 

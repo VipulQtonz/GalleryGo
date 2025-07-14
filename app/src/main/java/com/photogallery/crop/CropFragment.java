@@ -1,7 +1,5 @@
 package com.photogallery.crop;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -32,7 +30,6 @@ import androidx.transition.TransitionManager;
 
 import com.photogallery.R;
 import com.photogallery.activity.CropActivity;
-import com.photogallery.crop.callback.BitmapCropCallback;
 import com.photogallery.crop.model.AspectRatio;
 import com.photogallery.crop.util.SelectedStateListDrawable;
 import com.photogallery.crop.view.CropImageView;
@@ -114,7 +111,7 @@ public class CropFragment extends Fragment {
         else if (context instanceof CropFragmentCallback)
             callback = (CropFragmentCallback) context;
         else
-            throw new IllegalArgumentException(context.toString()
+            throw new IllegalArgumentException(context
                     + " must implement UCropFragmentCallback");
     }
 
@@ -335,16 +332,13 @@ public class CropFragment extends Fragment {
         mCropAspectRatioViews.get(aspectRationSelectedByDefault).setSelected(true);
 
         for (ViewGroup cropAspectRatioView : mCropAspectRatioViews) {
-            cropAspectRatioView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mGestureCropImageView.setTargetAspectRatio(
-                            ((AspectRatioTextView) ((ViewGroup) v).getChildAt(0)).getAspectRatio(v.isSelected()));
-                    mGestureCropImageView.setImageToWrapCropBounds();
-                    if (!v.isSelected()) {
-                        for (ViewGroup cropAspectRatioView : mCropAspectRatioViews) {
-                            cropAspectRatioView.setSelected(cropAspectRatioView == v);
-                        }
+            cropAspectRatioView.setOnClickListener(v -> {
+                mGestureCropImageView.setTargetAspectRatio(
+                        ((AspectRatioTextView) ((ViewGroup) v).getChildAt(0)).getAspectRatio(v.isSelected()));
+                mGestureCropImageView.setImageToWrapCropBounds();
+                if (!v.isSelected()) {
+                    for (ViewGroup cropAspectRatioView1 : mCropAspectRatioViews) {
+                        cropAspectRatioView1.setSelected(cropAspectRatioView1 == v);
                     }
                 }
             });
@@ -443,12 +437,9 @@ public class CropFragment extends Fragment {
         mGestureCropImageView.setImageToWrapCropBounds();
     }
 
-    private final View.OnClickListener mStateClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (!v.isSelected()) {
-                setWidgetState(v.getId());
-            }
+    private final View.OnClickListener mStateClickListener = v -> {
+        if (!v.isSelected()) {
+            setWidgetState(v.getId());
         }
     };
 
@@ -488,7 +479,7 @@ public class CropFragment extends Fragment {
 
     private void changeSelectedTab(int stateViewId) {
         if (getView() != null) {
-            TransitionManager.beginDelayedTransition((ViewGroup) getView().findViewById(R.id.rlCrop), mControlsTransition);
+            TransitionManager.beginDelayedTransition(getView().findViewById(R.id.rlCrop), mControlsTransition);
         }
         mWrapperStateScale.findViewById(R.id.tvScale).setVisibility(stateViewId == R.id.llStateScale ? View.VISIBLE : View.GONE);
         mWrapperStateAspectRatio.findViewById(R.id.tvCrop).setVisibility(stateViewId == R.id.llStateAspectRatio ? View.VISIBLE : View.GONE);

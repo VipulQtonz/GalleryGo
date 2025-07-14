@@ -17,7 +17,7 @@ import com.photogallery.R
 class EmojiBSFragment : BottomSheetDialogFragment() {
 
     private var mEmojiListener: EmojiListener? = null
-    private lateinit var emojisList: ArrayList<String> // ✅ Lazy initialization
+    private lateinit var emojisList: ArrayList<String>
 
     interface EmojiListener {
         fun onEmojiClick(emojiUnicode: String)

@@ -249,7 +249,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
     private fun populateMediaList() {
         CoroutineScope(Dispatchers.IO).launch {
             val newMediaList = mutableListOf<MediaData>()
-            // Create a snapshot of uriList to avoid ConcurrentModificationException
             val uriSnapshot = synchronized(uriList) { uriList.toList() }
             uriSnapshot.forEach { uri ->
                 contentResolver.query(

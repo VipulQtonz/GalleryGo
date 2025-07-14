@@ -30,7 +30,7 @@ class FaceGroupAdapter(
             if (representativeUri != null) {
                 Glide.with(context).load(representativeUri).into(imageView)
             } else {
-                imageView.setImageResource(android.R.color.transparent) // Fallback if no URI
+                imageView.setImageResource(android.R.color.transparent)
             }
             tvGroupName.text = context.getString(R.string.add_name)
             root.setOnClickListener { onClick(group) }

@@ -22,10 +22,10 @@ import com.photogallery.databinding.ActivitySettingBinding
 import com.photogallery.databinding.DialogPersonaliseGridBinding
 import com.photogallery.databinding.PermissionNotificationCustomDialogBinding
 import com.photogallery.dialog.RateUsAppCustomDialog
+import com.photogallery.utils.Const.CODE_NOTIFICATION
 import com.photogallery.utils.SharedPreferenceHelper
 
 class SettingActivity : BaseActivity<ActivitySettingBinding>() {
-    private val CODE_NOTIFICATION = 1235
     var personaliseLayoutDialog: AlertDialog? = null
     private var shortOrder = 0
 

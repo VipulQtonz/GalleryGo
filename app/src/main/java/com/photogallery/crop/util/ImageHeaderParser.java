@@ -159,14 +159,12 @@ public class ImageHeaderParser {
             tagOffset = calcTagOffset(firstIfdOffset, i);
             tagType = segmentData.getInt16(tagOffset);
 
-            // We only want orientation.
             if (tagType != ORIENTATION_TAG_TYPE) {
                 continue;
             }
 
             formatCode = segmentData.getInt16(tagOffset + 2);
 
-            // 12 is max format code.
             if (formatCode < 1 || formatCode > 12) {
                 if (Log.isLoggable(TAG, Log.DEBUG)) {
                     Log.d(TAG, "Got invalid format code = " + formatCode);

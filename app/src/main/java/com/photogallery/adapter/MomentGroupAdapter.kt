@@ -40,8 +40,8 @@ class MomentGroupAdapter(
     private var currentViewHolder: ViewHolder? = null
     private var mediaPlayer: MediaPlayer? = null
     private var musicFiles: List<String> = emptyList()
-    private var isNavigating = false // Flag to prevent concurrent navigation
-    private var lastNavigationTime = 0L // To debounce rapid navigation
+    private var isNavigating = false
+    private var lastNavigationTime = 0L
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val flCancel: FrameLayout = view.findViewById(R.id.flCancel)
@@ -94,7 +94,7 @@ class MomentGroupAdapter(
                 "next" -> {
                     val nextPosition = holder.vpMoments.currentItem + 1
                     if (nextPosition < (holder.vpMoments.adapter?.itemCount ?: 0)) {
-                        holder.storiesProgressView.pause() // Pause progress to avoid onNext
+                        holder.storiesProgressView.pause()
                         holder.vpMoments.setCurrentItem(nextPosition, true)
                         startAutoAdvance(holder)
                     } else {
@@ -105,7 +105,7 @@ class MomentGroupAdapter(
                 "prev" -> {
                     val prevPosition = holder.vpMoments.currentItem - 1
                     if (prevPosition >= 0) {
-                        holder.storiesProgressView.pause() // Pause progress to avoid onNext
+                        holder.storiesProgressView.pause()
                         holder.vpMoments.setCurrentItem(prevPosition, true)
                         startAutoAdvance(holder)
                     }
@@ -144,7 +144,7 @@ class MomentGroupAdapter(
         holder.vpMoments.setCurrentItem(0, false)
 
         if (group.allUris.isNotEmpty()) {
-            holder.storiesProgressView.destroy() // Clear any existing state
+            holder.storiesProgressView.destroy()
             holder.storiesProgressView.setStoriesCount(group.allUris.size)
             holder.storiesProgressView.setStoryDuration(autoAdvanceDelay)
             holder.storiesProgressView.resetProgress()
@@ -199,7 +199,7 @@ class MomentGroupAdapter(
                     handler.removeCallbacksAndMessages(null)
                     holder.storiesProgressView.setProgressForManualChange(position)
                     (holder.vpMoments.adapter as? MomentAdapter)?.setCurrentPosition(position)
-                    holder.storiesProgressView.resume() // Resume progress after manual navigation
+                    holder.storiesProgressView.resume()
                     startAutoAdvance(holder)
                     isNavigating = false
                 }
@@ -356,16 +356,14 @@ class MomentGroupAdapter(
         currentViewHolder = holder
         currentPlayingPosition = holder.adapterPosition
 
-        // Reset ViewPager2 and StoriesProgressView to start from the beginning
         holder.vpMoments.setCurrentItem(0, false)
-        holder.storiesProgressView.destroy() // Clear any previous state
+        holder.storiesProgressView.destroy()
         holder.storiesProgressView.setStoriesCount(momentGroups[holder.adapterPosition].allUris.size)
         holder.storiesProgressView.setStoryDuration(autoAdvanceDelay)
         holder.storiesProgressView.resetProgress()
         startNewMusic(holder)
         holder.storiesProgressView.startStories(0)
         startAutoAdvance(holder)
-        // Notify adapter to ensure zoom starts
         holder.vpMoments.adapter?.notifyDataSetChanged()
     }
 

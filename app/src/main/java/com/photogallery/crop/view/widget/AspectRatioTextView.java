@@ -91,7 +91,6 @@ public class AspectRatioTextView extends AppCompatTextView {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void init(Context context, @NonNull TypedArray a) {
         setGravity(Gravity.CENTER_HORIZONTAL);
 

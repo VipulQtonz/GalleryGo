@@ -1,18 +1,3 @@
-/* Copyright 2019 The TensorFlow Authors. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-==============================================================================*/
-
 package com.photogallery.utils;
 
 import static java.lang.Math.sqrt;
@@ -41,8 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-public class TFLiteObjectDetectionAPIModel
-        implements SimilarityClassifier {
+public class TFLiteObjectDetectionAPIModel implements SimilarityClassifier {
     private static final int OUTPUT_SIZE = 192;
     private static final int NUM_DETECTIONS = 1;
     private static final float IMAGE_MEAN = 128.0f;
@@ -96,8 +80,7 @@ public class TFLiteObjectDetectionAPIModel
     private TFLiteObjectDetectionAPIModel() {
     }
 
-    private static MappedByteBuffer loadModelFile(AssetManager assets, String modelFilename)
-            throws IOException {
+    private static MappedByteBuffer loadModelFile(AssetManager assets, String modelFilename) throws IOException {
         AssetFileDescriptor fileDescriptor = assets.openFd(modelFilename);
         FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
         FileChannel fileChannel = inputStream.getChannel();
@@ -106,13 +89,7 @@ public class TFLiteObjectDetectionAPIModel
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
     }
 
-    public static SimilarityClassifier create(
-            final AssetManager assetManager,
-            final String modelFilename,
-            final String labelFilename,
-            final int inputSize,
-            final boolean isQuantized)
-            throws IOException {
+    public static SimilarityClassifier create(final AssetManager assetManager, final String modelFilename, final String labelFilename, final int inputSize, final boolean isQuantized) throws IOException {
 
         final TFLiteObjectDetectionAPIModel d = new TFLiteObjectDetectionAPIModel();
         String actualFilename = labelFilename.split("file:///android_asset/")[1];
@@ -220,11 +197,7 @@ public class TFLiteObjectDetectionAPIModel
 
         final int numDetectionsOutput = 1;
         final ArrayList<Recognition> recognitions = new ArrayList<>(numDetectionsOutput);
-        Recognition rec = new Recognition(
-                id,
-                label,
-                distance,
-                new RectF());
+        Recognition rec = new Recognition(id, label, distance, new RectF());
         recognitions.add(rec);
         if (storeExtra) {
             rec.setExtra(embeedings);

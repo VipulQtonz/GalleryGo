@@ -236,7 +236,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
                             WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                     }
                 }
-            } // Remove the else block to avoid systemUiVisibility issues on older APIs
+            }
 
             binding.ivArrow.animate().rotation(180f).setDuration(300).start()
             popupWindow.setOnDismissListener {

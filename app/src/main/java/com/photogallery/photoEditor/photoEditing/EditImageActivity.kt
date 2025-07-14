@@ -114,7 +114,7 @@ class EditImageActivity : BaseActivity<ActivityEditImageBinding>(), OnPhotoEdito
                 val croppedUri = it.getParcelableExtra<Uri>("croppedUri")
                 if (croppedUri != null) {
                     try {
-                        imageUri = croppedUri // Update imageUri to the cropped image
+                        imageUri = croppedUri
                         val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
                         mPhotoEditorView.source.setImageBitmap(bitmap)
                         mImgUndo.isEnabled = mPhotoEditor.isUndoAvailable
@@ -323,7 +323,7 @@ class EditImageActivity : BaseActivity<ActivityEditImageBinding>(), OnPhotoEdito
                                     Bitmap.CompressFormat.PNG, 100, FileOutputStream(tempFile)
                                 )
                                 val tempUri = Uri.fromFile(tempFile)
-                                imageUri = tempUri // Update imageUri
+                                imageUri = tempUri
 
                                 val saveSettings = SaveSettings.Builder().setClearViewsEnabled(true)
                                     .setTransparencyEnabled(true).build()
@@ -496,7 +496,7 @@ class EditImageActivity : BaseActivity<ActivityEditImageBinding>(), OnPhotoEdito
     }
 
     private fun cropSelectedMedia() {
-        showLoading() // Show progress dialog
+        showLoading()
 
         lifecycleScope.launch(Dispatchers.IO) {
             try {

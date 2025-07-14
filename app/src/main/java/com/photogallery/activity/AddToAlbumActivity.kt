@@ -77,14 +77,18 @@ class AddToAlbumActivity : BaseActivity<ActivityAddToAlbumBinding>() {
     private fun loadAlbumsAsync() {
         lifecycleScope.launch {
             val albums = withContext(Dispatchers.IO) {
-                // Log to debug SharedPreferences content
                 val savedAlbums =
                     ePreferences.getStringSet(SharedPreferenceHelper.ALBUMS_KEY)
 
-                // Always fetch fresh data to ensure newly created albums are included
                 val deviceAlbums = getAlbumsFromStorage(this@AddToAlbumActivity)
                 val allAlbums = mutableListOf<Album>().apply {
-                    add(Album(name = getString(R.string.add_album), photoUris = mutableListOf(), isAddAlbum = true))
+                    add(
+                        Album(
+                            name = getString(R.string.add_album),
+                            photoUris = mutableListOf(),
+                            isAddAlbum = true
+                        )
+                    )
                     addAll(savedAlbums.map { albumName ->
                         Album(
                             name = albumName,
@@ -93,7 +97,6 @@ class AddToAlbumActivity : BaseActivity<ActivityAddToAlbumBinding>() {
                     })
                     addAll(deviceAlbums.filter { !savedAlbums.contains(it.name) })
                 }
-                // Update cache
                 MyApplication.cachedAlbums = allAlbums
                 allAlbums
             }
@@ -103,6 +106,7 @@ class AddToAlbumActivity : BaseActivity<ActivityAddToAlbumBinding>() {
             binding.progressBar.visibility = View.GONE
         }
     }
+
     private fun getAlbumsFromStorage(context: Context): List<Album> {
         val albumMap = LinkedHashMap<String, MutableList<Uri>>()
         val projection = arrayOf(
@@ -131,7 +135,7 @@ class AddToAlbumActivity : BaseActivity<ActivityAddToAlbumBinding>() {
                 if (!albumMap.containsKey(bucketName)) {
                     albumMap[bucketName] = mutableListOf()
                 }
-                albumMap[bucketName]!!.add(imageUri) // Removed the size check
+                albumMap[bucketName]!!.add(imageUri)
             }
         }
 
@@ -206,7 +210,6 @@ class AddToAlbumActivity : BaseActivity<ActivityAddToAlbumBinding>() {
                 val albumDir = File(picturesDir, albumName)
                 if (!albumDir.exists()) {
                     if (albumDir.mkdirs()) {
-                        // Scan the new directory and wait for completion
                         var scanCompleted = false
                         MediaScannerConnection.scanFile(
                             this@AddToAlbumActivity,
@@ -215,7 +218,6 @@ class AddToAlbumActivity : BaseActivity<ActivityAddToAlbumBinding>() {
                         ) { _, _ ->
                             scanCompleted = true
                         }
-                        // Wait for scan to complete (up to 5 seconds)
                         val startTime = System.currentTimeMillis()
                         while (!scanCompleted && System.currentTimeMillis() - startTime < 5000) {
                             Thread.sleep(100)
@@ -275,7 +277,8 @@ class AddToAlbumActivity : BaseActivity<ActivityAddToAlbumBinding>() {
 
         binding.progressBar.visibility = View.VISIBLE
         lifecycleScope.launch(Dispatchers.IO) {
-            val picturesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            val picturesDir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
             val albumDir = File(picturesDir, album.name)
             if (!albumDir.exists()) {
                 albumDir.mkdirs()
@@ -287,7 +290,10 @@ class AddToAlbumActivity : BaseActivity<ActivityAddToAlbumBinding>() {
                     try {
                         val originalFile = File(media.path)
                         val newFile = File(albumDir, originalFile.name)
-                        Log.d("AddToAlbumActivity", "Moving ${originalFile.absolutePath} to ${newFile.absolutePath}")
+                        Log.d(
+                            "AddToAlbumActivity",
+                            "Moving ${originalFile.absolutePath} to ${newFile.absolutePath}"
+                        )
                         if (originalFile.renameTo(newFile)) {
                             val contentUri = if (media.isVideo) {
                                 MediaStore.Video.Media.EXTERNAL_CONTENT_URI
@@ -306,7 +312,10 @@ class AddToAlbumActivity : BaseActivity<ActivityAddToAlbumBinding>() {
                                 null
                             )
                             if (rowsUpdated == 0) {
-                                Log.e("AddToAlbumActivity", "Failed to update MediaStore for media ID ${media.id}")
+                                Log.e(
+                                    "AddToAlbumActivity",
+                                    "Failed to update MediaStore for media ID ${media.id}"
+                                )
                             }
 
                             MediaScannerConnection.scanFile(
@@ -317,18 +326,28 @@ class AddToAlbumActivity : BaseActivity<ActivityAddToAlbumBinding>() {
                                 if (uri == null) {
                                     Log.e("AddToAlbumActivity", "Media scan failed for $path")
                                 } else {
-                                    Log.d("AddToAlbumActivity", "Media scan completed for $path, URI: $uri")
+                                    Log.d(
+                                        "AddToAlbumActivity",
+                                        "Media scan completed for $path, URI: $uri"
+                                    )
                                 }
                             }
 
-                            // Verify new file exists
                             if (!newFile.exists()) {
-                                Log.e("AddToAlbumActivity", "New file does not exist: ${newFile.absolutePath}")
+                                Log.e(
+                                    "AddToAlbumActivity",
+                                    "New file does not exist: ${newFile.absolutePath}"
+                                )
                             }
 
                             media.copy(path = newFile.absolutePath)
                         } else {
-                            throw Exception(getString(R.string.failed_to_move_file_to, newFile.absolutePath))
+                            throw Exception(
+                                getString(
+                                    R.string.failed_to_move_file_to,
+                                    newFile.absolutePath
+                                )
+                            )
                         }
                     } catch (e: Exception) {
                         withContext(Dispatchers.Main) {
@@ -356,10 +375,14 @@ class AddToAlbumActivity : BaseActivity<ActivityAddToAlbumBinding>() {
                 binding.progressBar.visibility = View.GONE
                 setResult(RESULT_OK)
                 MyApplication.instance.clearSelectedMediaAndAction()
-                // Notify system of file change
                 updatedMediaList.forEach { media ->
                     if (media.id in selectedIds) {
-                        sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(File(media.path))))
+                        sendBroadcast(
+                            Intent(
+                                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                Uri.fromFile(File(media.path))
+                            )
+                        )
                     }
                 }
                 onBackPressedDispatcher()
@@ -369,7 +392,7 @@ class AddToAlbumActivity : BaseActivity<ActivityAddToAlbumBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        albumRecyclerView.adapter = null // Prevent memory leaks
+        albumRecyclerView.adapter = null
         MyApplication.instance.clearSelectedMediaAndAction()
     }
 }

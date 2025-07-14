@@ -103,7 +103,6 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
                         ) == PackageManager.PERMISSION_GRANTED
             }
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
-                // For Android 10, we need both read and write
                 ContextCompat.checkSelfPermission(
                     requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED &&
@@ -143,7 +142,6 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
                 )
             }
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
-                // Request both read and write for Android 10
                 readStoragePermissionLauncher.launch(
                     arrayOf(
                         Manifest.permission.READ_EXTERNAL_STORAGE,

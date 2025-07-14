@@ -38,7 +38,7 @@ class ImagePagerAdapter(
     private val ePreferences: SharedPreferenceHelper
 ) : RecyclerView.Adapter<ImagePagerAdapter.ImageViewHolder>() {
 
-    private val videoLoadTimeout = 10000L // 10 seconds
+    private val videoLoadTimeout = 10000L
     private val activeViewHolders = mutableListOf<ImageViewHolder>()
     private val loopingStateMap = mutableMapOf<Int, Boolean>()
     private var isMuted: Boolean = ePreferences.getBoolean("isMuted", false)

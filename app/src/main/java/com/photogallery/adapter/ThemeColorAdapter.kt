@@ -18,7 +18,7 @@ class ThemeColorAdapter internal constructor(
     private var inflater: LayoutInflater
     private val colorPickerColors: List<Int>
     private var onColorPickerClickListener: OnThemeColorPickerClickListener? =
-        null // Changed to nullable
+        null
 
     internal constructor(context: Context, position: Int) : this(
         context,

@@ -18,7 +18,7 @@ class BlurBSFragment : BottomSheetDialogFragment() {
     }
 
     private var blurListener: BlurProperties? = null
-    private var currentBlurRadius: Int = 1 // Start at 1 to avoid zero
+    private var currentBlurRadius: Int = 1
     private var lastSavedBlurRadius: Int = 0
 
     override fun onCreateView(

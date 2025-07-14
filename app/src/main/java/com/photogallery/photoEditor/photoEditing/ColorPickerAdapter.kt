@@ -16,8 +16,8 @@ class ColorPickerAdapter internal constructor(
     private var inflater: LayoutInflater
     private val colorPickerColors: List<Int>
     private var onColorPickerClickListener: OnColorPickerClickListener? =
-        null // Changed to nullable
-    private var selectedPosition = 0 // Default to 0th index
+        null
+    private var selectedPosition = 0
 
     internal constructor(context: Context) : this(context, getDefaultColors(context)) {
         this.context = context

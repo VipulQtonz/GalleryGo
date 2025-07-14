@@ -59,7 +59,7 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
     private val mediaOnlyList = mutableListOf<MediaData>()
     private var shortOrder = 0
     var getViewMode: String? = "DAY"
-    private var spanCount = 3 // Default span count
+    private var spanCount = 3
     private lateinit var scaleGestureDetector: ScaleGestureDetector
     private var hasScaled = false
 

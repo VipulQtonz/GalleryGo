@@ -170,7 +170,7 @@ class FavoriteActivity : BaseActivity<ActivityFavoriteBinding>() {
                 val database = PhotoGalleryDatabase.getDatabase(this@FavoriteActivity)
                 database.photoGalleryDao().deleteFavorite(media)
                 withContext(Dispatchers.Main) {
-                    loadFavoriteMedia() // Refresh the list
+                    loadFavoriteMedia()
                 }
             } catch (_: Exception) {
                 withContext(Dispatchers.Main) {

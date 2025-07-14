@@ -308,7 +308,7 @@ class GalleryVideoAdapter(
             layoutMode: LayoutMode,
             isSelected: Boolean,
             isSelectionMode: Boolean,
-            spanCount: Int // Add spanCount parameter
+            spanCount: Int
         ) {
             this.isSelectionMode = isSelectionMode
             itemView.findViewById<ImageView>(R.id.ivOptions)?.visibility =
@@ -327,7 +327,7 @@ class GalleryVideoAdapter(
                 val itemSize = (screenWidth - (spacing * (spanCount + 1))) / spanCount
 
                 params.width = itemSize
-                params.height = itemSize // Make it square
+                params.height = itemSize
                 ivItem.layoutParams = params
                 ivItem.scaleType = ImageView.ScaleType.CENTER_CROP
                 ivItem.adjustViewBounds = false
@@ -336,7 +336,7 @@ class GalleryVideoAdapter(
                     .load(media.uri)
                     .error(R.drawable.ic_video_placeholder)
                     .placeholder(R.drawable.ic_video_placeholder)
-                    .override(itemSize, itemSize) // Load square image
+                    .override(itemSize, itemSize)
                     .into(ivItem)
             } else {
                 params.width = ViewGroup.LayoutParams.MATCH_PARENT

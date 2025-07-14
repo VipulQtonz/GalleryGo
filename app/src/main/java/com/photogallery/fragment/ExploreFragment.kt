@@ -188,7 +188,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
                 if (!albumMap.containsKey(bucketName)) {
                     albumMap[bucketName] = mutableListOf()
                 }
-                albumMap[bucketName]!!.add(imageUri) // Removed the size check
+                albumMap[bucketName]!!.add(imageUri)
             }
         }
 
@@ -318,6 +318,6 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        albumRecyclerView.adapter = null // Prevent memory leaks
+        albumRecyclerView.adapter = null
     }
 }

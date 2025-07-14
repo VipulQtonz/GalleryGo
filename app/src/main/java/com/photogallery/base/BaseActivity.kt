@@ -255,7 +255,6 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
             }
 
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
-                // Request both read and write for Android 10
                 readStoragePermissionLauncher.launch(
                     arrayOf(
                         Manifest.permission.READ_EXTERNAL_STORAGE,

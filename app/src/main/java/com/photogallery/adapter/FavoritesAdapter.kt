@@ -66,7 +66,7 @@ class FavoritesAdapter(
             binding.apply {
                 ivFavorite.visibility = View.VISIBLE
                 root.setOnClickListener {
-                    onItemClick(media) // Launch PhotoViewActivity
+                    onItemClick(media)
                 }
                 ivFavorite.setOnClickListener {
                     onUnFavoriteClick(media)
@@ -84,13 +84,13 @@ class FavoritesAdapter(
         val params = binding.ivGalleryImgItem.layoutParams
         val displayMetrics = context.resources.displayMetrics
         val screenWidth = displayMetrics.widthPixels
-        val columnCount = 3 // Default grid columns
+        val columnCount = 3
         val spacing = context.resources.getDimensionPixelSize(R.dimen.grid_spacing)
 
         val itemSize = (screenWidth - (spacing * (columnCount + 1))) / columnCount
 
         params.width = itemSize
-        params.height = itemSize // Make it square
+        params.height = itemSize
         binding.ivGalleryImgItem.layoutParams = params
         binding.ivGalleryImgItem.scaleType = ImageView.ScaleType.CENTER_CROP
         binding.ivGalleryImgItem.adjustViewBounds = false

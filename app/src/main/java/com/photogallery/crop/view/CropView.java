@@ -2,15 +2,12 @@ package com.photogallery.crop.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 
-import com.photogallery.crop.callback.CropBoundsChangeListener;
-import com.photogallery.crop.callback.OverlayViewChangeListener;
 import com.photogallery.R;
 
 public class CropView extends FrameLayout {

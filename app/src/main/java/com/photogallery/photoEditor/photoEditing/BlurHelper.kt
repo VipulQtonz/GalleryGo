@@ -22,7 +22,7 @@ object BlurHelper {
             output.copyTo(outputBitmap)
         } catch (e: Exception) {
             e.printStackTrace()
-            return inputBitmap // Return original bitmap on error
+            return inputBitmap
         } finally {
             renderScript.destroy()
         }

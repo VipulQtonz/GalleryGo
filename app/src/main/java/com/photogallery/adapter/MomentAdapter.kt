@@ -92,14 +92,14 @@ class MomentAdapter(
                             clearZoom()
                             val currentItem = it.currentItem
                             val itemCount = it.adapter?.itemCount ?: 0
-                            if (x > screenWidth / 2) { // Right side tap
+                            if (x > screenWidth / 2) {
                                 if (currentItem < itemCount - 1) {
                                     it.setCurrentItem(currentItem + 1, true)
                                     onNavigation("next")
                                 } else {
                                     onNavigation("group_next")
                                 }
-                            } else { // Left side tap
+                            } else {
                                 if (currentItem > 0) {
                                     it.setCurrentItem(currentItem - 1, true)
                                     onNavigation("prev")

@@ -20,7 +20,7 @@ class RotateBSFragment : BottomSheetDialogFragment() {
     }
 
     private var rotateListener: RotateProperties? = null
-    private var rotationCount: Int = 0 // Track 90-degree rotations (mod 4)
+    private var rotationCount: Int = 0
     private var flipHorizontal: Boolean = false
     private var flipVertical: Boolean = false
     private var savedRotationCount: Int = 0
@@ -45,7 +45,7 @@ class RotateBSFragment : BottomSheetDialogFragment() {
         val tvSave = view.findViewById<TextView>(R.id.tvDone)
 
         ivRotate.setOnClickListener {
-            rotationCount = (rotationCount + 1) % 4 // Rotate 90 degrees clockwise
+            rotationCount = (rotationCount + 1) % 4
             rotateListener?.onRotate()
         }
 

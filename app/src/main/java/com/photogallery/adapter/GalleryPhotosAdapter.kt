@@ -145,7 +145,6 @@ class GalleryPhotosAdapter(
                     isSelectionMode,
                     spanCount
                 )
-                // Ensure selection indicator is updated for recycled views
                 holder.itemView.findViewById<ImageView>(R.id.ivSelectOption)?.let {
                     it.visibility = if (isSelectionMode) View.VISIBLE else View.GONE
                     it.setImageResource(
@@ -184,7 +183,7 @@ class GalleryPhotosAdapter(
         val itemPosition = galleryImgList.indexOfFirst {
             it is GalleryListItem.MediaItem && it.media.id == media.id
         }
-        if (itemPosition == -1) return // Item not found
+        if (itemPosition == -1) return
 
         val wasInSelectionMode = isSelectionMode
 
@@ -205,7 +204,6 @@ class GalleryPhotosAdapter(
         if (wasInSelectionMode != isSelectionMode) {
             notifyDataSetChanged()
         } else {
-            // Notify only the toggled item and its header when staying in selection mode
             notifyItemChanged(itemPosition)
             val dateFormat = SimpleDateFormat("EEE, dd MMM yyyy", Locale.getDefault())
             val monthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
@@ -333,7 +331,7 @@ class GalleryPhotosAdapter(
             layoutMode: LayoutMode,
             isSelected: Boolean,
             isSelectionMode: Boolean,
-            spanCount: Int // Add spanCount parameter
+            spanCount: Int
         ) {
             if (position == 0) {
                 if (ePreferences!!.getBoolean("isFirstTimePhotoFragmentAdapterItem", true)) {
@@ -364,7 +362,7 @@ class GalleryPhotosAdapter(
                 val itemSize = (screenWidth - (spacing * (spanCount + 1))) / spanCount
 
                 params.width = itemSize
-                params.height = itemSize // Make it square
+                params.height = itemSize
                 ivItem.layoutParams = params
                 ivItem.scaleType = ImageView.ScaleType.CENTER_CROP
                 ivItem.adjustViewBounds = false
@@ -373,7 +371,7 @@ class GalleryPhotosAdapter(
                     .load(media.uri)
                     .error(R.drawable.ic_image_placeholder)
                     .placeholder(R.drawable.ic_image_placeholder)
-                    .override(itemSize, itemSize) // Square image
+                    .override(itemSize, itemSize)
                     .into(ivItem)
             } else {
                 params.width = ViewGroup.LayoutParams.MATCH_PARENT

@@ -113,7 +113,6 @@ class AppThemAndColorActivity : BaseActivity<ActivityAppThemAndColorBinding>() {
     }
 
     private fun applyTheme(theme: Int, fromSystem: Boolean) {
-        // Only allow system changes when System Default is selected AND it's a system change
         if (fromSystem && ePreferences.getInt(
                 PREF_THEME, THEME_SYSTEM_DEFAULT
             ) != THEME_SYSTEM_DEFAULT
@@ -125,7 +124,6 @@ class AppThemAndColorActivity : BaseActivity<ActivityAppThemAndColorBinding>() {
             THEME_LIGHT -> {
 
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                // Force light theme regardless of system
                 delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
             }
 
@@ -135,7 +133,6 @@ class AppThemAndColorActivity : BaseActivity<ActivityAppThemAndColorBinding>() {
             }
 
             else -> {
-                // Follow system only for System Default option
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
             }

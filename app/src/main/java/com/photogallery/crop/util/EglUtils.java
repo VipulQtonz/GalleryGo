@@ -111,7 +111,7 @@ public class EglUtils {
                 EGL10.EGL_NONE
         };
         javax.microedition.khronos.egl.EGLSurface surf = egl.eglCreatePbufferSurface(dpy, config, surfAttr);
-        final int EGL_CONTEXT_CLIENT_VERSION = 0x3098;  // missing in EGL10
+        final int EGL_CONTEXT_CLIENT_VERSION = 0x3098;  
         int[] ctxAttrib = {
                 EGL_CONTEXT_CLIENT_VERSION, 1,
                 EGL10.EGL_NONE

@@ -126,17 +126,14 @@ public class BitmapLoadUtils {
         width = size.x;
         height = size.y;
 
-        // Twice the device screen diagonal as default
         int maxBitmapSize = (int) Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
 
-        // Check for max texture size via Canvas
         Canvas canvas = new Canvas();
         final int maxCanvasSize = Math.min(canvas.getMaximumBitmapWidth(), canvas.getMaximumBitmapHeight());
         if (maxCanvasSize > 0) {
             maxBitmapSize = Math.min(maxBitmapSize, maxCanvasSize);
         }
 
-        // Check for max texture size via GL
         final int maxTextureSize = EglUtils.getMaxTextureSize();
         if (maxTextureSize > 0) {
             maxBitmapSize = Math.min(maxBitmapSize, maxTextureSize);
@@ -148,12 +145,11 @@ public class BitmapLoadUtils {
 
     @SuppressWarnings("ConstantConditions")
     public static void close(@Nullable Closeable c) {
-        if (c != null && c instanceof Closeable) { // java.lang.IncompatibleClassChangeError: interface not implemented
+        if (c != null && c instanceof Closeable) {
             try {
                 c.close();
             } catch (IOException e) {
             }
         }
     }
-
 }

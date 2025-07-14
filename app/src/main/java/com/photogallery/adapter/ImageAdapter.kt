@@ -8,7 +8,6 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.photogallery.R
-import android.content.res.Resources
 
 class ImageAdapter(
     private var imageUris: List<Uri>,

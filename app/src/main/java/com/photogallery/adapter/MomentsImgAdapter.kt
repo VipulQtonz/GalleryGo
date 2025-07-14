@@ -13,10 +13,9 @@ import com.photogallery.model.Moment
 
 class MomentsImgAdapter(
     private var imgArrayList: ArrayList<Moment>,
-    private val onItemClickListener: OnItemClickListener // Interface instead of lambda
+    private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<MomentsImgAdapter.ViewHolder>() {
 
-    // Define the interface
     interface OnItemClickListener {
         fun onItemClick(position: Int, moment: Moment)
     }

@@ -38,4 +38,6 @@ object Const {
     const val THEME_SYSTEM_DEFAULT = 2
 
     const val SPAN_COUNT_DEFAULT = 3
+
+    const val CODE_NOTIFICATION = 1235
 }

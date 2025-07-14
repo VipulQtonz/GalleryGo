@@ -44,8 +44,8 @@ class DocumentAdapter(
                     RequestOptions()
                         .centerCrop()
                         .placeholder(R.drawable.ic_image_placeholder)
-                        .error(R.drawable.ic_image_placeholder) // Add an error image
-                        .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache images for performance
+                        .error(R.drawable.ic_image_placeholder)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                 )
                 .into(holder.imageView)
         } else {

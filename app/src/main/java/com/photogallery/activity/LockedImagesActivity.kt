@@ -40,7 +40,7 @@ import java.io.File
 class LockedImagesActivity : BaseActivity<ActivityLockedImagesBinding>() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: LockedMediaAdapter
-    private val lockedMedia = mutableListOf<File>() // Changed to List<File>
+    private val lockedMedia = mutableListOf<File>()
     private val selectImageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
@@ -65,7 +65,7 @@ class LockedImagesActivity : BaseActivity<ActivityLockedImagesBinding>() {
 
         adapter = LockedMediaAdapter(
             this@LockedImagesActivity,
-            onItemClick = { media -> showItemOptionsDialog(media) }, // Updated to pass File
+            onItemClick = { media -> showItemOptionsDialog(media) },
             onSelectionModeChange = { isSelectionMode ->
                 binding.llMoveAndDelete.visibility =
                     if (isSelectionMode) View.VISIBLE else View.GONE

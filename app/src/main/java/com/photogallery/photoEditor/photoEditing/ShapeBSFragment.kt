@@ -18,9 +18,9 @@ import com.photogallery.model.ShapeOptionItems
 class ShapeBSFragment : BottomSheetDialogFragment(), SeekBar.OnSeekBarChangeListener {
     private var mProperties: Properties? = null
     private var selectedColor: Int = 0
-    private var selectedOpacity: Int = 100 // Default opacity
+    private var selectedOpacity: Int = 100
     private var selectedSize: Int = 20
-    private var selectedShape: ShapeType = ShapeType.Brush // Default to Brush
+    private var selectedShape: ShapeType = ShapeType.Brush
 
     interface Properties {
         fun onColorChanged(colorCode: Int)

@@ -47,13 +47,13 @@ class RecyclerBinAdapter(
             val params = imageView.layoutParams
             val displayMetrics = context.resources.displayMetrics
             val screenWidth = displayMetrics.widthPixels
-            val columnCount = 3 // Default grid columns
+            val columnCount = 3
             val spacing = context.resources.getDimensionPixelSize(R.dimen.grid_spacing)
 
             val itemSize = (screenWidth - (spacing * (columnCount + 1))) / columnCount
 
             params.width = itemSize
-            params.height = itemSize // Make it square
+            params.height = itemSize
             imageView.layoutParams = params
             imageView.scaleType = ImageView.ScaleType.CENTER_CROP
             imageView.adjustViewBounds = false
@@ -86,7 +86,6 @@ class RecyclerBinAdapter(
                     )
                     .build()
             } else {
-                // No padding when not selected
                 imageView.setPadding(0, 0, 0, 0)
                 imageView.background = null
                 imageView.shapeAppearanceModel = imageView.shapeAppearanceModel
@@ -113,7 +112,7 @@ class RecyclerBinAdapter(
                 if (!this@RecyclerBinAdapter.isSelectionMode) {
                     this@RecyclerBinAdapter.isSelectionMode = true
                     onSelectionModeChange(true)
-                    notifyDataSetChanged() // Force refresh to show ivSelect on all items
+                    notifyDataSetChanged()
                 }
                 toggleSelection(media)
                 true
@@ -169,9 +168,7 @@ class RecyclerBinAdapter(
         isSelectionMode = false
         onSelectionModeChange(false)
 
-        // ✅ Notify activity of updated count
         onSelectionCountChange(0)
-
         notifyDataSetChanged()
     }
 }
@@ -185,9 +182,3 @@ class MediaDiffCallback : DiffUtil.ItemCallback<MediaData>() {
         return oldItem == newItem
     }
 }
-
-
-
-
-
-

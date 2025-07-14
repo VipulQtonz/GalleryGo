@@ -6,6 +6,6 @@ data class GroupedLocationPhoto(
     val locationName: String?,
     val representativeUri: Uri,
     val allUris: MutableList<Uri>,
-    val latitude: Double?, // Add latitude
-    val longitude: Double? // Add longitude
+    val latitude: Double?,
+    val longitude: Double?
 )
