@@ -166,3 +166,39 @@
 -keepattributes Signature
 -keepattributes *Annotation*
 
+# --- Core runtime ------------------------------------------------------------
+-keep class org.tensorflow.** { *; }
+-keep class org.tensorflow.lite.** { *; }
+-keepclassmembers class org.tensorflow.** { native <methods>; }
+-dontwarn org.tensorflow.**
+
+# --- FlatBuffers (model metadata) -------------------------------------------
+-keep class com.google.flatbuffers.** { *; }
+-dontwarn com.google.flatbuffers.**
+
+# --- Optional delegates ------------------------------------------------------
+-keep class org.tensorflow.lite.gpu.**     { *; }   # GPU
+-keep class org.tensorflow.lite.nnapi.**   { *; }   # NNAPI
+-keep class org.tensorflow.lite.hexagon.** { *; }   # Hexagon DSP
+-keep class org.tensorflow.lite.xnnpack.** { *; }   # XNNPACK
+-dontwarn org.tensorflow.lite.gpu.**
+-dontwarn org.tensorflow.lite.nnapi.**
+-dontwarn org.tensorflow.lite.hexagon.**
+-dontwarn org.tensorflow.lite.xnnpack.**
+
+# --- Support & Task libraries (only if you add these AARs) -------------------
+-keep class org.tensorflow.lite.support.** { *; }
+-keep class org.tensorflow.lite.task.**    { *; }
+-dontwarn org.tensorflow.lite.support.**
+-dontwarn org.tensorflow.lite.task.**
+
+# --- Logging helpers that TFLite references via reflection -------------------
+-keep class com.google.flogger.** { *; }
+-keep class com.google.errorprone.annotations.** { *; }
+-keepclassmembers class * {
+    @com.google.errorprone.annotations.FormatMethod <methods>;
+    @com.google.errorprone.annotations.FormatString <fields>;
+}
+
+# --- Misc. community issues --------------------------------------------------
+-dontwarn org.checkerframework.**        # fixes R8 warning seen in TFLite 2.x :contentReference[oaicite:0]{index=0}

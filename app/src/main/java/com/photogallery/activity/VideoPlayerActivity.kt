@@ -67,7 +67,7 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>() {
     private var isDragging = false
     private var startY = 0f
     private var lastY = 0f
-    private val dismissThreshold = 0.4f // 40% of screen height to dismiss
+    private val dismissThreshold = 0.4f
     private var screenHeight = 0f
     private val minScale = 0.8f
     private var isSwipeDismiss = false

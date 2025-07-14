@@ -72,8 +72,7 @@ class VideosFragment : BaseFragment<FragmentPhotosBinding>() {
             getString(R.string.no_videos_available_capture_and_share_your_moments)
         binding.emptyViewLayout.ivIllustrator.setImageResource(R.drawable.ic_videos_empty)
         scaleGestureDetector = ScaleGestureDetector(
-            requireContext(),
-            object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
                 override fun onScale(detector: ScaleGestureDetector): Boolean {
                     if (!hasScaled) {
                         if (detector.scaleFactor > 1.0f && spanCount > 1) {
@@ -93,8 +92,7 @@ class VideosFragment : BaseFragment<FragmentPhotosBinding>() {
                     hasScaled = false
                     ePreferences?.putInt("span_count", spanCount)
                 }
-            }
-        )
+            })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -472,8 +470,7 @@ class VideosFragment : BaseFragment<FragmentPhotosBinding>() {
                 val dateHeader = itemList[dateHeaderIndex] as GalleryListItem.DateHeader
                 val hasItemsForDate = itemList.any { item ->
                     item is GalleryListItem.MediaItem && getDateKey(
-                        item.media.dateTaken,
-                        viewMode
+                        item.media.dateTaken, viewMode
                     ) == dateHeader.date
                 }
                 if (!hasItemsForDate) {

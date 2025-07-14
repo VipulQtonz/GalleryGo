@@ -138,7 +138,6 @@ public final class PausableProgressBar extends FrameLayout {
         }
     }
 
-
     private static class PausableScaleAnimation extends ScaleAnimation {
 
         private long mElapsedAtPause = 0;

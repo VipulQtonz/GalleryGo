@@ -29,7 +29,6 @@
         android:clipToPadding="false"
         android:overScrollMode="never"
         android:padding="@dimen/_6sdp"
-        android:scrollbars="none"
-        tools:listitem="@layout/item_album" />
+        android:scrollbars="none" />
 
 </RelativeLayout>

@@ -34,7 +34,6 @@ class AlbumViewerActivity : BaseActivity<ActivityAlbumViewerBinding>() {
         populateMediaList()
 
         if (isWhat == "FaceGroup") {
-            binding.rlFaceGroupData.visibility = View.VISIBLE
             binding.tvPeopleName.text = albumName
             val representativeUri = intent.getStringExtra("representativeImage")
             Glide.with(this).load(representativeUri).error(R.drawable.ic_image_placeholder)

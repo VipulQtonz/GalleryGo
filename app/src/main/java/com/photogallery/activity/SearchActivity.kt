@@ -222,6 +222,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
     override fun onBackPressedDispatcher() {
         if (binding.rlImageRecyclerView.isVisible) {
             selectedGroup.value = null
+            binding.searchBar.setText(null)
             currentLocationLiveData?.removeObserver(locationGroupObserver)
             currentDocumentLiveData?.removeObserver(documentGroupObserver)
             currentLocationLiveData = null
