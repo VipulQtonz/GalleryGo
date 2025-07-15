@@ -335,6 +335,7 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
                         binding.ivFavorite.setImageResource(R.drawable.ic_favourites_pink)
                     }
                     setFavoriteIcon(position)
+                    MyApplication.isPhotoFetchReload == true
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -375,6 +376,7 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
                     binding.ivFavorite.setImageResource(R.drawable.ic_favourites_inactive)
                     setFavoriteIcon(position)
                 }
+                MyApplication.isPhotoFetchReload == true
             }
             dialog.dismiss()
         }

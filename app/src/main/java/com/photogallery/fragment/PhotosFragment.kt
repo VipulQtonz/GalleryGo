@@ -36,6 +36,7 @@ import com.photogallery.adapter.MomentsImgAdapter
 import com.photogallery.base.BaseFragment
 import com.photogallery.databinding.DialogPersonaliseGridBinding
 import com.photogallery.databinding.FragmentPhotosBinding
+import com.photogallery.db.PhotoGalleryDatabase
 import com.photogallery.model.GalleryListItem
 import com.photogallery.model.MediaData
 import com.photogallery.model.Moment
@@ -102,8 +103,7 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
             binding.emptyViewLayout.ivIllustrator.setImageResource(R.drawable.ic_photos_empty)
         }
         scaleGestureDetector = ScaleGestureDetector(
-            requireContext(),
-            object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            requireContext(), object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
                 override fun onScale(detector: ScaleGestureDetector): Boolean {
                     if (!hasScaled) {
                         if (detector.scaleFactor > 1.0f && spanCount > 1) {
@@ -123,8 +123,7 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
                     hasScaled = false
                     ePreferences?.putInt("span_count", spanCount)
                 }
-            }
-        )
+            })
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -143,6 +142,7 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
     }
 
     private fun initializeAdapter() {
+        val dao = PhotoGalleryDatabase.getDatabase(requireContext()).photoGalleryDao()
         galleryPhotosAdapter = GalleryPhotosAdapter(
             ePreferences,
             context = requireContext(),
@@ -174,7 +174,8 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
                     startActivity(intent)
                     (requireContext() as Activity).nextScreenAnimation()
                 }
-            })
+            }
+        )
         binding.rvMoments.layoutManager = CarouselLayoutManager()
         binding.rvMoments.adapter = homeActivity?.let {
             MomentsImgAdapter(imgArrayList, this)
@@ -347,7 +348,7 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
 
             withContext(Dispatchers.Main) {
                 binding.emptyViewLayout.llEmptyLayout.visibility = View.GONE
-
+                val dao = PhotoGalleryDatabase.getDatabase(requireContext()).photoGalleryDao()
                 MyApplication.isPhotoFetchReload = false
                 galleryPhotosAdapter = GalleryPhotosAdapter(
                     ePreferences = ePreferences,
@@ -371,19 +372,19 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
                     },
                     onSelectedCountChange = { count ->
                         (activity as? HomeActivity)?.updateSelectedCount(count)
-                    }
-                ) { mediaData, _ ->
-                    val position = mediaOnlyList.indexOfFirst { it.id == mediaData.id }
-                    if (position != -1) {
-                        val intent =
-                            Intent(requireContext(), PhotoViewActivity::class.java).apply {
-                                putExtra("selected_position", position)
-                                putExtra("media_id", mediaData.id)
-                            }
-                        startActivity(intent)
-                        (requireContext() as Activity).nextScreenAnimation()
-                    }
-                }
+                    },
+                    onImageClickListener = { mediaData, _ ->
+                        val position = mediaOnlyList.indexOfFirst { it.id == mediaData.id }
+                        if (position != -1) {
+                            val intent =
+                                Intent(requireContext(), PhotoViewActivity::class.java).apply {
+                                    putExtra("selected_position", position)
+                                    putExtra("media_id", mediaData.id)
+                                }
+                            startActivity(intent)
+                            (requireContext() as Activity).nextScreenAnimation()
+                        }
+                    })
 
                 val layoutManager = GridLayoutManager(
                     requireContext(), spanCount
@@ -418,7 +419,7 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
         galleryPhotosAdapter.updateSpanCount(spanCount)
     }
 
-    private fun loadGroupedImages(viewMode: ViewMode): List<GalleryListItem> {
+    private suspend fun loadGroupedImages(viewMode: ViewMode): List<GalleryListItem> {
         val imageMap = mutableMapOf<String, MutableList<MediaData>>()
         val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(
@@ -448,6 +449,12 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
         }
 
         val allUris = mutableListOf<Uri>()
+
+        // Retrieve favorite URIs from the database
+        val dao = PhotoGalleryDatabase.getDatabase(requireContext()).photoGalleryDao()
+        val favoriteUris = withContext(Dispatchers.IO) {
+            dao.getAllFavorites().map { it.uri }.toSet()
+        }
 
         val cursor = context?.contentResolver?.query(
             uri, projection, selection, selectionArgs, sortOrder
@@ -479,7 +486,15 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding>(),
                     ViewMode.COMFORTABLE -> monthFormat.format(date)
                 }
                 val contentUri = ContentUris.withAppendedId(uri, id)
-                val media = MediaData(id, name, path, contentUri, dateTakenMillis, isVideo = false)
+                val media = MediaData(
+                    id,
+                    name,
+                    path,
+                    contentUri,
+                    dateTakenMillis,
+                    isVideo = false,
+                    isFavorite = favoriteUris.contains(contentUri)
+                )
                 imageMap.getOrPut(dateKey) { mutableListOf() }.add(media)
                 allUris.add(contentUri)
             }

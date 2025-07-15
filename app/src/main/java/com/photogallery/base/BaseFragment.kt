@@ -94,6 +94,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
                 Environment.isExternalStorageManager()
             }
+
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
                 ContextCompat.checkSelfPermission(
                     requireContext(), Manifest.permission.READ_MEDIA_IMAGES
@@ -102,6 +103,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
                             requireContext(), Manifest.permission.READ_MEDIA_VIDEO
                         ) == PackageManager.PERMISSION_GRANTED
             }
+
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
                 ContextCompat.checkSelfPermission(
                     requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE
@@ -110,6 +112,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
                             requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE
                         ) == PackageManager.PERMISSION_GRANTED
             }
+
             else -> {
                 ContextCompat.checkSelfPermission(
                     requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE
@@ -128,11 +131,12 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
                     val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
                     intent.data = ("package:" + requireContext().packageName).toUri()
                     manageStorageLauncher.launch(intent)
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                     val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
                     manageStorageLauncher.launch(intent)
                 }
             }
+
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
                 readStoragePermissionLauncher.launch(
                     arrayOf(
@@ -141,6 +145,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
                     )
                 )
             }
+
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
                 readStoragePermissionLauncher.launch(
                     arrayOf(
@@ -149,6 +154,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
                     )
                 )
             }
+
             else -> {
                 readStoragePermissionLauncher.launch(
                     arrayOf(

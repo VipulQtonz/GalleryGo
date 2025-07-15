@@ -21,6 +21,7 @@ import com.photogallery.adapter.GalleryPhotosAdapter
 import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivitySelectImageBinding
 import com.photogallery.databinding.DialogPersonaliseGridBinding
+import com.photogallery.db.PhotoGalleryDatabase
 import com.photogallery.model.GalleryListItem
 import com.photogallery.model.MediaData
 import com.photogallery.utils.Const.PERMISSION_REQUEST_CODE
@@ -159,6 +160,7 @@ class SelectImageActivity : BaseActivity<ActivitySelectImageBinding>() {
     }
 
     private fun initializeAdapter() {
+        val dao = PhotoGalleryDatabase.getDatabase(this).photoGalleryDao()
         galleryPhotosAdapter = GalleryPhotosAdapter(
             ePreferences = ePreferences,
             context = this,
@@ -191,7 +193,8 @@ class SelectImageActivity : BaseActivity<ActivitySelectImageBinding>() {
                     startActivity(intent)
                     nextScreenAnimation()
                 }
-            })
+            }
+        )
 
         val layoutManager = GridLayoutManager(this, spanCount).apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

@@ -2,7 +2,6 @@ package com.photogallery.fragment
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,7 +36,6 @@ import com.photogallery.utils.ConnectivityObserver
 import com.photogallery.utils.isInternet
 import com.skydoves.balloon.ArrowOrientation
 import kotlinx.coroutines.Job
-import androidx.core.net.toUri
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private lateinit var locationPhotosAdapter: LocationPhotosAdapter
@@ -304,9 +303,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             val allFaceGroupPhotos =
                 MyApplication.faceGroups.value?.flatMap {
                     it.uris.map { uri ->
-                        Uri.parse(
-                            uri
-                        )
+                        uri.toUri()
                     }
                 }?.distinct() ?: emptyList()
             MyApplication.selectedAlbumImages = allFaceGroupPhotos.toMutableList()

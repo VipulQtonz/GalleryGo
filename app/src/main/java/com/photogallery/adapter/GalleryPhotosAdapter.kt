@@ -13,6 +13,7 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.shape.CornerFamily
 import com.photogallery.MyApplication.Companion.setupTooltip
 import com.photogallery.R
+import com.photogallery.db.PhotoGalleryDao
 import com.photogallery.model.GalleryListItem
 import com.photogallery.model.MediaData
 import com.photogallery.utils.Const.TYPE_HEADER
@@ -22,6 +23,10 @@ import com.photogallery.utils.SharedPreferenceHelper
 import com.photogallery.utils.ViewMode
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.skydoves.balloon.ArrowOrientation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -38,7 +43,7 @@ class GalleryPhotosAdapter(
     private val onOptionClickListener: () -> Unit,
     private val onSelectionModeChange: (Boolean) -> Unit,
     private val onSelectedCountChange: (Int) -> Unit,
-    private val onImageClickListener: (MediaData, Int) -> Unit
+    private val onImageClickListener: (MediaData, Int) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RecyclerViewFastScroller.OnPopupViewUpdate {
     private val selectedMedia = mutableSetOf<MediaData>()
     internal var isSelectionMode = false
@@ -294,7 +299,7 @@ class GalleryPhotosAdapter(
         private val onLongClick: (Int) -> Unit,
         private val onImageClick: (Int) -> Unit,
         private val context: Context,
-        private val ePreferences: SharedPreferenceHelper?
+        private val ePreferences: SharedPreferenceHelper?,
     ) : RecyclerView.ViewHolder(itemView) {
         private val ivItem = itemView.findViewById<ShapeableImageView>(R.id.ivGalleryImgItem)
         private val ivSelectOption = itemView.findViewById<ImageView>(R.id.ivSelectOption)
@@ -333,6 +338,10 @@ class GalleryPhotosAdapter(
             isSelectionMode: Boolean,
             spanCount: Int
         ) {
+            val ivFavorite =
+                itemView.findViewById<ImageView>(R.id.ivFavorite) // Add this in your layout
+            ivFavorite?.visibility = if (media.isFavorite) View.VISIBLE else View.GONE
+
             if (position == 0) {
                 if (ePreferences!!.getBoolean("isFirstTimePhotoFragmentAdapterItem", true)) {
                     setupTooltip(
