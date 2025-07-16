@@ -60,8 +60,9 @@ interface PhotoGalleryDao {
 
 
     //for skip images
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSkippedImage(skippedImage: SkippedImage)
+
 
     @Query("SELECT uri FROM skipped_images")
     suspend fun getAllSkippedUris(): List<String>
