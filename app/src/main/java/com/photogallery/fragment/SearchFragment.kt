@@ -141,7 +141,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         ) { group ->
             MyApplication.selectedAlbumImages = group.uris.map { it.toUri() }
             val intent = Intent(requireActivity(), AlbumViewerActivity::class.java).apply {
-                putExtra("albumName", "Face Group ${group.groupId.takeLast(8)}")
+                putExtra("albumName", getString(R.string.people))
                 putExtra("isWhat", "FaceGroup")
                 putExtra("FromSearch", true)
                 putExtra("representativeImage", group.representativeUri)

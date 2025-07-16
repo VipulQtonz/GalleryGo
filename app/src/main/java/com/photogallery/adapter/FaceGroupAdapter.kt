@@ -32,7 +32,6 @@ class FaceGroupAdapter(
             } else {
                 imageView.setImageResource(android.R.color.transparent)
             }
-            tvGroupName.text = context.getString(R.string.add_name)
             root.setOnClickListener { onClick(group) }
         }
     }

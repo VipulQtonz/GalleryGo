@@ -6,6 +6,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.photogallery.MyApplication
+import com.photogallery.R
 import com.photogallery.adapter.GenericGroupAdapter
 import com.photogallery.base.BaseActivity
 import com.photogallery.databinding.ActivitySeeAllBinding
@@ -78,20 +79,17 @@ class SeeAllActivity : BaseActivity<ActivitySeeAllBinding>() {
 
     private fun setupAdapter() {
         genericGroupAdapter = GenericGroupAdapter(
-            context = this,
-            onItemClick = { group ->
+            context = this, onItemClick = { group ->
                 MyApplication.selectedAlbumImages = when (group) {
                     is GroupedLocationPhoto -> group.allUris.toMutableList()
                     is DocumentGroup -> group.allUris.toMutableList()
-                    is FaceGroupingUtils.FaceGroup -> group.uris.map { it.toUri() }
-                        .toMutableList()
+                    is FaceGroupingUtils.FaceGroup -> group.uris.map { it.toUri() }.toMutableList()
 
                     else -> mutableListOf()
                 }
                 val intent = when (group) {
                     is GroupedLocationPhoto -> Intent(
-                        this,
-                        LocationPhotoViewerActivity::class.java
+                        this, LocationPhotoViewerActivity::class.java
                     ).apply {
                         putExtra("albumName", group.locationName ?: "Unknown Location")
                         putExtra("latitude", group.latitude ?: 0.0)
@@ -103,12 +101,7 @@ class SeeAllActivity : BaseActivity<ActivitySeeAllBinding>() {
                     else -> Intent(this, AlbumViewerActivity::class.java).apply {
                         putExtra(
                             "albumName", when (group) {
-                                is FaceGroupingUtils.FaceGroup -> "Face Group ${
-                                    group.groupId.takeLast(
-                                        8
-                                    )
-                                }"
-
+                                is FaceGroupingUtils.FaceGroup -> getString(R.string.people)
                                 is DocumentGroup -> group.name
                                 else -> albumName
                             }
@@ -126,8 +119,7 @@ class SeeAllActivity : BaseActivity<ActivitySeeAllBinding>() {
                 }
                 startActivity(intent)
                 nextScreenAnimation()
-            }
-        )
+            })
 
         binding.rwSeeAll.layoutManager = GridLayoutManager(this, 3)
         binding.rwSeeAll.adapter = genericGroupAdapter

@@ -11,7 +11,7 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorBgScreen"
+        android:background="@null"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:elevation="0dp"

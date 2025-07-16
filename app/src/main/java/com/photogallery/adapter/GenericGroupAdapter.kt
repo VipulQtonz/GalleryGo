@@ -71,8 +71,6 @@ class GenericGroupAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(group: FaceGroupingUtils.FaceGroup) {
-            val uri = group.uris.firstOrNull()
-            binding.tvGroupName.text = context.getString(R.string.add_name)
             Glide.with(context)
                 .load(group.representativeUri)
                 .circleCrop()
