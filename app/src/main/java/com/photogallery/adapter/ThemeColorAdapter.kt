@@ -17,13 +17,10 @@ class ThemeColorAdapter internal constructor(
 ) : RecyclerView.Adapter<ThemeColorAdapter.ViewHolder0825>() {
     private var inflater: LayoutInflater
     private val colorPickerColors: List<Int>
-    private var onColorPickerClickListener: OnThemeColorPickerClickListener? =
-        null
+    private var onColorPickerClickListener: OnThemeColorPickerClickListener? = null
 
     internal constructor(context: Context, position: Int) : this(
-        context,
-        position,
-        getDefaultColors(context)
+        context, position, getDefaultColors(context)
     ) {
         this.context = context
         this.selectedPosition = position
@@ -51,8 +48,7 @@ class ThemeColorAdapter internal constructor(
         }
 
         val backgroundDrawable = ContextCompat.getDrawable(
-            context,
-            if (isSelected) R.drawable.bg_rounded_corner_color
+            context, if (isSelected) R.drawable.bg_rounded_corner_color
             else R.drawable.bg_rounded_corner_color
         ) as GradientDrawable
 

@@ -132,6 +132,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 putExtra("isWhat", "Document")
                 putExtra("FromSearch", true)
             }
+            MyApplication.isAlbumReload = true
             startActivity(requireContext(), intent, null)
             (requireContext() as Activity).nextScreenAnimation()
         }
@@ -146,6 +147,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 putExtra("FromSearch", true)
                 putExtra("representativeImage", group.representativeUri)
             }
+            MyApplication.isAlbumReload = true
             startActivity(requireContext(), intent, null)
             (requireContext() as Activity).nextScreenAnimation()
         }

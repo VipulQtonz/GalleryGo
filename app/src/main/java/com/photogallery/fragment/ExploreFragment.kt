@@ -98,6 +98,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
                 val intent = Intent(requireActivity(), AlbumViewerActivity::class.java)
                 intent.putExtra("albumName", album.name)
                 startActivity(intent)
+                MyApplication.isAlbumReload = true
                 (requireContext() as Activity).nextScreenAnimation()
             }
         }

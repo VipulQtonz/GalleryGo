@@ -11,14 +11,15 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.withContext
 import java.util.UUID
 import java.util.concurrent.Executors
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 object FaceGroupingUtils {
     private const val TAG = "FaceGroupingUtils"
-    private const val BASE_SELFIE_SIMILARITY_THRESHOLD = 0.60f
-    private const val BASE_GENERAL_SIMILARITY_THRESHOLD = 0.65f
-    private const val MIN_SIMILARITY_THRESHOLD = 0.85f
-    private const val MERGE_THRESHOLD = 0.75f
+    private const val BASE_SIMILARITY_THRESHOLD = 0.98f
+    private const val MERGE_THRESHOLD = 0.98f
+    private const val DBSCAN_EPS = 0.70f
+    private const val MIN_SAMPLES = 4
 
     private val databaseDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
@@ -27,7 +28,7 @@ object FaceGroupingUtils {
         val uris: MutableSet<String> = mutableSetOf(),
         val embeddings: MutableList<FloatArray> = mutableListOf(),
         var representativeUri: String? = null,
-        val referenceEmbedding: FloatArray? = null
+        var referenceEmbedding: FloatArray? = null
     ) {
         override fun toString(): String {
             return "FaceGroup(id=$groupId, imageCount=${uris.size}, representativeUri=$representativeUri, uris=[${
@@ -41,7 +42,7 @@ object FaceGroupingUtils {
 
     suspend fun groupSimilarFaces(context: Context): List<FaceGroup> {
         return withContext(Dispatchers.IO) {
-            Log.d(TAG, "Starting face grouping process")
+            Log.d(TAG, "Starting improved face grouping process")
             val database = PhotoGalleryDatabase.getDatabase(context)
             val allEmbeddings = database.photoGalleryDao().getAllEmbeddings()
             Log.i(TAG, "Retrieved ${allEmbeddings.size} face embeddings from database")
@@ -82,14 +83,29 @@ object FaceGroupingUtils {
             val expectedEmbeddingSize = getExpectedEmbeddingSize(selfieEmbeddings)
                 ?: return@withContext emptyList()
 
-            val selfieGroups = groupSelfies(selfieEmbeddings, expectedEmbeddingSize)
+            // Normalize all embeddings first
+            val normalizedSelfies = selfieEmbeddings.map {
+                it.copy(embedding = normalizeEmbedding(it.embedding))
+            }
+            val normalizedMultiFace = multiFaceEmbeddings.map {
+                it.copy(embedding = normalizeEmbedding(it.embedding))
+            }
 
-            val faceGroups =
-                assignMultiFaceImages(multiFaceEmbeddings, selfieGroups, expectedEmbeddingSize)
+            // Use DBSCAN for initial clustering
+            val selfieGroups = dbscanClustering(normalizedSelfies, DBSCAN_EPS, MIN_SAMPLES)
 
+            // Assign multi-face images to existing groups
+            val faceGroups = assignMultiFaceImages(
+                normalizedMultiFace,
+                selfieGroups,
+                expectedEmbeddingSize
+            )
+
+            // Merge similar groups
             val mergedGroups = mergeSimilarGroups(faceGroups)
 
-            val validGroups = filterAndValidateGroups(mergedGroups)
+            // Final processing and validation
+            val validGroups = processFinalGroups(mergedGroups)
 
             logGroupingResults(validGroups)
             validGroups
@@ -148,72 +164,81 @@ object FaceGroupingUtils {
             }
     }
 
-    private fun groupSelfies(
-        selfieEmbeddings: List<FaceEmbedding>,
-        expectedEmbeddingSize: Int
+    private fun dbscanClustering(
+        embeddings: List<FaceEmbedding>,
+        eps: Float = DBSCAN_EPS,
+        minSamples: Int = MIN_SAMPLES
     ): MutableList<FaceGroup> {
-        val selfieGroups = mutableListOf<FaceGroup>()
-        var zeroEmbeddingCount = 0
-        var invalidSizeEmbeddingCount = 0
+        val visited = mutableSetOf<Int>()
+        val clusters = mutableListOf<FaceGroup>()
+        var clusterId = 0
 
-        selfieEmbeddings.forEach { selfieEmbedding ->
-            val embeddingVector = normalizeEmbedding(selfieEmbedding.embedding)
+        embeddings.forEachIndexed { index, _ ->
+            if (index !in visited) {
+                visited.add(index)
+                val neighbors = regionQuery(embeddings, index, eps)
 
-            when {
-                embeddingVector.all { it == 0f } -> {
-                    zeroEmbeddingCount++
-                    Log.w(
-                        TAG,
-                        "Skipping zero-filled selfie embedding for URI: ${selfieEmbedding.uri}"
-                    )
-                }
+                if (neighbors.size >= minSamples) {
+                    // Expand cluster
+                    val cluster = FaceGroup(groupId = (clusterId++).toString())
+                    expandCluster(embeddings, visited, cluster, index, eps, minSamples)
 
-                embeddingVector.size != expectedEmbeddingSize -> {
-                    invalidSizeEmbeddingCount++
-                    Log.w(
-                        TAG,
-                        "Skipping selfie embedding with size ${embeddingVector.size} (expected $expectedEmbeddingSize)"
-                    )
-                }
-
-                else -> {
-                    var bestGroup: FaceGroup? = null
-                    var bestSimilarity = -1f
-
-                    for (group in selfieGroups) {
-                        val centroid = calculateCentroid(group.embeddings)
-                        val threshold = getAdaptiveThreshold(group.embeddings.size)
-                        val similarity = calculateCosineSimilarity(centroid, embeddingVector)
-
-                        if (similarity >= threshold && similarity > bestSimilarity) {
-                            bestSimilarity = similarity
-                            bestGroup = group
-                        }
-                    }
-
-                    if (bestGroup != null) {
-                        bestGroup.uris.add(selfieEmbedding.uri)
-                        bestGroup.embeddings.add(embeddingVector)
-                        Log.d(TAG, "Matched selfie to group ${bestGroup.groupId}")
-                    } else {
-                        val newGroup = FaceGroup(
-                            uris = mutableSetOf(selfieEmbedding.uri),
-                            embeddings = mutableListOf(embeddingVector),
-                            representativeUri = selfieEmbedding.uri,
-                            referenceEmbedding = embeddingVector
-                        )
-                        selfieGroups.add(newGroup)
-                        Log.d(TAG, "Created new selfie group ${newGroup.groupId}")
+                    // Only keep meaningful clusters
+                    if (cluster.uris.size >= minSamples) {
+                        clusters.add(cluster)
                     }
                 }
             }
         }
 
-        Log.i(
-            TAG,
-            "Skipped $zeroEmbeddingCount zero-filled and $invalidSizeEmbeddingCount invalid-sized selfie embeddings"
-        )
-        return selfieGroups
+        // Assign representative for each cluster
+        clusters.forEach { group ->
+            group.representativeUri = selectBestRepresentative(group)
+            group.referenceEmbedding = calculateCentroid(group.embeddings)
+        }
+
+        Log.d(TAG, "DBSCAN clustering formed ${clusters.size} clusters")
+        return clusters
+    }
+
+    private fun regionQuery(embeddings: List<FaceEmbedding>, index: Int, eps: Float): List<Int> {
+        val neighbors = mutableListOf<Int>()
+        val current = embeddings[index]
+
+        embeddings.forEachIndexed { i, embedding ->
+            if (calculateCombinedSimilarity(current.embedding, embedding.embedding) >= eps) {
+                neighbors.add(i)
+            }
+        }
+
+        return neighbors
+    }
+
+    private fun expandCluster(
+        embeddings: List<FaceEmbedding>,
+        visited: MutableSet<Int>,
+        cluster: FaceGroup,
+        index: Int,
+        eps: Float,
+        minSamples: Int
+    ) {
+        val seeds = mutableListOf(index)
+
+        while (seeds.isNotEmpty()) {
+            val current = seeds.removeAt(0)
+            cluster.uris.add(embeddings[current].uri)
+            cluster.embeddings.add(embeddings[current].embedding)
+
+            val neighbors = regionQuery(embeddings, current, eps)
+            if (neighbors.size >= minSamples) {
+                neighbors.forEach { neighbor ->
+                    if (neighbor !in visited) {
+                        visited.add(neighbor)
+                        seeds.add(neighbor)
+                    }
+                }
+            }
+        }
     }
 
     private fun assignMultiFaceImages(
@@ -226,7 +251,7 @@ object FaceGroupingUtils {
         val assignedUris = mutableSetOf<String>()
 
         multiFaceEmbeddings.forEach { embedding ->
-            val embeddingVector = normalizeEmbedding(embedding.embedding)
+            val embeddingVector = embedding.embedding
 
             when {
                 embeddingVector.all { it == 0f } -> {
@@ -249,11 +274,13 @@ object FaceGroupingUtils {
                 else -> {
                     var bestGroup: FaceGroup? = null
                     var bestSimilarity = -1f
+                    val threshold = getDynamicThreshold(faceGroups.size)
 
                     for (group in faceGroups) {
-                        val centroid = calculateCentroid(group.embeddings)
-                        val threshold = getAdaptiveThreshold(group.embeddings.size)
-                        val similarity = calculateCosineSimilarity(centroid, embeddingVector)
+                        val similarity = calculateCombinedSimilarity(
+                            group.referenceEmbedding ?: calculateCentroid(group.embeddings),
+                            embeddingVector
+                        )
 
                         if (similarity >= threshold && similarity > bestSimilarity) {
                             bestSimilarity = similarity
@@ -265,7 +292,10 @@ object FaceGroupingUtils {
                         bestGroup.uris.add(embedding.uri)
                         bestGroup.embeddings.add(embeddingVector)
                         assignedUris.add(embedding.uri)
-                        Log.d(TAG, "Assigned multi-face to group ${bestGroup.groupId}")
+                        Log.d(
+                            TAG,
+                            "Assigned multi-face to group ${bestGroup.groupId} with similarity $bestSimilarity"
+                        )
                     } else {
                         Log.d(TAG, "No match found for multi-face URI: ${embedding.uri}")
                     }
@@ -302,16 +332,21 @@ object FaceGroupingUtils {
                     val group2 = currentGroups[j]
                     if (group2.groupId in mergedGroupIds) continue
 
-                    val centroid1 = calculateCentroid(group1.embeddings)
-                    val centroid2 = calculateCentroid(group2.embeddings)
-                    val similarity = calculateCosineSimilarity(centroid1, centroid2)
+                    val centroid1 =
+                        group1.referenceEmbedding ?: calculateCentroid(group1.embeddings)
+                    val centroid2 =
+                        group2.referenceEmbedding ?: calculateCentroid(group2.embeddings)
+                    val similarity = calculateCombinedSimilarity(centroid1, centroid2)
 
                     if (similarity >= MERGE_THRESHOLD) {
                         mergedGroup.uris.addAll(group2.uris)
                         mergedGroup.embeddings.addAll(group2.embeddings)
                         mergedGroupIds.add(group2.groupId)
                         didMerge = true
-                        Log.d(TAG, "Merged group ${group2.groupId} into ${group1.groupId}")
+                        Log.d(
+                            TAG,
+                            "Merged group ${group2.groupId} into ${group1.groupId} with similarity $similarity"
+                        )
                     }
                 }
 
@@ -324,67 +359,42 @@ object FaceGroupingUtils {
         return currentGroups
     }
 
-    private fun filterAndValidateGroups(groups: List<FaceGroup>): List<FaceGroup> {
-        return groups.filter { it.uris.size > 1 }.map { group ->
-            val validRepresentativeUri = group.uris.firstOrNull { uri ->
-                group.representativeUri == uri || group.representativeUri == null
-            } ?: group.uris.firstOrNull()
-
+    private fun processFinalGroups(groups: List<FaceGroup>): List<FaceGroup> {
+        return groups.filter { it.uris.size >= MIN_SAMPLES }.map { group ->
+            val centroid = calculateCentroid(group.embeddings)
             group.copy(
-                representativeUri = validRepresentativeUri,
-                referenceEmbedding = calculateCentroid(group.embeddings)
+                representativeUri = selectBestRepresentative(group),
+                referenceEmbedding = centroid
             )
         }
     }
 
-    private fun logGroupingResults(groups: List<FaceGroup>) {
-        Log.i(TAG, "Face grouping complete: ${groups.size} distinct face groups formed")
-        groups.forEachIndexed { index, group ->
-            Log.i(TAG, "Group $index: $group")
-            Log.d(TAG, "Embedding Count: ${group.embeddings.size}")
-            Log.d(TAG, "Representative URI: ${group.representativeUri ?: "None"}")
-        }
-    }
+    private fun selectBestRepresentative(group: FaceGroup): String {
+        if (group.uris.isEmpty()) return ""
+        if (group.embeddings.isEmpty()) return group.uris.first()
 
-    private fun getAdaptiveThreshold(groupSize: Int): Float {
-        return when {
-            groupSize <= 2 -> MIN_SIMILARITY_THRESHOLD
-            groupSize <= 5 -> BASE_SELFIE_SIMILARITY_THRESHOLD
-            else -> BASE_GENERAL_SIMILARITY_THRESHOLD
-        }
-    }
+        val centroid = group.referenceEmbedding ?: calculateCentroid(group.embeddings)
+        var bestUri = group.uris.first()
+        var bestSimilarity = -1f
 
-    private fun calculateCentroid(
-        embeddings: List<FloatArray>,
-        isSelfieGroup: Boolean = false
-    ): FloatArray {
-        if (embeddings.isEmpty()) return floatArrayOf()
-        val size = embeddings.first().size
-        val centroid = FloatArray(size)
-        var totalWeight = 0f
-
-        embeddings.forEach { embedding ->
-            val weight = if (isSelfieGroup) 2.0f else 1.0f
-            for (i in embedding.indices) {
-                centroid[i] += embedding[i] * weight
+        group.embeddings.forEachIndexed { index, embedding ->
+            val similarity = calculateCombinedSimilarity(centroid, embedding)
+            if (similarity > bestSimilarity) {
+                bestSimilarity = similarity
+                bestUri = group.uris.elementAt(index)
             }
-            totalWeight += weight
         }
-        return normalizeEmbedding(centroid.map { it / totalWeight }.toFloatArray())
+
+        return bestUri
     }
 
-    private fun normalizeEmbedding(embedding: FloatArray): FloatArray {
-        var norm = 0f
-        embedding.forEach { norm += it * it }
-        norm = sqrt(norm)
-        return if (norm == 0f) embedding else embedding.map { it / norm }.toFloatArray()
-    }
-
-    private fun calculateCosineSimilarity(embedding1: FloatArray, embedding2: FloatArray): Float {
+    private fun calculateCombinedSimilarity(embedding1: FloatArray, embedding2: FloatArray): Float {
         if (embedding1.size != embedding2.size) {
             Log.w(TAG, "Embedding size mismatch: ${embedding1.size} vs ${embedding2.size}")
             return 0f
         }
+
+        // Calculate cosine similarity
         var dotProduct = 0f
         var norm1 = 0f
         var norm2 = 0f
@@ -395,10 +405,60 @@ object FaceGroupingUtils {
         }
         norm1 = sqrt(norm1)
         norm2 = sqrt(norm2)
-        if (norm1 == 0f || norm2 == 0f) {
-            Log.w(TAG, "Zero norm detected, returning 0 similarity")
-            return 0f
+        val cosineSim = if (norm1 == 0f || norm2 == 0f) 0f else (dotProduct / (norm1 * norm2))
+
+        // Calculate normalized Euclidean distance
+        var sum = 0f
+        for (i in embedding1.indices) {
+            sum += (embedding1[i] - embedding2[i]).pow(2)
         }
-        return (dotProduct / (norm1 * norm2)).coerceIn(-1f, 1f)
+        val euclideanDist = sqrt(sum)
+        val normalizedEuclidean = 1 - (euclideanDist / 2) // Normalize to [0,1]
+
+        // Combined metric (weighted average)
+        return 0.7f * cosineSim + 0.3f * normalizedEuclidean
+    }
+
+    private fun calculateCentroid(embeddings: List<FloatArray>): FloatArray {
+        if (embeddings.isEmpty()) return floatArrayOf()
+        val size = embeddings.first().size
+        val centroid = FloatArray(size)
+
+        embeddings.forEach { embedding ->
+            for (i in embedding.indices) {
+                centroid[i] += embedding[i]
+            }
+        }
+
+        for (i in centroid.indices) {
+            centroid[i] /= embeddings.size
+        }
+
+        return normalizeEmbedding(centroid)
+    }
+
+    private fun normalizeEmbedding(embedding: FloatArray): FloatArray {
+        var norm = 0f
+        embedding.forEach { norm += it * it }
+        norm = sqrt(norm)
+        return if (norm == 0f) embedding else embedding.map { it / norm }.toFloatArray()
+    }
+
+    private fun getDynamicThreshold(groupCount: Int): Float {
+        // Adjust threshold based on number of groups
+        return when {
+            groupCount < 5 -> BASE_SIMILARITY_THRESHOLD - 0.05f // More permissive for few groups
+            groupCount > 20 -> BASE_SIMILARITY_THRESHOLD + 0.05f // More strict for many groups
+            else -> BASE_SIMILARITY_THRESHOLD
+        }
+    }
+
+    private fun logGroupingResults(groups: List<FaceGroup>) {
+        Log.i(TAG, "Face grouping complete: ${groups.size} distinct face groups formed")
+        groups.forEachIndexed { index, group ->
+            Log.i(TAG, "Group $index: $group")
+            Log.d(TAG, "Embedding Count: ${group.embeddings.size}")
+            Log.d(TAG, "Representative URI: ${group.representativeUri ?: "None"}")
+        }
     }
 }

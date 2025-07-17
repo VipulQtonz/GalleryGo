@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.photogallery.R
 import com.photogallery.databinding.ItemFaceGroupBinding
 import com.photogallery.process.FaceGroupingUtils
 
@@ -26,7 +25,7 @@ class FaceGroupAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val group = faceGroups[position]
         with(holder.binding) {
-            val representativeUri = group.uris.firstOrNull()
+            val representativeUri = group.representativeUri
             if (representativeUri != null) {
                 Glide.with(context).load(representativeUri).into(imageView)
             } else {

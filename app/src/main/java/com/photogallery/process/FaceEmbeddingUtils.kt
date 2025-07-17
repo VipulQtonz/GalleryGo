@@ -41,7 +41,7 @@ object FaceEmbeddingUtils {
     private const val TF_OD_API_MODEL_FILE = "mobile_face_net.tflite"
     private const val TF_OD_API_LABELS_FILE = "file:///android_asset/labelmap.txt"
     private const val MAX_BITMAP_SIZE = 2048
-    private const val MAX_FACES_PER_IMAGE = 3
+    private const val MAX_FACES_PER_IMAGE = 1
 
     private val databaseDispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
     private val faceDetectorOptions = FaceDetectorOptions.Builder()
@@ -132,6 +132,17 @@ object FaceEmbeddingUtils {
                         }
 
                         faces.forEachIndexed { faceIndex, face ->
+                            // Check for required landmarks (nose, eyes, lips)
+                            if (!isFaceClearlyVisible(face)) {
+                                Log.d(TAG, "Skipping face $faceIndex in $uri: missing required landmarks")
+                                withContext(databaseDispatcher) {
+                                    database.photoGalleryDao().insertSkippedImage(
+                                        SkippedImage(uri.toString(), "Missing required face landmarks")
+                                    )
+                                }
+                                return@forEachIndexed
+                            }
+
                             val faceBitmap = cropFaceFromBitmap(resizedBitmap, face)
                             val embedding = generateFaceEmbedding(detector, faceBitmap)
 
@@ -183,6 +194,21 @@ object FaceEmbeddingUtils {
                 detector.close()
                 Log.i(TAG, "Closed TFLite detector")
             }
+        }
+    }
+
+    private fun isFaceClearlyVisible(face: Face): Boolean {
+        val landmarks = face.allLandmarks
+        val requiredLandmarks = listOf(
+            FaceLandmark.NOSE_BASE,
+            FaceLandmark.LEFT_EYE,
+            FaceLandmark.RIGHT_EYE,
+            FaceLandmark.MOUTH_LEFT,
+            FaceLandmark.MOUTH_RIGHT
+        )
+
+        return requiredLandmarks.all { landmarkType ->
+            landmarks.any { it.landmarkType == landmarkType }
         }
     }
 

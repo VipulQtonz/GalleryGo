@@ -30,8 +30,10 @@ class AlbumViewerActivity : BaseActivity<ActivityAlbumViewerBinding>() {
         isWhat = intent.getStringExtra("isWhat") ?: ""
         albumName = intent.getStringExtra("albumName") ?: "Album"
         binding.toolbar.tvToolbarTitle.text = albumName
-        showLoadingDialog()
-        populateMediaList()
+        if (MyApplication.isAlbumReload == true) {
+            showLoadingDialog()
+            populateMediaList()
+        }
 
         if (isWhat == "FaceGroup") {
             binding.tvPeopleName.text = albumName
@@ -145,6 +147,7 @@ class AlbumViewerActivity : BaseActivity<ActivityAlbumViewerBinding>() {
                     }
                     startActivity(intent)
                     nextScreenAnimation()
+                    MyApplication.isAlbumReload = false
                 }
             }, onItemLongClick = {})
             binding.recyclerViewAlbum.adapter = adapter

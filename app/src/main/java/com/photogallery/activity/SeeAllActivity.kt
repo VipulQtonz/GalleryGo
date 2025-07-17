@@ -117,6 +117,7 @@ class SeeAllActivity : BaseActivity<ActivitySeeAllBinding>() {
                         )
                     }
                 }
+                MyApplication.isAlbumReload = true
                 startActivity(intent)
                 nextScreenAnimation()
             })

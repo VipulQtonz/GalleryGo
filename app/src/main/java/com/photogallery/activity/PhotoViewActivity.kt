@@ -336,6 +336,8 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
                     }
                     setFavoriteIcon(position)
                     MyApplication.isPhotoFetchReload == true
+                    MyApplication.isAlbumReload == true
+
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -377,6 +379,7 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
                     setFavoriteIcon(position)
                 }
                 MyApplication.isPhotoFetchReload == true
+                MyApplication.isAlbumReload == true
             }
             dialog.dismiss()
         }
@@ -680,6 +683,8 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
                             }
                             MyApplication.instance.notifyFileDeleted(selectedMedia.uri)
                             MyApplication.isPhotoFetchReload = true
+                            MyApplication.isAlbumReload = true
+
                             (binding.viewPager.adapter as ImagePagerAdapter).notifyDataSetChanged()
 
                             if (mediaList.isEmpty()) {
@@ -786,6 +791,7 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
 
                     MyApplication.instance.notifyFileDeleted(media.uri)
                     MyApplication.isPhotoFetchReload = true
+                    MyApplication.isAlbumReload = true
 
                     (binding.viewPager.adapter as? ImagePagerAdapter)?.notifyDataSetChanged()
 
@@ -905,6 +911,7 @@ class PhotoViewActivity : BaseActivity<ActivityPhotoViewBinding>() {
 
                         withContext(Dispatchers.Main) {
                             MyApplication.isPhotoFetchReload = true
+                            MyApplication.isAlbumReload = true
                             mediaList[currentPosition] = updatedMedia
                             (binding.viewPager.adapter as ImagePagerAdapter).notifyItemChanged(
                                 currentPosition

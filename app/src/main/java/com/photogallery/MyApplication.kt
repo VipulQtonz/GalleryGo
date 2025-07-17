@@ -79,6 +79,7 @@ class MyApplication : MultiDexApplication() {
         private var selectedMoment: Moment? = null
         var isPhotoFetchReload: Boolean? = true
         var isVideoFetchReload: Boolean? = true
+        var isAlbumReload: Boolean? = false
 
         fun setSelectedMoment(moment: Moment?) {
             selectedMoment = moment

@@ -39,6 +39,7 @@ class DuplicateImageActivity : BaseActivity<ActivityDuplicateImageBinding>() {
             val adapter = DuplicateGroupImageAdapter(this, duplicateGroups) { group ->
                 MyApplication.selectedAlbumImages = group.allUris
                 val intent = Intent(this, AlbumViewerActivity::class.java)
+                MyApplication.isAlbumReload = true
                 intent.putExtra("albumName", getString(R.string.duplicates))
                 startActivity(intent)
                 nextScreenAnimation()
